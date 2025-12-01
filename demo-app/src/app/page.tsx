@@ -3,7 +3,7 @@
 import { LifecyclePhase, PhaseStatus } from '@/components/LifecyclePhase'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { ArrowRight, CheckCircle2, ChevronRight, FileText, Shield, AlertTriangle, Lock, Link2, FileCheck, CheckSquare, Settings, Home, BookOpen } from 'lucide-react'
+import { ArrowRight, CheckCircle2, ChevronRight, FileText, Shield, AlertTriangle, Lock, Link2, FileCheck, CheckSquare, Settings, Home as HomeIcon, BookOpen } from 'lucide-react'
 import { FullLifecycleDiagram } from '@/components/FullLifecycleDiagram'
 import { AssetsArchitectureDiagram } from '@/components/AssetsArchitectureDiagram'
 import Link from 'next/link'
@@ -165,7 +165,7 @@ const pageIndex = [
   {
     name: 'Ciclo de Vida',
     href: '/',
-    icon: Home,
+    icon: HomeIcon,
     description: 'Visão geral completa do ciclo de vida com as 5 fases, diagramas interativos e status de cada etapa do processo regulatório.',
     whatToExpect: [
       'Diagrama completo do ciclo de vida em Mermaid',
