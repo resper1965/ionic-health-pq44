@@ -105,7 +105,7 @@ Ionic.Health-PQ44/
 ├── docs/                    # Documentação do processo
 ├── pipelines/               # Pipelines do nCommand Lite
 ├── infrastructure/          # IaC do nCommand Lite
-├── spec-kit/                # Ferramentas do processo
+├── spec-kit/                # Kit de Gestão de Especificações (ferramenta da apresentação)
 └── demo-app/                # ← Aplicação de apresentação
     └── (Esta aplicação)
 ```

@@ -68,7 +68,7 @@ O QA Leader aprova o início apenas com riscos mitigados.
 - Código Terraform
 - **Proibido**: Alteração manual no Portal Azure
 
-#### Pull Request (O Grande Filtro)
+#### Pull Request no Azure Repos (O Grande Filtro)
 
 **Bloqueio automático**:
 - Sem Work Item vinculado? → REJEITADO
