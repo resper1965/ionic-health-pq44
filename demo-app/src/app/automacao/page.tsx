@@ -198,24 +198,49 @@ export default function AutomacaoPage() {
         {/* Summary Card */}
         <Card className="mb-12 border-cyan shadow-lg">
           <CardContent className="p-6">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              <div className="text-center">
-                <div className="text-4xl font-bold text-primary mb-2">20</div>
-                <div className="text-sm text-gray-600">Processos Automatizados</div>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-green-600 mb-2">15</div>
-                <div className="text-sm text-gray-600">Processos Ativos</div>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-yellow-600 mb-2">1</div>
-                <div className="text-sm text-gray-600">Processos Agendados</div>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-gray-600 mb-2">4</div>
-                <div className="text-sm text-gray-600">Processos Sob Demanda</div>
-              </div>
-            </div>
+            {(() => {
+              const total = automatedProcesses.length
+              const triggerBased = automatedProcesses.filter(p => 
+                p.trigger.toLowerCase().includes('trigger') || 
+                p.trigger.toLowerCase().includes('push') || 
+                p.trigger.toLowerCase().includes('pr') || 
+                p.trigger.toLowerCase().includes('commit') || 
+                p.trigger.toLowerCase().includes('scheduled') || 
+                p.trigger.toLowerCase().includes('cron') ||
+                p.trigger.toLowerCase().includes('contínuo') ||
+                p.trigger.toLowerCase().includes('24/7') ||
+                p.trigger.toLowerCase().includes('diariamente')
+              ).length
+              const humanDemand = automatedProcesses.filter(p => 
+                p.trigger.toLowerCase().includes('manual') || 
+                p.trigger.toLowerCase().includes('execução manual') ||
+                p.trigger.toLowerCase().includes('sob demanda') ||
+                p.status === 'on-demand'
+              ).length
+
+              return (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="text-center">
+                    <div className="text-4xl font-bold text-primary mb-2">{total}</div>
+                    <div className="text-sm text-gray-600">Total de Processos Automatizados</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-4xl font-bold text-green-600 mb-2">{triggerBased}</div>
+                    <div className="text-sm text-gray-600">Iniciam Sob Trigger Automático</div>
+                    <div className="text-xs text-gray-500 mt-1">
+                      (Push, PR, Commit, Scheduled, Contínuo)
+                    </div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-4xl font-bold text-blue-600 mb-2">{humanDemand}</div>
+                    <div className="text-sm text-gray-600">Iniciam por Demanda Humana</div>
+                    <div className="text-xs text-gray-500 mt-1">
+                      (Execução manual, sob demanda)
+                    </div>
+                  </div>
+                </div>
+              )
+            })()}
           </CardContent>
         </Card>
 

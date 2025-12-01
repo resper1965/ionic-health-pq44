@@ -2,30 +2,638 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { FileCheck, ExternalLink, CheckCircle2, Circle, AlertTriangle, Shield } from 'lucide-react'
+import { FileCheck, ExternalLink, Info, FileText, Shield, ChevronDown, ChevronUp } from 'lucide-react'
 import Link from 'next/link'
-import auditData from '@/data/audit-evidences.json'
 import { useState } from 'react'
+import { getSlugFromPath } from '@/lib/document-slugs'
+
+interface RegulatoryEvidence {
+  norm: string
+  normCode: string
+  evidences: {
+    category: string
+    items: {
+      evidence: string
+      where: string
+      howToAccess: string
+      system: string
+    }[]
+  }[]
+}
+
+const regulatoryEvidences: RegulatoryEvidence[] = [
+  {
+    norm: 'ISO 13485:2016',
+    normCode: 'iso-13485',
+    evidences: [
+      {
+        category: 'Sistema de Gestão da Qualidade',
+        items: [
+          {
+            evidence: 'SOPs documentados (SOP-001 a SOP-005)',
+            where: 'Azure Repos → docs/sop/',
+            howToAccess: 'Arquivos Markdown versionados no Git',
+            system: 'Azure Repos'
+          },
+          {
+            evidence: 'PROCESS.md - Processo Integrado Completo',
+            where: 'Azure Repos → docs/PROCESS.md',
+            howToAccess: 'Documento principal do processo',
+            system: 'Azure Repos'
+          },
+          {
+            evidence: 'Histórico de versionamento de documentos',
+            where: 'Azure Repos → Git History',
+            howToAccess: 'Histórico de commits e mudanças',
+            system: 'Azure Repos'
+          }
+        ]
+      },
+      {
+        category: 'Controle de Documentação',
+        items: [
+          {
+            evidence: 'Work Items (Requisitos)',
+            where: 'Azure DevOps → Boards',
+            howToAccess: 'Work Items vinculados, aprovados e rastreados',
+            system: 'Azure DevOps'
+          },
+          {
+            evidence: 'DHF (Design History File)',
+            where: 'SharePoint → /DHF/Version/v1.0.0/',
+            howToAccess: 'PDF assinado digitalmente, imutável',
+            system: 'SharePoint'
+          },
+          {
+            evidence: 'Matriz de Rastreabilidade',
+            where: 'SharePoint → DHF → Seção Traceability',
+            howToAccess: 'Documento gerado automaticamente',
+            system: 'SharePoint'
+          }
+        ]
+      },
+      {
+        category: 'Controle de Produto',
+        items: [
+          {
+            evidence: 'Pipeline CI/CD configurado',
+            where: 'Azure Repos → pipelines/azure-pipelines.yml',
+            howToAccess: 'Definição do pipeline no código',
+            system: 'Azure DevOps'
+          },
+          {
+            evidence: 'Execução de Pipelines',
+            where: 'Azure DevOps → Pipelines → Runs',
+            howToAccess: 'Histórico de execuções e logs',
+            system: 'Azure DevOps'
+          },
+          {
+            evidence: 'Gates de Pipeline',
+            where: 'Azure DevOps → Pipeline → Gates',
+            howToAccess: 'Configuração de gates e verificações',
+            system: 'Azure DevOps'
+          }
+        ]
+      },
+      {
+        category: 'Verificação e Validação',
+        items: [
+          {
+            evidence: 'Relatórios de Testes Unitários',
+            where: 'Azure DevOps → Pipelines → Test Results',
+            howToAccess: 'Relatórios com 100% pass rate',
+            system: 'Azure DevOps'
+          },
+          {
+            evidence: 'Testes Funcionais',
+            where: 'Azure DevOps → Test Plans',
+            howToAccess: 'Test Cases e resultados',
+            system: 'Azure DevOps'
+          },
+          {
+            evidence: 'Testes E2E Automatizados',
+            where: 'Azure DevOps → Pipeline → Artifacts',
+            howToAccess: 'Relatórios Playwright com screenshots/vídeos',
+            system: 'Azure DevOps'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    norm: 'IEC 62304:2006+A1:2015',
+    normCode: 'iec-62304',
+    evidences: [
+      {
+        category: 'Processo de Desenvolvimento',
+        items: [
+          {
+            evidence: 'SOP-001: SDLC - Ciclo de Vida de Desenvolvimento',
+            where: 'Azure Repos → docs/sop/SOP-001-SDLC.md',
+            howToAccess: 'Documento do processo SDLC',
+            system: 'Azure Repos'
+          },
+          {
+            evidence: 'Work Items (Requisitos)',
+            where: 'Azure DevOps → Boards',
+            howToAccess: 'Requisitos vinculados e aprovados',
+            system: 'Azure DevOps'
+          },
+          {
+            evidence: 'Commits com Work Item ID',
+            where: 'Azure Repos → Commits',
+            howToAccess: 'Commits no formato [WORKITEM-ID]',
+            system: 'Azure Repos'
+          }
+        ]
+      },
+      {
+        category: 'Controle de Configuração',
+        items: [
+          {
+            evidence: 'Estrutura de Branches (Gitflow)',
+            where: 'Azure Repos → Branches',
+            howToAccess: 'Branches main/develop/feat/*',
+            system: 'Azure Repos'
+          },
+          {
+            evidence: 'Histórico de Commits',
+            where: 'Azure Repos → History',
+            howToAccess: 'Histórico completo de mudanças',
+            system: 'Azure Repos'
+          },
+          {
+            evidence: 'Tags de Release',
+            where: 'Azure Repos → Tags',
+            howToAccess: 'Tags semânticas (v1.0.0, v1.1.0)',
+            system: 'Azure Repos'
+          },
+          {
+            evidence: 'Infraestrutura como Código (Terraform)',
+            where: 'Azure Repos → infrastructure/azure/',
+            howToAccess: 'Arquivos .tf versionados',
+            system: 'Azure Repos'
+          }
+        ]
+      },
+      {
+        category: 'Resolução de Problemas',
+        items: [
+          {
+            evidence: 'Work Items de Bug',
+            where: 'Azure DevOps → Boards → Bugs',
+            howToAccess: 'Bugs vinculados e rastreados',
+            system: 'Azure DevOps'
+          },
+          {
+            evidence: 'Findings no DefectDojo',
+            where: 'DefectDojo → Findings',
+            howToAccess: 'Vulnerabilidades identificadas e tratadas',
+            system: 'DefectDojo'
+          },
+          {
+            evidence: 'Histórico de Correções',
+            where: 'Azure DevOps → Work Item → History',
+            howToAccess: 'Timeline de correções',
+            system: 'Azure DevOps'
+          }
+        ]
+      },
+      {
+        category: 'Testes de Software',
+        items: [
+          {
+            evidence: 'Testes Unitários (100% Pass)',
+            where: 'Azure DevOps → Pipelines → Test Results',
+            howToAccess: 'Relatórios de execução',
+            system: 'Azure DevOps'
+          },
+          {
+            evidence: 'Testes E2E (Sanity, Smoke, Regression)',
+            where: 'Azure DevOps → Pipeline → Artifacts',
+            howToAccess: 'Relatórios Playwright',
+            system: 'Azure DevOps'
+          },
+          {
+            evidence: 'Código de Testes',
+            where: 'Azure Repos → tests/',
+            howToAccess: 'Arquivos de teste no repositório',
+            system: 'Azure Repos'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    norm: 'ISO 14971:2019',
+    normCode: 'iso-14971',
+    evidences: [
+      {
+        category: 'Análise de Riscos',
+        items: [
+          {
+            evidence: 'Work Items de Risco',
+            where: 'Azure DevOps → Boards → Tipo "Risk"',
+            howToAccess: 'Filtro: Work Item Type = Risk',
+            system: 'Azure DevOps'
+          },
+          {
+            evidence: 'Análise de Risco (RPN)',
+            where: 'Azure DevOps → Work Item → Campos customizados',
+            howToAccess: 'Campos: Severidade, Probabilidade, Detectabilidade, RPN',
+            system: 'Azure DevOps'
+          },
+          {
+            evidence: 'uFMEA (Análise de Erro de Uso)',
+            where: 'Azure DevOps → Work Item → Attachments',
+            howToAccess: 'Anexos e comentários',
+            system: 'Azure DevOps'
+          },
+          {
+            evidence: 'Relacionamento Risco → Requisito',
+            where: 'Azure DevOps → Work Item → Links',
+            howToAccess: 'Relação "Mitigates"',
+            system: 'Azure DevOps'
+          }
+        ]
+      },
+      {
+        category: 'Avaliação e Controle de Riscos',
+        items: [
+          {
+            evidence: 'Risk Acceptance Forms',
+            where: 'SharePoint → /Risk Management/Risk Acceptance Forms/',
+            howToAccess: 'PDFs assinados digitalmente',
+            system: 'SharePoint'
+          },
+          {
+            evidence: 'Risk Acceptance Register',
+            where: 'SharePoint → /Risk Management/Risk Acceptance Register/',
+            howToAccess: 'Lista completa de riscos aceitos',
+            system: 'SharePoint'
+          },
+          {
+            evidence: 'Análise de Benefício/Risco',
+            where: 'SharePoint → /Risk Management/Risk Analysis/',
+            howToAccess: 'Documentos Word/PDF',
+            system: 'SharePoint'
+          },
+          {
+            evidence: 'Status de Aceitação no ADO',
+            where: 'Azure DevOps → Work Item → Campo customizado',
+            howToAccess: 'Campo "Risk Acceptance Status"',
+            system: 'Azure DevOps'
+          }
+        ]
+      },
+      {
+        category: 'Reavaliação de Riscos',
+        items: [
+          {
+            evidence: 'Reavaliação Trimestral',
+            where: 'SharePoint → /Risk Management/Reassessment/',
+            howToAccess: 'Relatórios trimestrais',
+            system: 'SharePoint'
+          },
+          {
+            evidence: 'Work Items Atualizados',
+            where: 'Azure DevOps → Boards → Risk → Updated Date',
+            howToAccess: 'Filtro por data de atualização',
+            system: 'Azure DevOps'
+          },
+          {
+            evidence: 'Novos Riscos Identificados',
+            where: 'Azure DevOps → Boards → Risk → Created Date',
+            howToAccess: 'Riscos criados no período',
+            system: 'Azure DevOps'
+          }
+        ]
+      },
+      {
+        category: 'Monitoramento Pós-Mercado',
+        items: [
+          {
+            evidence: 'Incidentes de Segurança',
+            where: 'Azure Sentinel → Incidents',
+            howToAccess: 'Lista de incidentes detectados',
+            system: 'Azure Sentinel'
+          },
+          {
+            evidence: 'Vulnerabilidades Identificadas',
+            where: 'DefectDojo → Findings',
+            howToAccess: 'Findings ativos e mitigados',
+            system: 'DefectDojo'
+          },
+          {
+            evidence: 'Scans Diários',
+            where: 'DefectDojo → Findings → Source = "Daily Scan"',
+            howToAccess: 'Findings de scans diários',
+            system: 'DefectDojo'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    norm: 'IEC 62366-1:2015',
+    normCode: 'iec-62366-1',
+    evidences: [
+      {
+        category: 'Perfil de Usuário',
+        items: [
+          {
+            evidence: 'Perfil de Usuário (IEC 62366)',
+            where: 'Azure DevOps → Work Item → Campo customizado',
+            howToAccess: 'Campo "Perfil de Usuário"',
+            system: 'Azure DevOps'
+          },
+          {
+            evidence: 'Tarefas Principais (IEC 62366)',
+            where: 'Azure DevOps → Work Item → Campo customizado',
+            howToAccess: 'Campo "Tarefas Principais"',
+            system: 'Azure DevOps'
+          }
+        ]
+      },
+      {
+        category: 'Análise de Erro de Uso (uFMEA)',
+        items: [
+          {
+            evidence: 'uFMEA Documentado',
+            where: 'Azure DevOps → Work Item → Attachments',
+            howToAccess: 'Anexos e análises de erro de uso',
+            system: 'Azure DevOps'
+          },
+          {
+            evidence: 'Work Items de Risco de Usabilidade',
+            where: 'Azure DevOps → Boards → Risk → Tipo "Usability"',
+            howToAccess: 'Filtro: Tipo = Usability',
+            system: 'Azure DevOps'
+          }
+        ]
+      },
+      {
+        category: 'Testes de Usabilidade',
+        items: [
+          {
+            evidence: 'Testes Formativos (Protótipos)',
+            where: 'Azure DevOps → Work Item → Comentários',
+            howToAccess: 'Registros de testes formativos',
+            system: 'Azure DevOps'
+          },
+          {
+            evidence: 'Testes Somativos (IEC 62366)',
+            where: 'Azure DevOps → Test Plans → Suite "Usability"',
+            howToAccess: 'Test Suite específica de usabilidade',
+            system: 'Azure DevOps'
+          },
+          {
+            evidence: 'Resultados de Testes de Usabilidade',
+            where: 'Azure DevOps → Test Plans → Results',
+            howToAccess: 'Test Run com resultados somativos',
+            system: 'Azure DevOps'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    norm: 'ISO/IEC 27001:2022',
+    normCode: 'iso-27001',
+    evidences: [
+      {
+        category: 'Gestão de Vulnerabilidades',
+        items: [
+          {
+            evidence: 'SOP-003: Gestão de Vulnerabilidades',
+            where: 'Azure Repos → docs/sop/SOP-003-Vulnerability-Management.md',
+            howToAccess: 'Procedimento documentado',
+            system: 'Azure Repos'
+          },
+          {
+            evidence: 'Findings no DefectDojo',
+            where: 'DefectDojo → Findings',
+            howToAccess: 'Findings de SAST/SCA/DAST',
+            system: 'DefectDojo'
+          },
+          {
+            evidence: 'Relatórios de Scan (SAST)',
+            where: 'SonarCloud → Project Dashboard',
+            howToAccess: 'Quality Gate e métricas',
+            system: 'SonarCloud'
+          },
+          {
+            evidence: 'Relatórios de Scan (SCA)',
+            where: 'DefectDojo → Findings → Tipo "SCA"',
+            howToAccess: 'Filtro: Test Type = Trivy',
+            system: 'DefectDojo'
+          },
+          {
+            evidence: 'Relatórios de Scan (DAST)',
+            where: 'DefectDojo → Findings → Tipo "DAST"',
+            howToAccess: 'Filtro: Test Type = ZAP',
+            system: 'DefectDojo'
+          }
+        ]
+      },
+      {
+        category: 'Triagem e Gestão',
+        items: [
+          {
+            evidence: 'Triagem de Vulnerabilidades',
+            where: 'DefectDojo → Findings → Status',
+            howToAccess: 'Status: Triaged, False Positive, etc.',
+            system: 'DefectDojo'
+          },
+          {
+            evidence: 'Comentários de Triagem',
+            where: 'DefectDojo → Findings → Comments',
+            howToAccess: 'Análise do AppSec/QA',
+            system: 'DefectDojo'
+          },
+          {
+            evidence: 'Deduplicação Automática',
+            where: 'DefectDojo → Findings → "Duplicate"',
+            howToAccess: 'Status do finding',
+            system: 'DefectDojo'
+          },
+          {
+            evidence: 'Auto-Close de Vulnerabilidades',
+            where: 'DefectDojo → Findings → Status = "Mitigated"',
+            howToAccess: 'Histórico de mudanças',
+            system: 'DefectDojo'
+          }
+        ]
+      },
+      {
+        category: 'Monitoramento Contínuo',
+        items: [
+          {
+            evidence: 'Scans Diários',
+            where: 'DefectDojo → Findings → Source = "Daily Scan"',
+            howToAccess: 'Findings de scans agendados',
+            system: 'DefectDojo'
+          },
+          {
+            evidence: 'Logs de Monitoramento',
+            where: 'Azure Sentinel → Logs',
+            howToAccess: 'Queries KQL',
+            system: 'Azure Sentinel'
+          },
+          {
+            evidence: 'Dashboard de Monitoramento',
+            where: 'Azure Sentinel → Workbooks',
+            howToAccess: 'Visualizações de segurança',
+            system: 'Azure Sentinel'
+          },
+          {
+            evidence: 'Certificado de Segurança',
+            where: 'SharePoint → /DHF/Version/v1.0.0/security-certificate-v1.0.0.pdf',
+            howToAccess: 'PDF exportado do DefectDojo',
+            system: 'SharePoint'
+          }
+        ]
+      },
+      {
+        category: 'SLA e Controle',
+        items: [
+          {
+            evidence: 'SLA de Correção',
+            where: 'Azure DevOps → Bug → Custom Field "SLA"',
+            howToAccess: 'Campo customizado de SLA',
+            system: 'Azure DevOps'
+          },
+          {
+            evidence: 'Data de Criação vs. Resolução',
+            where: 'Azure DevOps → Bug → Dates',
+            howToAccess: 'Lead time de correção',
+            system: 'Azure DevOps'
+          },
+          {
+            evidence: 'Pipeline Bloqueado por Vulnerabilidades',
+            where: 'Azure DevOps → Pipeline → Failed Runs',
+            howToAccess: 'Runs falhados por gate de segurança',
+            system: 'Azure DevOps'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    norm: 'RDC 657/2022 (ANVISA)',
+    normCode: 'rdc-657',
+    evidences: [
+      {
+        category: 'Documentação Técnica',
+        items: [
+          {
+            evidence: 'DHF Completo',
+            where: 'SharePoint → /DHF/Version/v1.0.0/',
+            howToAccess: 'PDF assinado digitalmente',
+            system: 'SharePoint'
+          },
+          {
+            evidence: 'Matriz de Rastreabilidade',
+            where: 'SharePoint → DHF → Seção Traceability',
+            howToAccess: 'Mapeamento completo Requisito → Código → Testes',
+            system: 'SharePoint'
+          },
+          {
+            evidence: 'Especificações Técnicas',
+            where: 'Azure Repos → spec-kit/specs/',
+            howToAccess: 'Especificações versionadas',
+            system: 'Azure Repos'
+          }
+        ]
+      },
+      {
+        category: 'Controle de Mudanças',
+        items: [
+          {
+            evidence: 'SOP-005: Controle de Mudança',
+            where: 'Azure Repos → docs/sop/SOP-005-Change-Control.md',
+            howToAccess: 'Procedimento documentado',
+            system: 'Azure Repos'
+          },
+          {
+            evidence: 'Change Requests',
+            where: 'Azure DevOps → Boards → Work Item Type "Change Request"',
+            howToAccess: 'Work Items de mudança',
+            system: 'Azure DevOps'
+          },
+          {
+            evidence: 'Histórico de Versões',
+            where: 'Azure Repos → Tags',
+            howToAccess: 'Tags semânticas de releases',
+            system: 'Azure Repos'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    norm: 'FDA 21 CFR Part 820',
+    normCode: 'fda-820',
+    evidences: [
+      {
+        category: 'Quality System Regulation',
+        items: [
+          {
+            evidence: 'Sistema de Gestão da Qualidade',
+            where: 'Azure Repos → docs/PROCESS.md + docs/sop/',
+            howToAccess: 'Documentação completa de processos',
+            system: 'Azure Repos'
+          },
+          {
+            evidence: 'DHF (Design History File)',
+            where: 'SharePoint → /DHF/Version/v1.0.0/',
+            howToAccess: 'PDF assinado, imutável',
+            system: 'SharePoint'
+          },
+          {
+            evidence: 'Controle de Documentação',
+            where: 'Azure DevOps + SharePoint',
+            howToAccess: 'Versionamento e imutabilidade',
+            system: 'Azure DevOps + SharePoint'
+          }
+        ]
+      },
+      {
+        category: 'Design Controls',
+        items: [
+          {
+            evidence: 'Requisitos de Design',
+            where: 'Azure DevOps → Boards → Work Items',
+            howToAccess: 'Requisitos rastreados',
+            system: 'Azure DevOps'
+          },
+          {
+            evidence: 'Validação de Design',
+            where: 'Azure DevOps → Test Plans',
+            howToAccess: 'Testes de validação',
+            system: 'Azure DevOps'
+          },
+          {
+            evidence: 'Transferência de Design',
+            where: 'SharePoint → /DHF/Version/v1.0.0/',
+            howToAccess: 'DHF assinado no release',
+            system: 'SharePoint'
+          }
+        ]
+      }
+    ]
+  }
+]
 
 export default function AuditoriaPage() {
-  const [expandedPhases, setExpandedPhases] = useState<Record<string, boolean>>({})
+  const [expandedNorms, setExpandedNorms] = useState<Record<string, boolean>>({})
 
-  const togglePhase = (phaseId: string) => {
-    setExpandedPhases((prev) => ({
+  const toggleNorm = (normCode: string) => {
+    setExpandedNorms((prev) => ({
       ...prev,
-      [phaseId]: !prev[phaseId],
+      [normCode]: !prev[normCode],
     }))
   }
-
-  const getStatusBadge = (status: string) => {
-    if (status === 'Available') {
-      return { variant: 'success' as const, icon: CheckCircle2, label: 'Disponível' }
-    }
-    return { variant: 'warning' as const, icon: Circle, label: 'Pendente' }
-  }
-
-  const completedChecklist = auditData.checklist.filter(item => item.status === 'Complete').length
-  const totalChecklist = auditData.checklist.length
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
@@ -38,143 +646,103 @@ export default function AuditoriaPage() {
               Evidências para Auditoria
             </h1>
           </div>
-          <p className="text-xl text-gray-700 font-light max-w-2xl mx-auto">
-            Guia completo de evidências organizadas por fase para auditorias regulatórias
+          <p className="text-xl text-gray-700 font-light max-w-3xl mx-auto">
+            Organização das evidências por norma regulatória. Encontre rapidamente o que pode ser auditado em cada norma.
           </p>
         </div>
 
-        {/* Checklist Summary */}
-        <Card className="mb-8 border-2 border-primary/20 shadow-cyan-lg">
+        {/* Systems Overview */}
+        <Card className="mb-8 border-cyan shadow-lg">
           <CardHeader>
             <CardTitle className="flex items-center gap-3">
-              <Shield className="h-6 w-6 text-primary" />
-              Checklist Pré-Auditoria
+              <Info className="h-6 w-6 text-primary" />
+              Sistemas de Armazenamento de Evidências
             </CardTitle>
             <CardDescription>
-              Preparação para auditoria regulatória
+              Visão geral dos sistemas onde as evidências são geradas e armazenadas
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="mb-4">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium text-gray-700">Progresso</span>
-                <span className="text-sm font-semibold text-gray-800">
-                  {completedChecklist} de {totalChecklist} itens completos
-                </span>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-gray-200 rounded-lg">
+                <h3 className="font-semibold text-gray-800 mb-2">Azure DevOps</h3>
+                <p className="text-sm text-gray-600">Work Items, Test Plans, Pipelines, Commits</p>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2.5">
-                <div
-                  className="bg-primary h-2.5 rounded-full transition-all"
-                  style={{ width: `${(completedChecklist / totalChecklist) * 100}%` }}
-                />
+              <div className="p-4 border border-gray-200 rounded-lg">
+                <h3 className="font-semibold text-gray-800 mb-2">SharePoint</h3>
+                <p className="text-sm text-gray-600">DHF, Documentos Assinados, Imutáveis</p>
               </div>
-            </div>
-            <div className="space-y-2">
-              {auditData.checklist.map((item, idx) => {
-                const isComplete = item.status === 'Complete'
-                return (
-                  <div
-                    key={idx}
-                    className={`flex items-center gap-3 p-3 rounded-lg border ${
-                      isComplete ? 'bg-green-50 border-green-200' : 'bg-gray-50 border-gray-200'
-                    }`}
-                  >
-                    {isComplete ? (
-                      <CheckCircle2 className="h-5 w-5 text-green-600 flex-shrink-0" />
-                    ) : (
-                      <Circle className="h-5 w-5 text-gray-400 flex-shrink-0" />
-                    )}
-                    <span className={`text-sm flex-1 ${isComplete ? 'text-gray-800' : 'text-gray-600'}`}>
-                      {item.item}
-                    </span>
-                    {item.evidence && (
-                      <Link
-                        href={`#${item.evidence}`}
-                        className="text-xs text-primary hover:underline"
-                      >
-                        Ver evidência
-                      </Link>
-                    )}
-                  </div>
-                )
-              })}
+              <div className="p-4 border border-gray-200 rounded-lg">
+                <h3 className="font-semibold text-gray-800 mb-2">DefectDojo</h3>
+                <p className="text-sm text-gray-600">Vulnerabilidades, Scans, Triagem</p>
+              </div>
+              <div className="p-4 border border-gray-200 rounded-lg">
+                <h3 className="font-semibold text-gray-800 mb-2">Azure Repos</h3>
+                <p className="text-sm text-gray-600">Código, Commits, Versionamento Git</p>
+              </div>
+              <div className="p-4 border border-gray-200 rounded-lg">
+                <h3 className="font-semibold text-gray-800 mb-2">SonarCloud</h3>
+                <p className="text-sm text-gray-600">Relatórios SAST, Métricas</p>
+              </div>
+              <div className="p-4 border border-gray-200 rounded-lg">
+                <h3 className="font-semibold text-gray-800 mb-2">Azure Sentinel</h3>
+                <p className="text-sm text-gray-600">Logs, Incidentes SIEM</p>
+              </div>
             </div>
           </CardContent>
         </Card>
 
-        {/* Evidences by Phase */}
-        <div className="space-y-6 mb-8">
-          {auditData.phases.map((phase) => (
-            <Card key={phase.id} className="border-cyan shadow-lg">
+        {/* Evidences by Regulatory Norm */}
+        <div className="space-y-6">
+          {regulatoryEvidences.map((regulatory) => (
+            <Card key={regulatory.normCode} className="border-cyan shadow-lg">
               <CardHeader>
                 <div className="flex items-center justify-between">
-                  <CardTitle className="flex items-center gap-3">
-                    <FileCheck className="h-6 w-6 text-primary" />
-                    {phase.name}
-                  </CardTitle>
+                  <div>
+                    <CardTitle className="text-2xl font-semibold text-gray-800">{regulatory.norm}</CardTitle>
+                    <CardDescription className="mt-1">
+                      Evidências disponíveis para auditoria desta norma
+                    </CardDescription>
+                  </div>
                   <button
-                    onClick={() => togglePhase(phase.id)}
-                    className="text-sm text-primary hover:underline"
+                    onClick={() => toggleNorm(regulatory.normCode)}
+                    className="p-2 rounded-full hover:bg-gray-100 transition-colors"
                   >
-                    {expandedPhases[phase.id] ? 'Recolher' : 'Expandir'}
+                    {expandedNorms[regulatory.normCode] ? (
+                      <ChevronUp className="h-5 w-5 text-gray-600" />
+                    ) : (
+                      <ChevronDown className="h-5 w-5 text-gray-600" />
+                    )}
                   </button>
                 </div>
               </CardHeader>
-              {expandedPhases[phase.id] && (
+              {expandedNorms[regulatory.normCode] && (
                 <CardContent>
                   <div className="space-y-6">
-                    {phase.evidenceCategories.map((category, catIdx) => (
-                      <div key={catIdx}>
-                        <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                          {category.category}
-                        </h3>
-                        <div className="space-y-4">
-                          {category.evidences.map((evidence) => {
-                            const statusBadge = getStatusBadge(evidence.status)
-                            const StatusIcon = statusBadge.icon
-                            return (
-                              <Card key={evidence.id} id={evidence.id} className="bg-white border border-gray-200">
-                                <CardHeader className="pb-3">
-                                  <div className="flex items-start justify-between gap-4">
-                                    <div className="flex-1">
-                                      <CardTitle className="text-base mb-2">{evidence.title}</CardTitle>
-                                      <CardDescription className="text-sm mb-2">
-                                        {evidence.description}
-                                      </CardDescription>
-                                      <div className="flex items-center gap-4 text-xs text-gray-600">
-                                        <span>
-                                          <strong>Sistema:</strong> {evidence.system}
-                                        </span>
-                                        <span>
-                                          <strong>Localização:</strong> {evidence.location}
-                                        </span>
-                                        <span>
-                                          <strong>Responsável:</strong> {evidence.responsible}
-                                        </span>
-                                      </div>
-                                    </div>
-                                    <Badge variant={statusBadge.variant} className="flex-shrink-0">
-                                      <StatusIcon className="h-3 w-3 mr-1" />
-                                      {statusBadge.label}
-                                    </Badge>
-                                  </div>
-                                </CardHeader>
-                                {evidence.link && (
-                                  <CardContent className="pt-0">
-                                    <a
-                                      href={evidence.link}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="inline-flex items-center gap-2 text-primary hover:text-primary/80 hover:underline text-sm"
-                                    >
-                                      Acessar evidência
-                                      <ExternalLink className="h-4 w-4" />
-                                    </a>
-                                  </CardContent>
-                                )}
-                              </Card>
-                            )
-                          })}
+                    {regulatory.evidences.map((category, catIdx) => (
+                      <div key={catIdx} className="border-l-4 border-primary pl-4">
+                        <h3 className="text-lg font-semibold text-gray-800 mb-3">{category.category}</h3>
+                        <div className="space-y-3">
+                          {category.items.map((item, itemIdx) => (
+                            <div key={itemIdx} className="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                              <div className="flex items-start justify-between gap-4 mb-2">
+                                <h4 className="font-semibold text-gray-800 flex-1">{item.evidence}</h4>
+                                <Badge variant="outline" className="text-xs flex-shrink-0">
+                                  {item.system}
+                                </Badge>
+                              </div>
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                                <div>
+                                  <span className="font-medium text-gray-700">Onde está:</span>
+                                  <p className="text-gray-600 mt-1">{item.where}</p>
+                                </div>
+                                <div>
+                                  <span className="font-medium text-gray-700">Como acessar:</span>
+                                  <p className="text-gray-600 mt-1">{item.howToAccess}</p>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
                         </div>
                       </div>
                     ))}
@@ -185,55 +753,28 @@ export default function AuditoriaPage() {
           ))}
         </div>
 
-        {/* Access Guide */}
-        <Card className="border-2 border-blue-300 shadow-lg bg-blue-50/50">
+        {/* Document Reference */}
+        <Card className="mt-8 border-cyan shadow-lg">
           <CardHeader>
             <CardTitle className="flex items-center gap-3">
-              <Shield className="h-6 w-6 text-blue-600" />
-              Guia de Acesso para Auditores
+              <FileText className="h-6 w-6 text-primary" />
+              Documento Completo de Evidências
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              <div>
-                <h3 className="font-semibold text-gray-800 mb-2">Credenciais Temporárias</h3>
-                <ul className="text-sm text-gray-700 space-y-1">
-                  <li>• <strong>Azure DevOps:</strong> Conta de leitura (Read-only)</li>
-                  <li>• <strong>DefectDojo:</strong> Usuário com permissão de visualização</li>
-                  <li>• <strong>SharePoint:</strong> Acesso de leitura ao diretório DHF</li>
-                  <li>• <strong>SonarCloud:</strong> Acesso público ou conta de leitura</li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-800 mb-2">Documentação para Auditores</h3>
-                <div className="flex flex-wrap gap-2">
-                  <Link
-                    href="/documentos/audit-evidences"
-                    className="text-sm text-primary hover:underline"
-                  >
-                    AUDIT-EVIDENCES.md
-                  </Link>
-                  <span className="text-gray-400">•</span>
-                  <Link
-                    href="/documentos/compliance-matrix"
-                    className="text-sm text-primary hover:underline"
-                  >
-                    COMPLIANCE-MATRIX.md
-                  </Link>
-                  <span className="text-gray-400">•</span>
-                  <Link
-                    href="/documentos/process"
-                    className="text-sm text-primary hover:underline"
-                  >
-                    PROCESS.md
-                  </Link>
-                </div>
-              </div>
-            </div>
+            <p className="text-gray-700 mb-4">
+              Para acesso detalhado a todas as evidências, incluindo localização exata por fase do ciclo de vida, 
+              instruções de acesso detalhadas e responsáveis, consulte o documento completo de mapeamento de evidências.
+            </p>
+            <Link 
+              href="/documentos/audit-evidences"
+              className="inline-flex items-center gap-2 text-primary hover:underline font-medium"
+            >
+              Ver Documento Completo de Evidências <ExternalLink className="h-4 w-4" />
+            </Link>
           </CardContent>
         </Card>
       </div>
     </main>
   )
 }
-

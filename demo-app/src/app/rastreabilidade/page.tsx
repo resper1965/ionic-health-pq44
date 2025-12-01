@@ -2,246 +2,204 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { GitBranch, FileText, TestTube, AlertTriangle, Link2, CheckCircle2, Circle } from 'lucide-react'
+import { GitBranch, FileText, ExternalLink, Link as LinkIcon, CheckCircle2 } from 'lucide-react'
 import Link from 'next/link'
-import traceabilityData from '@/data/traceability.json'
-import { MermaidDiagram } from '@/components/MermaidDiagram'
-
-const traceabilityFlow = `flowchart LR
-    A[Requisito<br/>REQ-001] -->|Implementado em| B[Código<br/>Commits/Branches]
-    A -->|Validado por| C[Testes<br/>Unit/E2E]
-    A -->|Vinculado a| D[Riscos<br/>RISK-001]
-    B -->|Cobre| C
-    C -->|Valida| D
-    D -->|Mitigado por| B
-    
-    style A fill:#54c4cd,stroke:#48b3bb,stroke-width:2px,color:#fff
-    style B fill:#58595b,stroke:#4a4b4d,stroke-width:2px,color:#fff
-    style C fill:#10b981,stroke:#059669,stroke-width:2px,color:#fff
-    style D fill:#f59e0b,stroke:#d97706,stroke-width:2px,color:#fff`
 
 export default function RastreabilidadePage() {
-  const { summary, requirements } = traceabilityData
-
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
       <div className="container mx-auto px-4 py-12 max-w-7xl">
         {/* Header */}
         <div className="mb-12 text-center space-y-4">
           <div className="inline-flex items-center justify-center gap-3 mb-4">
-            <Link2 className="h-10 w-10 text-primary" />
+            <GitBranch className="h-10 w-10 text-primary" />
             <h1 className="text-5xl font-bold text-gradient-primary">
               Rastreabilidade
             </h1>
           </div>
-          <p className="text-xl text-gray-700 font-light max-w-2xl mx-auto">
-            Matriz completa de rastreabilidade: Requisitos → Código → Testes → Riscos
+          <p className="text-xl text-gray-700 font-light max-w-3xl mx-auto">
+            Matriz completa de rastreabilidade bidirecional: Requisitos → Código → Testes → Riscos. 
+            Garantia de rastreabilidade completa em todas as fases do ciclo de vida.
           </p>
         </div>
 
-        {/* Summary Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <Card className="border-cyan shadow-lg">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">Total de Requisitos</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-gray-800">{summary.totalRequirements}</div>
-              <p className="text-sm text-gray-500 mt-1">Requisitos identificados</p>
-            </CardContent>
-          </Card>
-
-          <Card className="border-cyan shadow-lg">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">Cobertura de Código</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-green-600">{summary.coverage.code}%</div>
-              <p className="text-sm text-gray-500 mt-1">{summary.withCode} de {summary.totalRequirements} requisitos</p>
-            </CardContent>
-          </Card>
-
-          <Card className="border-cyan shadow-lg">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">Cobertura de Testes</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-green-600">{summary.coverage.tests.toFixed(1)}%</div>
-              <p className="text-sm text-gray-500 mt-1">{summary.withTests} de {summary.totalRequirements} requisitos</p>
-            </CardContent>
-          </Card>
-
-          <Card className="border-cyan shadow-lg">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">Cobertura de Riscos</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-yellow-600">{summary.coverage.risks.toFixed(1)}%</div>
-              <p className="text-sm text-gray-500 mt-1">{summary.withRisks} de {summary.totalRequirements} requisitos</p>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Traceability Flow Diagram */}
-        <Card className="mb-8 border-cyan shadow-lg">
+        {/* Overview */}
+        <Card className="mb-8 border-2 border-primary/20 shadow-cyan-lg bg-gradient-to-br from-primary/5 to-transparent">
           <CardHeader>
             <CardTitle className="flex items-center gap-3">
-              <Link2 className="h-6 w-6 text-primary" />
-              Fluxo de Rastreabilidade
+              <LinkIcon className="h-6 w-6 text-primary" />
+              Rastreabilidade Bidirecional
             </CardTitle>
-            <CardDescription>
-              Relacionamento entre Requisitos, Código, Testes e Riscos
-            </CardDescription>
           </CardHeader>
           <CardContent>
-            <MermaidDiagram chart={traceabilityFlow} />
+            <p className="text-gray-700 mb-4">
+              A rastreabilidade é fundamental para conformidade regulatória. Cada requisito deve estar vinculado ao código 
+              implementado, aos testes que o validam e aos riscos identificados.
+            </p>
+            <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
+              <div className="space-y-2 text-sm">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="h-4 w-4 text-green-600" />
+                  <span className="font-medium">Requisito → Código:</span>
+                  <span className="text-gray-600">Work Item vinculado em commits e PRs</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="h-4 w-4 text-green-600" />
+                  <span className="font-medium">Requisito → Testes:</span>
+                  <span className="text-gray-600">Work Item vinculado a Test Plans e Test Cases</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="h-4 w-4 text-green-600" />
+                  <span className="font-medium">Requisito → Riscos:</span>
+                  <span className="text-gray-600">Work Item de Risco vinculado via relação "Mitigates"</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="h-4 w-4 text-green-600" />
+                  <span className="font-medium">Código → Requisito:</span>
+                  <span className="text-gray-600">Commits contêm Work Item ID no formato [WORKITEM-ID]</span>
+                </div>
+              </div>
+            </div>
           </CardContent>
         </Card>
 
-        {/* Requirements Traceability Matrix */}
+        {/* Traceability Matrix */}
         <Card className="mb-8 border-cyan shadow-lg">
           <CardHeader>
-            <CardTitle className="flex items-center gap-3">
-              <FileText className="h-6 w-6 text-primary" />
-              Matriz de Rastreabilidade
-            </CardTitle>
+            <CardTitle>Matriz de Rastreabilidade</CardTitle>
             <CardDescription>
-              Rastreabilidade completa de cada requisito
+              Como os artefatos são vinculados em cada fase do ciclo de vida
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
-              <table className="min-w-full border-collapse">
-                <thead>
-                  <tr className="border-b border-gray-300 bg-gray-50">
-                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Requisito</th>
-                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Work Item</th>
-                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Código</th>
-                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Testes</th>
-                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Riscos</th>
-                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Status</th>
+              <table className="min-w-full divide-y divide-gray-200 border border-gray-200 rounded-lg">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Artefato</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sistema</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vinculação</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Como Rastrear</th>
                   </tr>
                 </thead>
-                <tbody>
-                  {requirements.map((req) => (
-                    <tr key={req.id} className="border-b border-gray-200 hover:bg-gray-50">
-                      <td className="py-4 px-4">
-                        <div className="font-medium text-gray-800">{req.title}</div>
-                        <div className="text-xs text-gray-500 mt-1">ID: {req.id}</div>
-                      </td>
-                      <td className="py-4 px-4">
-                        <Link
-                          href={`https://dev.azure.com/ionic-health/nCommand-Lite/_workitems/edit/${req.workItemId.replace('ADO-', '')}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-primary hover:underline text-sm"
-                        >
-                          {req.workItemId}
-                        </Link>
-                      </td>
-                      <td className="py-4 px-4">
-                        <div className="flex flex-col gap-1">
-                          <div className="flex items-center gap-2">
-                            <GitBranch className="h-4 w-4 text-gray-400" />
-                            <span className="text-sm text-gray-700">{req.code.branches[0]}</span>
-                          </div>
-                          <div className="text-xs text-gray-500">
-                            {req.code.commits.length} commit(s)
-                          </div>
-                        </div>
-                      </td>
-                      <td className="py-4 px-4">
-                        <div className="flex flex-col gap-1">
-                          {req.tests.map((test) => (
-                            <div key={test.id} className="flex items-center gap-2">
-                              <TestTube className="h-4 w-4 text-green-500" />
-                              <Badge variant={test.status === 'Pass' ? 'success' : 'destructive'} className="text-xs">
-                                {test.type}
-                              </Badge>
-                            </div>
-                          ))}
-                        </div>
-                      </td>
-                      <td className="py-4 px-4">
-                        <div className="flex flex-col gap-1">
-                          {req.risks.map((risk) => (
-                            <div key={risk.id} className="flex items-center gap-2">
-                              <AlertTriangle className="h-4 w-4 text-orange-500" />
-                              <Link
-                                href={`/riscos?risk=${risk.id}`}
-                                className="text-sm text-primary hover:underline"
-                              >
-                                {risk.id}
-                              </Link>
-                            </div>
-                          ))}
-                        </div>
-                      </td>
-                      <td className="py-4 px-4">
-                        <Badge variant={req.status === 'Complete' ? 'success' : 'warning'}>
-                          {req.status === 'Complete' ? (
-                            <CheckCircle2 className="h-3 w-3 mr-1" />
-                          ) : (
-                            <Circle className="h-3 w-3 mr-1" />
-                          )}
-                          {req.status}
-                        </Badge>
-                      </td>
-                    </tr>
-                  ))}
+                <tbody className="bg-white divide-y divide-gray-200">
+                  <tr>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Requisito</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">Azure DevOps</td>
+                    <td className="px-6 py-4 text-sm text-gray-600">Work Item (Feature/User Story)</td>
+                    <td className="px-6 py-4 text-sm text-gray-600">Work Item ID único</td>
+                  </tr>
+                  <tr>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Código</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">Azure Repos (Git)</td>
+                    <td className="px-6 py-4 text-sm text-gray-600">Commits com Work Item ID: [ADO-1234]</td>
+                    <td className="px-6 py-4 text-sm text-gray-600">Git log ou Azure DevOps → Links</td>
+                  </tr>
+                  <tr>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Testes</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">Azure DevOps</td>
+                    <td className="px-6 py-4 text-sm text-gray-600">Test Plan vinculado ao Work Item</td>
+                    <td className="px-6 py-4 text-sm text-gray-600">Work Item → Links → Test Plans</td>
+                  </tr>
+                  <tr>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Riscos</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">Azure DevOps</td>
+                    <td className="px-6 py-4 text-sm text-gray-600">Work Item tipo "Risk" com relação "Mitigates"</td>
+                    <td className="px-6 py-4 text-sm text-gray-600">Work Item → Links → Related Work Items</td>
+                  </tr>
+                  <tr>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Vulnerabilidades</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">DefectDojo</td>
+                    <td className="px-6 py-4 text-sm text-gray-600">Finding vinculado a Work Item via API</td>
+                    <td className="px-6 py-4 text-sm text-gray-600">DefectDojo → JIRA/ADO Integration</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
           </CardContent>
         </Card>
 
-        {/* Coverage Gaps */}
-        {summary.coverage.tests < 100 || summary.coverage.risks < 100 ? (
-          <Card className="border-2 border-yellow-300 shadow-lg bg-yellow-50/50">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-3">
-                <AlertTriangle className="h-6 w-6 text-yellow-600" />
-                Gaps de Rastreabilidade Identificados
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2">
-                {summary.coverage.tests < 100 && (
-                  <div className="flex items-center gap-2">
-                    <Circle className="h-4 w-4 text-yellow-600" />
-                    <span className="text-sm text-gray-700">
-                      {summary.totalRequirements - summary.withTests} requisito(s) sem testes associados
-                    </span>
-                  </div>
-                )}
-                {summary.coverage.risks < 100 && (
-                  <div className="flex items-center gap-2">
-                    <Circle className="h-4 w-4 text-yellow-600" />
-                    <span className="text-sm text-gray-700">
-                      {summary.totalRequirements - summary.withRisks} requisito(s) sem análise de risco
-                    </span>
-                  </div>
-                )}
+        {/* Implementation Details */}
+        <Card className="mb-8 border-cyan shadow-lg">
+          <CardHeader>
+            <CardTitle>Implementação da Rastreabilidade</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-6">
+              <div>
+                <h3 className="font-semibold text-gray-800 mb-2">FASE 1: Requisito Criado</h3>
+                <ul className="list-disc list-inside space-y-1 text-sm text-gray-700 ml-4">
+                  <li>Work Item criado no Azure DevOps com ID único (ex: ADO-1234)</li>
+                  <li>Campos preenchidos: Título, Descrição, Perfil de Usuário (IEC 62366), Tarefas Principais</li>
+                  <li>Riscos identificados e vinculados via relação "Mitigates"</li>
+                </ul>
               </div>
-            </CardContent>
-          </Card>
-        ) : (
-          <Card className="border-2 border-green-300 shadow-lg bg-green-50/50">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-3">
-                <CheckCircle2 className="h-6 w-6 text-green-600" />
-                Rastreabilidade Completa
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-gray-700">
-                Todos os requisitos possuem código, testes e análise de riscos associados.
-              </p>
-            </CardContent>
-          </Card>
-        )}
+
+              <div>
+                <h3 className="font-semibold text-gray-800 mb-2">FASE 2: Código Desenvolvido</h3>
+                <ul className="list-disc list-inside space-y-1 text-sm text-gray-700 ml-4">
+                  <li>Commits incluem Work Item ID no formato: <code className="bg-gray-100 px-1 rounded">[ADO-1234] Descrição do commit</code></li>
+                  <li>Pull Request vincula Work Item através da interface Azure DevOps</li>
+                  <li>Branch Policy exige Work Item vinculado para aprovação de PR</li>
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="font-semibold text-gray-800 mb-2">FASE 3: Testes Executados</h3>
+                <ul className="list-disc list-inside space-y-1 text-sm text-gray-700 ml-4">
+                  <li>Test Plans e Test Cases vinculados ao Work Item no Azure DevOps</li>
+                  <li>Resultados de testes (Unit, E2E) vinculados ao Work Item</li>
+                  <li>Rastreabilidade através de Test Runs vinculados</li>
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="font-semibold text-gray-800 mb-2">Rastreabilidade Reversa</h3>
+                <ul className="list-disc list-inside space-y-1 text-sm text-gray-700 ml-4">
+                  <li>De um commit: Buscar Work Item ID no commit message</li>
+                  <li>De um teste: Ver Test Plan → Work Item vinculado</li>
+                  <li>De um risco: Ver Work Item de Risco → Requisito relacionado via "Mitigates"</li>
+                </ul>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Documents */}
+        <Card className="border-cyan shadow-lg">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-3">
+              <FileText className="h-6 w-6 text-primary" />
+              Documentos Relacionados
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Link 
+                href="/documentos/process"
+                className="p-4 border border-gray-200 rounded-lg hover:border-primary hover:bg-primary/5 transition-colors"
+              >
+                <h3 className="font-semibold text-gray-800 mb-2">Processo Integrado</h3>
+                <p className="text-sm text-gray-600 mb-2">
+                  Processo completo detalhando rastreabilidade em todas as fases.
+                </p>
+                <Badge variant="outline" className="text-xs">Processo</Badge>
+              </Link>
+              
+              <Link 
+                href="/documentos/sop-001-sdlc"
+                className="p-4 border border-gray-200 rounded-lg hover:border-primary hover:bg-primary/5 transition-colors"
+              >
+                <h3 className="font-semibold text-gray-800 mb-2">SOP-001: SDLC</h3>
+                <p className="text-sm text-gray-600 mb-2">
+                  Procedimento de ciclo de vida com detalhes de rastreabilidade.
+                </p>
+                <Badge variant="outline" className="text-xs">Procedimento</Badge>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </main>
   )
 }
-

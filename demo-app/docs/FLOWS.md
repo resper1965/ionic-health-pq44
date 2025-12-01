@@ -103,16 +103,29 @@ flowchart TD
     F --> G{Quality Gate<br/>A?}
     G -->|Não| E
     G -->|Sim| H[SCA: Trivy<br/>Scan Dependencies]
-    H --> I[Ingestão DefectDojo<br/>SAST + SCA]
-    I --> J{Novas Vulnerabilidades<br/>Críticas/Altas?}
+    H --> I[Script Ingestão<br/>defectdojo-ingest.sh]
+    I --> I1[Enviar Relatórios<br/>SAST + SCA para API]
+    I1 --> I2[DefectDojo<br/>Recebe Dados]
+    I2 --> I3[Deduplicação<br/>Automática]
+    I3 --> I4{Findings<br/>Novos ou<br/>Recorrentes?}
+    I4 -->|Novos| I5[Criar Findings<br/>Novos]
+    I4 -->|Recorrentes| I6[Atualizar Findings<br/>Existentes]
+    I5 --> I7[Security Gate Check]
+    I6 --> I7
+    I7 --> I8[Script defectdojo-check.sh<br/>Consulta DefectDojo]
+    I8 --> J{Vulnerabilidades<br/>Críticas/Altas<br/>Ativas?}
     J -->|Sim| E
     J -->|Não| K[Deploy Staging]
     K --> K1[Smoke Tests E2E<br/>Playwright]
     K1 --> K2[Sanity Tests E2E<br/>Playwright]
     K2 --> K3[E2E Tests<br/>Fluxos Críticos]
     K3 --> L[DAST: OWASP ZAP<br/>Dynamic Scan]
-    L --> M[Ingestão DefectDojo<br/>DAST]
-    M --> N{Vulnerabilidades<br/>Críticas/Altas?}
+    L --> M1[Script Ingestão<br/>defectdojo-ingest.sh]
+    M1 --> M2[Enviar Relatório<br/>DAST para API]
+    M2 --> M3[DefectDojo<br/>Processa DAST]
+    M3 --> M4[Deduplicação<br/>Automática]
+    M4 --> M5[Security Gate Check<br/>DefectDojo]
+    M5 --> N{Vulnerabilidades<br/>Críticas/Altas<br/>DAST?}
     N -->|Sim| E
     N -->|Não| O[✅ Pipeline Pass<br/>Pronto para Release]
 ```

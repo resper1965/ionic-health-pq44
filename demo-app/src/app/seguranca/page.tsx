@@ -2,261 +2,241 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Shield, CheckCircle2, XCircle, AlertTriangle, TrendingDown, Clock, ExternalLink } from 'lucide-react'
+import { Shield, FileText, ExternalLink, Lock, AlertTriangle, CheckCircle2 } from 'lucide-react'
 import Link from 'next/link'
-import securityData from '@/data/security.json'
+import { getSlugFromPath } from '@/lib/document-slugs'
 
 export default function SegurancaPage() {
-  const totalVulnerabilities = Object.values(securityData.vulnerabilities).reduce((a, b) => a + b, 0)
-
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
       <div className="container mx-auto px-4 py-12 max-w-7xl">
         {/* Header */}
         <div className="mb-12 text-center space-y-4">
           <div className="inline-flex items-center justify-center gap-3 mb-4">
-            <Shield className="h-10 w-10 text-primary" />
+            <Lock className="h-10 w-10 text-primary" />
             <h1 className="text-5xl font-bold text-gradient-primary">
-              Segurança da Informação
+              Gestão de Segurança
             </h1>
           </div>
-          <p className="text-xl text-gray-700 font-light max-w-2xl mx-auto">
-            Visão completa da segurança do nCommand Lite, vulnerabilidades e certificado de segurança
+          <p className="text-xl text-gray-700 font-light max-w-3xl mx-auto">
+            Processo centralizado de gestão de vulnerabilidades usando OWASP DefectDojo como Fonte da Verdade de Segurança, 
+            conforme ISO/IEC 27001:2022 e ISO/IEC 27701:2019.
           </p>
         </div>
 
-        {/* Security Certificate Card */}
-        <Card className={`mb-8 border-2 shadow-cyan-lg ${
-          securityData.certificate.valid 
-            ? 'border-green-300 bg-green-50/50' 
-            : 'border-red-300 bg-red-50/50'
-        }`}>
-          <CardHeader>
-            <CardTitle className="flex items-center justify-between">
-              <span className="flex items-center gap-3">
-                {securityData.certificate.valid ? (
-                  <CheckCircle2 className="h-6 w-6 text-green-600" />
-                ) : (
-                  <XCircle className="h-6 w-6 text-red-600" />
-                )}
-                Certificado de Segurança
-              </span>
-              <Badge variant={securityData.certificate.valid ? 'success' : 'destructive'} className="text-lg px-4 py-2">
-                {securityData.certificate.valid ? 'APROVADO' : 'REPROVADO'}
-              </Badge>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-              <div className="text-center p-3 bg-white rounded-lg">
-                <div className="text-2xl font-bold text-red-600">{securityData.vulnerabilities.critical}</div>
-                <div className="text-xs text-gray-600 mt-1">Críticas</div>
-              </div>
-              <div className="text-center p-3 bg-white rounded-lg">
-                <div className="text-2xl font-bold text-orange-600">{securityData.vulnerabilities.high}</div>
-                <div className="text-xs text-gray-600 mt-1">Altas</div>
-              </div>
-              <div className="text-center p-3 bg-white rounded-lg">
-                <div className="text-2xl font-bold text-yellow-600">{securityData.vulnerabilities.medium}</div>
-                <div className="text-xs text-gray-600 mt-1">Médias</div>
-              </div>
-              <div className="text-center p-3 bg-white rounded-lg">
-                <div className="text-2xl font-bold text-blue-600">{securityData.vulnerabilities.low}</div>
-                <div className="text-xs text-gray-600 mt-1">Baixas</div>
-              </div>
-            </div>
-            <div className="text-sm text-gray-600">
-              <p><strong>Emitido em:</strong> {new Date(securityData.certificate.issuedDate).toLocaleDateString('pt-BR')}</p>
-              <p><strong>Válido até:</strong> {new Date(securityData.certificate.expiryDate).toLocaleDateString('pt-BR')}</p>
-              <p><strong>Emitido por:</strong> {securityData.certificate.issuedBy}</p>
-            </div>
-            <div className="mt-4 pt-4 border-t border-gray-200">
-              <p className="text-sm font-semibold text-gray-700 mb-2">Critério de Aprovação:</p>
-              <ul className="text-sm text-gray-600 space-y-1">
-                <li className={securityData.vulnerabilities.critical === 0 ? 'text-green-600' : 'text-red-600'}>
-                  {securityData.vulnerabilities.critical === 0 ? '✅' : '❌'} 0 vulnerabilidades críticas
-                </li>
-                <li className={securityData.vulnerabilities.high === 0 ? 'text-green-600' : 'text-red-600'}>
-                  {securityData.vulnerabilities.high === 0 ? '✅' : '❌'} 0 vulnerabilidades altas
-                </li>
-              </ul>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Statistics Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card className="border-cyan shadow-lg">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">Total de Vulnerabilidades</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-gray-800">{totalVulnerabilities}</div>
-              <p className="text-sm text-gray-500 mt-1">Vulnerabilidades ativas</p>
-            </CardContent>
-          </Card>
-
-          <Card className="border-cyan shadow-lg">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">Última Validação</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-lg font-semibold text-gray-800">
-                {new Date(securityData.lastValidation).toLocaleDateString('pt-BR')}
-              </div>
-              <p className="text-sm text-gray-500 mt-1">Certificado atualizado</p>
-            </CardContent>
-          </Card>
-
-          <Card className="border-cyan shadow-lg">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">Tendência (30 dias)</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex items-center gap-2">
-                <TrendingDown className="h-5 w-5 text-green-600" />
-                <div className="text-lg font-semibold text-green-600">
-                  -{Math.abs(securityData.trend.last30Days.net)}
-                </div>
-              </div>
-              <p className="text-sm text-gray-500 mt-1">
-                {securityData.trend.last30Days.fixed} corrigidas, {securityData.trend.last30Days.new} novas
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* SLA Status */}
-        <Card className="mb-8 border-cyan shadow-lg">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-3">
-              <Clock className="h-6 w-6 text-primary" />
-              SLA de Correção de Vulnerabilidades
-            </CardTitle>
-            <CardDescription>
-              Tempo máximo para correção conforme severidade
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <div className="p-4 bg-red-50 rounded-lg border border-red-200">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="font-semibold text-red-800">Crítico</span>
-                  <Badge variant="destructive">24h</Badge>
-                </div>
-                <div className="text-sm text-gray-600">
-                  <p className="font-medium">{securityData.sla.critical.current}</p>
-                  <p className="text-xs">abertas</p>
-                </div>
-              </div>
-
-              <div className="p-4 bg-orange-50 rounded-lg border border-orange-200">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="font-semibold text-orange-800">Alto</span>
-                  <Badge variant="warning">7 dias</Badge>
-                </div>
-                <div className="text-sm text-gray-600">
-                  <p className="font-medium">{securityData.sla.high.current}</p>
-                  <p className="text-xs">abertas</p>
-                </div>
-              </div>
-
-              <div className="p-4 bg-yellow-50 rounded-lg border border-yellow-200">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="font-semibold text-yellow-800">Médio</span>
-                  <Badge className="bg-yellow-500 text-white">30 dias</Badge>
-                </div>
-                <div className="text-sm text-gray-600">
-                  <p className="font-medium">{securityData.sla.medium.current}</p>
-                  <p className="text-xs">abertas</p>
-                </div>
-              </div>
-
-              <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="font-semibold text-blue-800">Baixo</span>
-                  <Badge variant="secondary">Próxima Release</Badge>
-                </div>
-                <div className="text-sm text-gray-600">
-                  <p className="font-medium">{securityData.vulnerabilities.low}</p>
-                  <p className="text-xs">identificadas</p>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Scan History */}
-        <Card className="mb-8 border-cyan shadow-lg">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-3">
-              <AlertTriangle className="h-6 w-6 text-primary" />
-              Histórico de Scans
-            </CardTitle>
-            <CardDescription>
-              Últimas execuções de scans de segurança
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="p-4 bg-white rounded-lg border border-gray-200">
-                <div className="font-semibold text-gray-800 mb-1">SAST</div>
-                <div className="text-sm text-gray-600">
-                  Último: {new Date(securityData.scans.lastSAST).toLocaleDateString('pt-BR')}
-                </div>
-                <div className="text-xs text-gray-500 mt-1">SonarCloud</div>
-              </div>
-
-              <div className="p-4 bg-white rounded-lg border border-gray-200">
-                <div className="font-semibold text-gray-800 mb-1">SCA</div>
-                <div className="text-sm text-gray-600">
-                  Último: {new Date(securityData.scans.lastSCA).toLocaleDateString('pt-BR')}
-                </div>
-                <div className="text-xs text-gray-500 mt-1">Trivy</div>
-              </div>
-
-              <div className="p-4 bg-white rounded-lg border border-gray-200">
-                <div className="font-semibold text-gray-800 mb-1">DAST</div>
-                <div className="text-sm text-gray-600">
-                  Último: {new Date(securityData.scans.lastDAST).toLocaleDateString('pt-BR')}
-                </div>
-                <div className="text-xs text-gray-500 mt-1">OWASP ZAP</div>
-              </div>
-            </div>
-            <div className="mt-4 pt-4 border-t border-gray-200">
-              <p className="text-sm text-gray-600">
-                <strong>Próximo scan agendado:</strong> {new Date(securityData.scans.nextScheduled).toLocaleDateString('pt-BR')}
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Links */}
-        <Card className="border-2 border-primary/20 shadow-cyan-lg">
+        {/* Architecture Overview */}
+        <Card className="mb-8 border-2 border-primary/20 shadow-cyan-lg bg-gradient-to-br from-primary/5 to-transparent">
           <CardHeader>
             <CardTitle className="flex items-center gap-3">
               <Shield className="h-6 w-6 text-primary" />
-              Gestão de Vulnerabilidades
+              Arquitetura: DefectDojo como Fonte da Verdade
             </CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-gray-700 mb-4">
-              Para entender o processo completo de gestão de vulnerabilidades, consulte:
+              O <strong>OWASP DefectDojo</strong> é a única fonte de verdade para vulnerabilidades, centralizando todos 
+              os achados de segurança, deduplicando automaticamente e gerenciando o ciclo de vida completo.
             </p>
-            <div className="space-y-2">
-              <Link
+            <div className="p-4 bg-gray-50 rounded-lg border border-gray-200 font-mono text-sm">
+              <div className="space-y-2">
+                <div>Pipeline CI/CD → Scanners (SAST/SCA/DAST) → DefectDojo API</div>
+                <div className="pl-8">↓</div>
+                <div className="pl-8">Deduplicação Automática</div>
+                <div className="pl-8">↓</div>
+                <div className="pl-8">Gestão de Ciclo de Vida</div>
+                <div className="pl-8">↓</div>
+                <div>Azure DevOps ← Work Items ← DefectDojo</div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Security Scans */}
+        <Card className="mb-8 border-cyan shadow-lg">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-3">
+              <CheckCircle2 className="h-6 w-6 text-primary" />
+              Scans de Segurança Automatizados
+            </CardTitle>
+            <CardDescription>
+              Executados durante a FASE 3 (Verificação Automatizada)
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-gray-200 rounded-lg">
+                <div className="flex items-center gap-2 mb-2">
+                  <Badge variant="outline">SAST</Badge>
+                  <span className="font-semibold text-gray-800">SonarCloud</span>
+                </div>
+                <p className="text-sm text-gray-600">
+                  Static Application Security Testing. Análise estática do código-fonte para identificar vulnerabilidades.
+                </p>
+              </div>
+
+              <div className="p-4 border border-gray-200 rounded-lg">
+                <div className="flex items-center gap-2 mb-2">
+                  <Badge variant="outline">SCA</Badge>
+                  <span className="font-semibold text-gray-800">Trivy</span>
+                </div>
+                <p className="text-sm text-gray-600">
+                  Software Composition Analysis. Varredura de bibliotecas e dependências para identificar CVEs conhecidas.
+                </p>
+              </div>
+
+              <div className="p-4 border border-gray-200 rounded-lg">
+                <div className="flex items-center gap-2 mb-2">
+                  <Badge variant="outline">DAST</Badge>
+                  <span className="font-semibold text-gray-800">OWASP ZAP</span>
+                </div>
+                <p className="text-sm text-gray-600">
+                  Dynamic Application Security Testing. Testes de segurança em aplicação em execução.
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Severity Levels */}
+        <Card className="mb-8 border-cyan shadow-lg">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-3">
+              <AlertTriangle className="h-6 w-6 text-primary" />
+              Classificação de Severidade e SLAs
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200 border border-gray-200 rounded-lg">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Severidade</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">CVSS Score</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SLA de Correção</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Bloqueio de Pipeline</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  <tr>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <Badge className="bg-red-500 text-white">Crítico</Badge>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">9.0 - 10.0</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">24 horas (Hotfix)</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-red-600 font-semibold">SIM - Pipeline FALHA</td>
+                  </tr>
+                  <tr>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <Badge className="bg-orange-500 text-white">Alto</Badge>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">7.0 - 8.9</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">7 dias</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-red-600 font-semibold">SIM - Pipeline FALHA</td>
+                  </tr>
+                  <tr>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <Badge className="bg-yellow-500 text-gray-900">Médio</Badge>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">4.0 - 6.9</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">30 dias</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">Não</td>
+                  </tr>
+                  <tr>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <Badge className="bg-green-500 text-white">Baixo</Badge>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">0.1 - 3.9</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">Próxima release</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">Não</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Process Flow */}
+        <Card className="mb-8 border-cyan shadow-lg">
+          <CardHeader>
+            <CardTitle>Processo de Gestão de Vulnerabilidades</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <h3 className="font-semibold text-gray-800 mb-2">1. Identificação (FASE 3)</h3>
+                <p className="text-sm text-gray-700">
+                  Pipeline executa scans (SAST/SCA/DAST) e envia resultados via API para DefectDojo.
+                </p>
+              </div>
+              
+              <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <h3 className="font-semibold text-gray-800 mb-2">2. Deduplicação Automática</h3>
+                <p className="text-sm text-gray-700">
+                  DefectDojo identifica automaticamente se a vulnerabilidade é nova ou recorrente (mesma CVE/CWE).
+                </p>
+              </div>
+              
+              <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <h3 className="font-semibold text-gray-800 mb-2">3. Triagem e Classificação</h3>
+                <p className="text-sm text-gray-700">
+                  Vulnerabilidades são classificadas por severidade e vinculadas a Work Items no Azure DevOps.
+                </p>
+              </div>
+              
+              <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <h3 className="font-semibold text-gray-800 mb-2">4. Correção</h3>
+                <p className="text-sm text-gray-700">
+                  Desenvolvedor corrige o código e commit é feito com referência ao Work Item.
+                </p>
+              </div>
+              
+              <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <h3 className="font-semibold text-gray-800 mb-2">5. Auto-Close (Mitigated)</h3>
+                <p className="text-sm text-gray-700">
+                  Pipeline detecta correção, envia novo scan para DefectDojo, que fecha automaticamente o finding como "Mitigated".
+                </p>
+              </div>
+              
+              <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <h3 className="font-semibold text-gray-800 mb-2">6. Monitoramento Contínuo</h3>
+                <p className="text-sm text-gray-700">
+                  Scan diário de imagens de produção (Trivy) para detectar vulnerabilidades em runtime.
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Documents */}
+        <Card className="border-cyan shadow-lg">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-3">
+              <FileText className="h-6 w-6 text-primary" />
+              Documentos Relacionados
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Link 
                 href="/documentos/sop-003-vulnerability-management"
-                className="flex items-center gap-2 text-primary hover:text-primary/80 hover:underline"
+                className="p-4 border border-gray-200 rounded-lg hover:border-primary hover:bg-primary/5 transition-colors"
               >
-                <ExternalLink className="h-4 w-4" />
-                SOP-003: Gestão de Vulnerabilidades
+                <h3 className="font-semibold text-gray-800 mb-2">SOP-003: Gestão de Vulnerabilidades</h3>
+                <p className="text-sm text-gray-600 mb-2">
+                  Procedimento completo de gestão centralizada de vulnerabilidades usando DefectDojo.
+                </p>
+                <Badge variant="outline" className="text-xs">Procedimento Operacional</Badge>
               </Link>
-              <Link
+              
+              <Link 
                 href="/documentos/automated-processes"
-                className="flex items-center gap-2 text-primary hover:text-primary/80 hover:underline"
+                className="p-4 border border-gray-200 rounded-lg hover:border-primary hover:bg-primary/5 transition-colors"
               >
-                <ExternalLink className="h-4 w-4" />
-                Processos Automatizados de Segurança
+                <h3 className="font-semibold text-gray-800 mb-2">Processos Automatizados</h3>
+                <p className="text-sm text-gray-600 mb-2">
+                  Lista completa de processos automatizados, incluindo scans de segurança e integrações.
+                </p>
+                <Badge variant="outline" className="text-xs">Processos</Badge>
               </Link>
             </div>
           </CardContent>
@@ -265,4 +245,3 @@ export default function SegurancaPage() {
     </main>
   )
 }
-
