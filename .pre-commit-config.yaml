@@ -1,0 +1,92 @@
+# Pre-commit Hooks Configuration - nCommand Lite
+# SOP-001: SDLC - Pre-commit hooks obrigatórios
+
+repos:
+  # Hooks gerais
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: '\.md$'
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-added-large-files
+        args: ['--maxkb=1000']
+      - id: check-merge-conflict
+      - id: detect-private-key
+        args: ['--allow-rsa-private-key']
+
+  # Segurança - Detecção de secrets
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.4.0
+    hooks:
+      - id: detect-secrets
+        args: ['--baseline', '.secrets.baseline']
+        exclude: package.lock.json|yarn.lock|\.terraform|node_modules
+
+  # Formatação Python (se aplicável)
+  - repo: https://github.com/psf/black
+    rev: 23.12.1
+    hooks:
+      - id: black
+        language_version: python3
+        exclude: '^infrastructure/'
+
+  # Linting Python (se aplicável)
+  - repo: https://github.com/pylint-dev/pylint
+    rev: v3.0.3
+    hooks:
+      - id: pylint
+        exclude: '^infrastructure/|tests/|\.venv/'
+        args:
+          - '--max-line-length=100'
+          - '--disable=C0111'  # missing-docstring
+
+  # Formatação JavaScript/TypeScript (se aplicável)
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v4.0.0-alpha.8
+    hooks:
+      - id: prettier
+        types: [file]
+        types_or: [javascript, jsx, ts, tsx, json, css, scss, markdown, yaml]
+        exclude: 'node_modules|dist|build|\.terraform'
+
+  # Linting JavaScript/TypeScript (se aplicável)
+  - repo: https://github.com/pre-commit/mirrors-eslint
+    rev: v8.56.0
+    hooks:
+      - id: eslint
+        files: \.(js|jsx|ts|tsx)$
+        exclude: 'node_modules|dist|build'
+        additional_dependencies:
+          - eslint@8.56.0
+
+  # Validação de Terraform
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.86.0
+    hooks:
+      - id: terraform_fmt
+      - id: terraform_validate
+      - id: terraform_docs
+      - id: terraform_tflint
+        args:
+          - '--args=--only=terraform_deprecated_interpolation'
+          - '--args=--only=terraform_deprecated_index'
+          - '--args=--only=terraform_unused_declarations'
+          - '--args=--only=terraform_comment_syntax'
+          - '--args=--only=terraform_documented_outputs'
+          - '--args=--only=terraform_documented_variables'
+          - '--args=--only=terraform_typed_variables'
+          - '--args=--only=terraform_module_pinned_source'
+          - '--args=--only=terraform_naming_convention'
+          - '--args=--only=terraform_required_version'
+          - '--args=--only=terraform_required_providers'
+          - '--args=--only=terraform_standard_module_structure'
+          - '--args=--only=terraform_workspace_remote'
+
+# Configurações globais
+default_language_version:
+  python: python3
+  node: '18'
+

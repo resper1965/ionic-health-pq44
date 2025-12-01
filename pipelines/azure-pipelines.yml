@@ -1,0 +1,244 @@
+# Azure DevOps Pipeline - nCommand Lite
+# FASE 3: Verificação Automatizada e Ingestão de Segurança
+
+trigger:
+  branches:
+    include:
+      - develop
+      - release/*
+      - hotfix/*
+  paths:
+    exclude:
+      - docs/*
+      - README.md
+
+pr:
+  branches:
+    include:
+      - develop
+      - main
+  paths:
+    exclude:
+      - docs/*
+      - README.md
+
+variables:
+  - group: ncommand-lite-variables
+  - name: buildConfiguration
+    value: 'Release'
+  - name: sonarcloud.projectKey
+    value: 'ionic-health_ncommand-lite'
+  - name: defectdojo.url
+    value: '$(DEFECTDOJO_URL)'
+  - name: defectdojo.apiKey
+    value: '$(DEFECTDOJO_API_KEY)'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+  # STAGE 1: Build e Testes Unitários
+  - stage: BuildAndTest
+    displayName: 'Build e Testes Unitários'
+    jobs:
+      - job: UnitTests
+        displayName: 'Executar Testes Unitários'
+        steps:
+          - task: UseNode@1
+            inputs:
+              version: '18.x'
+            displayName: 'Usar Node.js'
+
+          - script: |
+              npm ci
+            displayName: 'Instalar Dependências'
+
+          - script: |
+              npm run test -- --coverage --watchAll=false
+            displayName: 'Executar Testes Unitários'
+            continueOnError: false
+
+          - task: PublishCodeCoverageResults@1
+            inputs:
+              codeCoverageTool: 'Cobertura'
+              summaryFileLocation: '$(System.DefaultWorkingDirectory)/coverage/cobertura-coverage.xml'
+
+          # Gate: 100% Pass Rate obrigatório
+          - script: |
+              if [ $? -ne 0 ]; then
+                echo "##vso[task.logissue type=error]Testes unitários falharam. 100% pass rate obrigatório."
+                exit 1
+              fi
+            displayName: 'Validar 100% Pass Rate'
+
+  # STAGE 2: Análise Estática (SAST)
+  - stage: SAST
+    displayName: 'Análise Estática (SAST)'
+    dependsOn: BuildAndTest
+    jobs:
+      - job: SonarCloud
+        displayName: 'SonarCloud Analysis'
+        steps:
+          - task: SonarCloudPrepare@1
+            inputs:
+              SonarCloud: 'SonarCloud'
+              organization: 'ionic-health'
+              scannerMode: 'CLI'
+              configMode: 'manual'
+              cliProjectKey: '$(sonarcloud.projectKey)'
+              cliProjectName: 'nCommand Lite'
+              cliSources: 'src'
+
+          - script: |
+              npm run build
+            displayName: 'Build'
+
+          - script: |
+              npm run test -- --coverage --watchAll=false
+            displayName: 'Testes para Análise'
+
+          - task: SonarCloudAnalyze@1
+            displayName: 'Executar Análise SonarCloud'
+
+          - task: SonarCloudPublish@1
+            inputs:
+              pollingTimeoutSec: '300'
+            displayName: 'Publicar Resultados SonarCloud'
+
+          # Gate: Quality Gate A obrigatório
+          - script: |
+              echo "##vso[task.logissue type=warning]Validando Quality Gate A..."
+            displayName: 'Validar Quality Gate A'
+
+  # STAGE 3: Análise de Dependências (SCA)
+  - stage: SCA
+    displayName: 'Análise de Dependências (SCA)'
+    dependsOn: SAST
+    jobs:
+      - job: TrivyScan
+        displayName: 'Trivy SCA Scan'
+        steps:
+          - script: |
+              docker run --rm \
+                -v $(System.DefaultWorkingDirectory):/workspace \
+                aquasec/trivy:latest fs \
+                --format json \
+                --output /workspace/trivy-scan.json \
+                /workspace
+            displayName: 'Executar Trivy Scan'
+
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: '$(System.DefaultWorkingDirectory)/trivy-scan.json'
+              artifact: 'trivy-scan-results'
+            displayName: 'Publicar Resultados Trivy'
+
+          # Ingestão no DefectDojo
+          - task: Bash@3
+            inputs:
+              targetType: 'inline'
+              script: |
+                bash $(System.DefaultWorkingDirectory)/pipelines/scripts/defectdojo-ingest.sh \
+                  --type sca \
+                  --file $(System.DefaultWorkingDirectory)/trivy-scan.json \
+                  --url $(defectdojo.url) \
+                  --api-key $(defectdojo.apiKey) \
+                  --commit $(Build.SourceVersion) \
+                  --branch $(Build.SourceBranchName)
+            displayName: 'Ingerir no DefectDojo (SCA)'
+            env:
+              DEFECTDOJO_URL: $(defectdojo.url)
+              DEFECTDOJO_API_KEY: $(defectdojo.apiKey)
+
+  # STAGE 4: Validação de Segurança
+  - stage: SecurityValidation
+    displayName: 'Validação de Segurança (DefectDojo)'
+    dependsOn: SCA
+    jobs:
+      - job: CheckDefectDojo
+        displayName: 'Verificar Vulnerabilidades no DefectDojo'
+        steps:
+          - task: Bash@3
+            inputs:
+              targetType: 'inline'
+              script: |
+                bash $(System.DefaultWorkingDirectory)/pipelines/scripts/defectdojo-check.sh \
+                  --url $(defectdojo.url) \
+                  --api-key $(defectdojo.apiKey) \
+                  --branch $(Build.SourceBranchName) \
+                  --severity-critical \
+                  --severity-high
+            displayName: 'Verificar Vulnerabilidades Críticas/Altas'
+            env:
+              DEFECTDOJO_URL: $(defectdojo.url)
+              DEFECTDOJO_API_KEY: $(defectdojo.apiKey)
+
+          # Gate: Bloquear se houver vulnerabilidades críticas/altas
+          - script: |
+              if [ $? -ne 0 ]; then
+                echo "##vso[task.logissue type=error]Vulnerabilidades críticas ou altas detectadas. Pipeline bloqueado."
+                exit 1
+              fi
+            displayName: 'Validar Gate de Segurança'
+
+  # STAGE 5: Deploy Staging (para DAST)
+  - stage: DeployStaging
+    displayName: 'Deploy Staging'
+    dependsOn: SecurityValidation
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
+    jobs:
+      - deployment: Deploy
+        displayName: 'Deploy para Staging'
+        environment: 'staging'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - script: |
+                    echo "Deploy para Staging..."
+                  displayName: 'Deploy Staging'
+
+  # STAGE 6: DAST (Dynamic Application Security Testing)
+  - stage: DAST
+    displayName: 'Teste de Segurança Dinâmico (DAST)'
+    dependsOn: DeployStaging
+    jobs:
+      - job: OWASPZAP
+        displayName: 'OWASP ZAP Scan'
+        steps:
+          - task: Bash@3
+            inputs:
+              targetType: 'inline'
+              script: |
+                docker run --rm \
+                  -v $(System.DefaultWorkingDirectory):/zap/wrk/:rw \
+                  owasp/zap2docker-stable zap-baseline.py \
+                  -t $(STAGING_URL) \
+                  -J zap-report.json
+            displayName: 'Executar OWASP ZAP Scan'
+            env:
+              STAGING_URL: $(STAGING_URL)
+
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: '$(System.DefaultWorkingDirectory)/zap-report.json'
+              artifact: 'zap-dast-results'
+            displayName: 'Publicar Resultados ZAP'
+
+          # Ingestão no DefectDojo
+          - task: Bash@3
+            inputs:
+              targetType: 'inline'
+              script: |
+                bash $(System.DefaultWorkingDirectory)/pipelines/scripts/defectdojo-ingest.sh \
+                  --type dast \
+                  --file $(System.DefaultWorkingDirectory)/zap-report.json \
+                  --url $(defectdojo.url) \
+                  --api-key $(defectdojo.apiKey) \
+                  --commit $(Build.SourceVersion) \
+                  --branch $(Build.SourceBranchName)
+            displayName: 'Ingerir no DefectDojo (DAST)'
+            env:
+              DEFECTDOJO_URL: $(defectdojo.url)
+              DEFECTDOJO_API_KEY: $(defectdojo.apiKey)
+

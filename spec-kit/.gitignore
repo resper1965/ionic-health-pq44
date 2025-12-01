@@ -1,0 +1,26 @@
+# Spec-Kit - Arquivos a ignorar
+
+# Cache Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# IDs
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# Temporários
+tmp/
+temp/
+

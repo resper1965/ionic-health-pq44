@@ -1,0 +1,137 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Paleta Principal - Cinza Escuro (#58595b) e variações */
+    --background: 0 0% 98%;
+    --foreground: 220 6% 35%;
+    
+    --card: 0 0% 100%;
+    --card-foreground: 220 6% 35%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 6% 35%;
+    
+    /* Destaque Principal - Ciano (#54c4cd) */
+    --primary: 185 58% 56%;
+    --primary-foreground: 0 0% 100%;
+    
+    /* Variações do cinza */
+    --secondary: 220 6% 45%;
+    --secondary-foreground: 0 0% 100%;
+    
+    --muted: 220 6% 90%;
+    --muted-foreground: 220 6% 40%;
+    
+    --accent: 185 58% 96%;
+    --accent-foreground: 220 6% 35%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 220 6% 85%;
+    --input: 220 6% 85%;
+    --ring: 185 58% 56%;
+    
+    --radius: 0.75rem;
+    
+    /* Cores customizadas */
+    --gray-50: 220 6% 98%;
+    --gray-100: 220 6% 95%;
+    --gray-200: 220 6% 90%;
+    --gray-300: 220 6% 85%;
+    --gray-400: 220 6% 70%;
+    --gray-500: 220 6% 55%;
+    --gray-600: 220 6% 45%;
+    --gray-700: 220 6% 35%; /* #58595b equivalente */
+    --gray-800: 220 6% 25%;
+    --gray-900: 220 6% 15%;
+    
+    --cyan-50: 185 58% 98%;
+    --cyan-100: 185 58% 95%;
+    --cyan-200: 185 58% 90%;
+    --cyan-300: 185 58% 80%;
+    --cyan-400: 185 58% 68%;
+    --cyan-500: 185 58% 56%; /* #54c4cd equivalente */
+    --cyan-600: 185 58% 48%;
+    --cyan-700: 185 58% 40%;
+    --cyan-800: 185 58% 32%;
+    --cyan-900: 185 58% 24%;
+  }
+
+  .dark {
+    --background: 220 6% 10%;
+    --foreground: 220 6% 95%;
+    
+    --card: 220 6% 15%;
+    --card-foreground: 220 6% 95%;
+    
+    --popover: 220 6% 15%;
+    --popover-foreground: 220 6% 95%;
+    
+    --primary: 185 58% 56%;
+    --primary-foreground: 220 6% 10%;
+    
+    --secondary: 220 6% 25%;
+    --secondary-foreground: 220 6% 95%;
+    
+    --muted: 220 6% 20%;
+    --muted-foreground: 220 6% 70%;
+    
+    --accent: 220 6% 20%;
+    --accent-foreground: 220 6% 95%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 220 6% 25%;
+    --input: 220 6% 25%;
+    --ring: 185 58% 56%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Componentes customizados */
+@layer components {
+  .gradient-primary {
+    @apply bg-gradient-to-r from-[#54c4cd] to-[#48b3bb];
+  }
+  
+  .gradient-gray {
+    @apply bg-gradient-to-br from-[#58595b] via-[#4a4b4d] to-[#3c3d3f];
+  }
+  
+  .text-gradient-primary {
+    @apply bg-gradient-to-r from-[#54c4cd] to-[#48b3bb] bg-clip-text text-transparent;
+  }
+  
+  .border-cyan {
+    @apply border-[#54c4cd]/20;
+  }
+  
+  .shadow-cyan {
+    box-shadow: 0 4px 14px 0 rgba(84, 196, 205, 0.15);
+  }
+  
+  .shadow-cyan-lg {
+    box-shadow: 0 10px 40px -10px rgba(84, 196, 205, 0.3);
+  }
+}
+
+/* Animações suaves */
+@layer utilities {
+  .transition-smooth {
+    @apply transition-all duration-300 ease-in-out;
+  }
+}

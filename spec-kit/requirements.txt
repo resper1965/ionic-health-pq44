@@ -1,0 +1,9 @@
+# Dependências do Spec-Kit
+# Python 3.8+
+
+# Azure DevOps SDK
+azure-devops>=6.0.0
+
+# Utilitários
+python-dateutil>=2.8.2
+
