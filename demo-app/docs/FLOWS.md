@@ -9,7 +9,7 @@ flowchart TD
     Start([Início do Projeto]) --> Phase1[FASE 1:<br/>Planejamento, Risco<br/>e Infraestrutura]
     
     Phase1 --> Phase1_1[Azure Boards<br/>Work Item]
-    Phase1_1 --> Phase1_2[Spec-Kit<br/>Especificações]
+    Phase1_1 --> Phase1_2[Especificações<br/>e Requisitos]
     Phase1_2 --> Phase1_3[Análise de Riscos<br/>ISO 14971]
     Phase1_3 --> Phase1_4[Gate de Aprovação<br/>QA Leader]
     Phase1_4 -->|Aprovado| Phase2[FASE 2:<br/>Desenvolvimento<br/>e Codificação]
@@ -81,9 +81,11 @@ flowchart TD
     H -->|Work Item?| I[✅ Vinculado]
     H -->|2 Reviews?| J[✅ Aprovado]
     H -->|Build Pass?| K[✅ Sucesso]
+    H -->|Sanity E2E Pass?| K1[✅ Sanity Tests Pass]
     I --> L{Todos Checks OK?}
     J --> L
     K --> L
+    K1 --> L
     L -->|Sim| M[✅ Merge em develop]
     L -->|Não| N[❌ PR Rejeitado]
     N --> C
@@ -105,7 +107,10 @@ flowchart TD
     I --> J{Novas Vulnerabilidades<br/>Críticas/Altas?}
     J -->|Sim| E
     J -->|Não| K[Deploy Staging]
-    K --> L[DAST: OWASP ZAP<br/>Dynamic Scan]
+    K --> K1[Smoke Tests E2E<br/>Playwright]
+    K1 --> K2[Sanity Tests E2E<br/>Playwright]
+    K2 --> K3[E2E Tests<br/>Fluxos Críticos]
+    K3 --> L[DAST: OWASP ZAP<br/>Dynamic Scan]
     L --> M[Ingestão DefectDojo<br/>DAST]
     M --> N{Vulnerabilidades<br/>Críticas/Altas?}
     N -->|Sim| E
@@ -117,7 +122,8 @@ flowchart TD
 ```mermaid
 flowchart TD
     A[Pipeline Passed] --> B[Deploy Staging<br/>Ambiente de Testes]
-    B --> C[Testes Funcionais<br/>Azure Test Plans]
+    B --> B1[Regression Tests E2E<br/>Playwright/Selenium]
+    B1 --> C[Testes Funcionais<br/>Azure Test Plans]
     C --> D{100% Pass?}
     D -->|Não| E[Corrigir Issues]
     E --> C
@@ -141,7 +147,8 @@ flowchart TD
 ```mermaid
 flowchart TD
     A[Release v1.0.0<br/>Em Produção] --> B[Azure Sentinel<br/>SIEM Monitoramento]
-    B --> C[Scan Diário<br/>Trivy → DefectDojo]
+    B --> B1[Smoke Tests E2E<br/>Produção]
+    B1 --> C[Scan Diário<br/>Trivy → DefectDojo]
     C --> D{Novas<br/>Vulnerabilidades?}
     D -->|Sim| E[AppSec/QA<br/>Triagem]
     E --> F{True Positive?}
@@ -181,7 +188,6 @@ graph TB
         ADO --> Repos[Repos<br/>Git]
         ADO --> Pipelines[Pipelines<br/>CI/CD]
         ADO --> TestPlans[Test Plans<br/>Testes]
-        Git[Git/GitHub<br/>Versionamento]
     end
     
     subgraph Security["🔒 SEGURANÇA & QUALIDADE"]

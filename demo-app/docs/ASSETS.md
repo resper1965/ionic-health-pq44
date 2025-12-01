@@ -24,10 +24,6 @@ Documentação completa de todos os ativos envolvidos no ciclo de vida do desenv
 │  ├── Repos (Git)                                            │
 │  ├── Pipelines (CI/CD)                                      │
 │  └── Test Plans                                             │
-│                                                             │
-│  GitHub / Git                                               │
-│  ├── Versionamento                                          │
-│  └── Code Review                                            │
 └─────────────────────────────────────────────────────────────┘
                            ↓
 ┌─────────────────────────────────────────────────────────────┐
@@ -168,26 +164,6 @@ Documentação completa de todos os ativos envolvidos no ciclo de vida do desenv
 
 ---
 
-### GitHub / Git
-
-**Função**: Versionamento distribuído e colaboração
-
-**Repositórios**:
-- Principal: Azure DevOps Repos
-- Backup/Mirror: GitHub (opcional)
-
-**Workflows**:
-- Feature branches: `feat/WORKITEM-ID-description`
-- Hotfix branches: `hotfix/WORKITEM-ID-description`
-- Release branches: `release/v1.0.0`
-
-**Integrações**:
-- Pre-commit hooks (segurança, linting)
-- Dependabot (atualizações de dependências)
-- GitHub Actions (CI/CD adicional, se necessário)
-
----
-
 ## Segurança & Qualidade
 
 ### OWASP DefectDojo
@@ -276,6 +252,57 @@ Documentação completa de todos os ativos envolvidos no ciclo de vida do desenv
 **Responsável**: AppSec Team  
 **Licença**: Open Source (Apache 2.0)  
 **Custo**: Gratuito
+
+---
+
+### Playwright (Testes E2E)
+
+**Função**: Testes End-to-End Automatizados (Principal)
+
+**Capacidades**:
+- Testes E2E automatizados em múltiplos browsers (Chrome, Firefox, Safari, Edge)
+- Auto-waiting (reduz flakiness)
+- Screenshots e vídeos automáticos
+- Trace viewer para debug
+- Network mocking
+- Execução rápida e paralela
+
+**Tipos de Testes**:
+- **Smoke Tests**: Verificação básica de sistema (< 2 min)
+- **Sanity Tests**: Validação de funcionalidades críticas (< 5 min)
+- **E2E Tests**: Fluxos completos de usuário (10-30 min)
+- **Regression Tests**: Suíte completa (30-60 min)
+
+**Integração**:
+- Azure DevOps Pipelines
+- PR Checks (Sanity Tests bloqueiam PR se falhar)
+- Azure Test Plans (vinculação automática de resultados)
+
+**Responsável**: QA Team / Dev Team  
+**Licença**: Open Source (Apache 2.0)  
+**Custo**: Gratuito
+
+---
+
+### Selenium (Testes E2E - Complementar)
+
+**Função**: Testes End-to-End Automatizados (Complementar)
+
+**Capacidades**:
+- Testes E2E em todos os browsers
+- Máxima compatibilidade com browsers legados
+- Suporte para casos específicos não cobertos por Playwright
+
+**Uso**:
+- Casos específicos que requerem Selenium
+- Compatibilidade com browsers legados
+- Ferramentas que exigem Selenium
+
+**Responsável**: QA Team / Dev Team  
+**Licença**: Open Source (Apache 2.0)  
+**Custo**: Gratuito
+
+**Estratégia**: 80% Playwright (principal), 20% Selenium (complementar)
 
 ---
 
@@ -380,6 +407,7 @@ Documentação completa de todos os ativos envolvidos no ciclo de vida do desenv
 | Azure DevOps | SaaS | $0-50 | Incluído em planos Azure |
 | SonarCloud | SaaS | $10-100 | Baseado em LOC |
 | DefectDojo | Self-hosted | $50-200 | Infraestrutura + manutenção |
+| Playwright/Selenium | Open Source | $0 | Gratuito |
 | SharePoint Online | SaaS | $0-20 | Incluído em M365 |
 | **Total Estimado** | | **$260-870/mês** | |
 
@@ -393,6 +421,7 @@ Documentação completa de todos os ativos envolvidos no ciclo de vida do desenv
 | Azure DevOps | DevOps | QA Leader |
 | DefectDojo | AppSec | DevOps |
 | SonarCloud | Dev Team | DevOps |
+| Playwright/Selenium | QA Team / Dev Team | DevOps |
 | SharePoint | QA Leader | Regulatory Affairs |
 | Spec-Kit | QA Leader | Dev Team |
 

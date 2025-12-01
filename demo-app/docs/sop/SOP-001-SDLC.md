@@ -49,7 +49,6 @@ main                    # Branch de produção (protegida)
 - [ ] Sem vulnerabilidades críticas/altas no DefectDojo
 - [ ] Mínimo de 2 aprovações de código
 - [ ] Testes unitários: 100% pass
-- [ ] **Sanity Tests E2E: 100% pass** (novo)
 - [ ] Cobertura de código: mínimo conforme política do projeto
 - [ ] SAST: Quality Gate A (SonarCloud)
 
@@ -58,7 +57,6 @@ main                    # Branch de produção (protegida)
 O pipeline rejeita PRs que:
 - Não tenham Work Item vinculado
 - Falhem no build
-- Falhem nos Sanity Tests E2E
 - Tenham vulnerabilidades críticas/altas abertas
 - Não atendam aos critérios de qualidade
 

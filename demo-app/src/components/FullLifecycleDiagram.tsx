@@ -18,7 +18,7 @@ const fullLifecycleFlow = `flowchart TD
     Phase2_2 --> Phase2_3[Pre-commit Hooks]
     Phase2_3 --> Phase2_4[Testes Unitários<br/>100% Pass]
     Phase2_4 --> Phase2_5[Pull Request]
-    Phase2_5 --> Phase2_6{PR Checks<br/>2 Reviews + Build}
+    Phase2_5 --> Phase2_6{PR Checks<br/>2 Reviews + Build<br/>+ Sanity E2E}
     Phase2_6 -->|Aprovado| Phase2_7[✅ Merge develop]
     Phase2_6 -->|Rejeitado| Phase2_2
     Phase2_7 --> Phase3[FASE 3:<br/>Verificação Automatizada<br/>e Ingestão Segurança]
@@ -31,14 +31,18 @@ const fullLifecycleFlow = `flowchart TD
     Phase3_5 -->|Sim| Phase3_6[❌ Pipeline Bloqueado]
     Phase3_6 --> Phase2_2
     Phase3_5 -->|Não| Phase3_7[Deploy Staging]
-    Phase3_7 --> Phase3_8[DAST: OWASP ZAP]
+    Phase3_7 --> Phase3_7_1[Smoke Tests E2E<br/>Playwright]
+    Phase3_7_1 --> Phase3_7_2[Sanity Tests E2E<br/>Playwright]
+    Phase3_7_2 --> Phase3_7_3[E2E Tests<br/>Playwright]
+    Phase3_7_3 --> Phase3_8[DAST: OWASP ZAP]
     Phase3_8 --> Phase3_9[DefectDojo<br/>Ingestão DAST]
     Phase3_9 --> Phase3_10{DAST<br/>Vulns?}
     Phase3_10 -->|Sim| Phase3_6
     Phase3_10 -->|Não| Phase3_11[✅ Pipeline Pass]
     Phase3_11 --> Phase4[FASE 4:<br/>Validação e Liberação<br/>Release]
     
-    Phase4 --> Phase4_1[Testes Funcionais<br/>Azure Test Plans]
+    Phase4 --> Phase4_0[Regression Tests E2E<br/>Playwright/Selenium]
+    Phase4_0 --> Phase4_1[Testes Funcionais<br/>Azure Test Plans]
     Phase4_1 --> Phase4_2[Testes Usabilidade<br/>Somativos IEC 62366]
     Phase4_2 --> Phase4_3[Gerar DHF<br/>Automated Script]
     Phase4_3 --> Phase4_4[Matriz Rastreabilidade]
@@ -50,7 +54,8 @@ const fullLifecycleFlow = `flowchart TD
     Phase4_9 --> Phase5[FASE 5:<br/>Monitoramento e Gestão<br/>de Vulnerabilidades]
     
     Phase5 --> Phase5_1[Azure Sentinel<br/>SIEM Monitoramento]
-    Phase5_1 --> Phase5_2[Scan Diário<br/>Trivy → DefectDojo]
+    Phase5_1 --> Phase5_1_1[Smoke Tests E2E<br/>Produção]
+    Phase5_1_1 --> Phase5_2[Scan Diário<br/>Trivy → DefectDojo]
     Phase5_2 --> Phase5_3{Nova<br/>Vulnerabilidade?}
     Phase5_3 -->|Sim| Phase5_4[Triagem AppSec]
     Phase5_4 --> Phase5_5[Push to ADO<br/>Criar Bug]

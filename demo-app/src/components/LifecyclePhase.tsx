@@ -1,6 +1,6 @@
 'use client'
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { CheckCircle2, Circle, AlertCircle, Clock, FileText, Settings, Package, BookOpen, ExternalLink } from "lucide-react"
 import { PhaseFlowDiagram } from "./PhaseFlowDiagram"

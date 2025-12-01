@@ -19,7 +19,6 @@ const assetsArchitecture = `graph TB
         ADO --> Repos[Repos<br/>Git]
         ADO --> Pipelines[Pipelines<br/>CI/CD]
         ADO --> TestPlans[Test Plans<br/>Testes]
-        Git[Git/GitHub<br/>Versionamento]
     end
     
     subgraph Security["🔒 SEGURANÇA & QUALIDADE"]
@@ -27,6 +26,8 @@ const assetsArchitecture = `graph TB
         SonarCloud[SonarCloud<br/>SAST]
         Trivy[Trivy<br/>SCA]
         ZAP[OWASP ZAP<br/>DAST]
+        Playwright[Playwright<br/>E2E Tests]
+        Selenium[Selenium<br/>E2E Tests]
     end
     
     subgraph Docs["📄 DOCUMENTAÇÃO & COMPLIANCE"]

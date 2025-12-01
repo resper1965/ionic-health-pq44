@@ -16,7 +16,6 @@ Este procedimento estabelece a estratégia de testes funcionais e de usabilidade
 Aplica-se a:
 - Testes unitários
 - Testes de integração
-- Testes E2E automatizados (Playwright/Selenium)
 - Testes funcionais
 - Testes de usabilidade (IEC 62366)
 - Testes de segurança (DAST)
@@ -45,10 +44,6 @@ Aplica-se a:
 | **Unit Tests** | 100% Pass Rate |
 | **Code Coverage** | Mínimo 80% (crítico: 100%) |
 | **Integration Tests** | 100% Pass Rate |
-| **Smoke Tests (E2E)** | 100% Pass Rate |
-| **Sanity Tests (E2E)** | 100% Pass Rate |
-| **E2E Tests (Críticos)** | 100% Pass Rate |
-| **Regression Tests (E2E)** | 100% Pass Rate |
 | **SAST (SonarCloud)** | Quality Gate A |
 | **DAST (OWASP ZAP)** | Sem vulnerabilidades críticas/altas |
 
@@ -101,124 +96,6 @@ Aplica-se a:
 3. Enviado automaticamente para DefectDojo
 4. Vulnerabilidades críticas/altas bloqueiam release
 
-### 4.5 Testes E2E Automatizados (Playwright/Selenium)
-
-**Ferramentas**: Playwright (principal), Selenium (complementar)
-
-**Tipos de Testes E2E**:
-
-#### 4.5.1 Smoke Tests
-
-**Objetivo**: Validação rápida de sistema operacional após deploy
-
-**Ferramenta**: Playwright
-
-**Características**:
-- ⏱️ **Execução**: Muito rápida (< 2 minutos)
-- 📊 **Cobertura**: Infraestrutura e endpoints críticos
-- 🔄 **Frequência**: Após cada deploy em staging/produção
-- 🎯 **Escopo**: Verificação de sistema operacional
-
-**Exemplos**:
-- Aplicação responde (HTTP 200)
-- Health check endpoints
-- Páginas principais carregam
-- Autenticação básica funciona
-
-**Critério**: 100% Pass Rate obrigatório
-
-**Execução**: Pipeline CI/CD após deploy
-
-#### 4.5.2 Sanity Tests
-
-**Objetivo**: Validação rápida de funcionalidades críticas básicas
-
-**Ferramenta**: Playwright
-
-**Características**:
-- ⏱️ **Execução**: Rápida (< 5 minutos)
-- 📊 **Cobertura**: Fluxos críticos e básicos
-- 🔄 **Frequência**: A cada PR, após cada deploy
-- 🎯 **Escopo**: Happy path de funcionalidades essenciais
-
-**Exemplos para nCommand Lite**:
-- Login/autenticação básica
-- Navegação principal (menu)
-- Carregamento de página inicial
-- Visualização de documento básico
-- Navegação entre páginas principais
-
-**Critério**: 100% Pass Rate obrigatório (bloqueia PR se falhar)
-
-**Execução**: 
-- **PR Checks**: Validação automática em cada Pull Request
-- **Pipeline**: Após deploy em staging
-
-#### 4.5.3 E2E Tests (Fluxos Completos)
-
-**Objetivo**: Validação de fluxos completos de usuário do início ao fim
-
-**Ferramenta**: Playwright (80%), Selenium (20% - casos específicos)
-
-**Características**:
-- ⏱️ **Execução**: Moderada (10-30 minutos)
-- 📊 **Cobertura**: Fluxos críticos de negócio
-- 🔄 **Frequência**: Antes de merge em develop, após deploy em staging
-- 🎯 **Escopo**: Cenários de usuário completos
-
-**Exemplos para nCommand Lite**:
-- Fluxo completo de visualização de ciclo de vida
-- Navegação completa entre todas as páginas
-- Visualização de documento do início ao fim
-- Interação com diagramas Mermaid
-- Fluxo completo de automação
-
-**Critério**: 100% Pass Rate obrigatório
-
-**Execução**: Pipeline CI/CD após deploy em staging
-
-#### 4.5.4 Regression Tests
-
-**Objetivo**: Validação que mudanças não quebraram funcionalidades existentes
-
-**Ferramenta**: Playwright/Selenium
-
-**Características**:
-- ⏱️ **Execução**: Longa (30-60 minutos)
-- 📊 **Cobertura**: Todos os fluxos principais
-- 🔄 **Frequência**: Antes de release, nightly builds
-- 🎯 **Escopo**: Suíte completa de testes
-
-**Critério**: 100% Pass Rate obrigatório para release
-
-**Execução**: 
-- **Pre-Release**: Pipeline antes do release
-- **Nightly**: Pipeline agendado diariamente
-
-#### 4.5.5 Integração com Azure Test Plans
-
-**Rastreabilidade Automática**:
-- E2E Tests automatizados criam Test Cases automaticamente no Azure Test Plans
-- Resultados vinculados a Work Items
-- Screenshots e vídeos anexados aos Test Cases
-- Relatórios HTML/PDF salvos como evidências
-
-**Script de Integração**: `npm run test:e2e:sync-ado`
-
-#### 4.5.6 Estrutura de Testes
-
-```
-tests/e2e/
-├── playwright/
-│   ├── sanity/          # Sanity Tests (rápidos)
-│   ├── smoke/           # Smoke Tests (muito rápidos)
-│   ├── regression/      # Testes de regressão
-│   ├── fixtures/        # Dados de teste
-│   └── pages/           # Page Object Model
-└── selenium/
-    └── legacy/          # Casos específicos Selenium
-```
-
 ## 5. Testes de Usabilidade (IEC 62366-1)
 
 ### 5.1 Testes Formativos
@@ -262,18 +139,11 @@ tests/e2e/
 
 **Base**: Casos de teste no Azure Test Plans vinculados a requisitos
 
-**Nota**: Testes E2E automatizados reduzem significativamente a carga de testes funcionais manuais. Testes manuais focam em casos complexos e específicos que não podem ser automatizados facilmente.
-
 ### 6.2 Execução
 
-1. **Testes de Fumaça**: Automatizados (Playwright) após cada deploy em Staging
-2. **Testes Funcionais**: 
-   - **Automatizados**: E2E Tests (Playwright) para fluxos críticos
-   - **Manuais**: Casos complexos, edge cases, validação exploratória
-3. **Testes de Regressão**: 
-   - **Automatizados**: Regression Tests (Playwright) - suíte completa
-   - **Manuais**: Validação de casos específicos e ajustes
-4. **Testes de Aceitação**: Validação final antes da liberação (manual + automatizado)
+1. **Testes de Fumaça**: Após cada deploy em Staging
+2. **Testes de Regressão**: Antes de cada release
+3. **Testes de Aceitação**: Validação final antes da liberação
 
 ### 6.3 Registro
 
@@ -286,10 +156,9 @@ tests/e2e/
 ### 7.1 Requisitos → Testes
 
 Cada requisito funcional deve ter:
-- **No mínimo 1** caso de teste funcional (E2E automatizado ou manual)
-- **No mínimo 1** caso de teste de regressão (automatizado preferencialmente)
+- **No mínimo 1** caso de teste funcional
+- **No mínimo 1** caso de teste de regressão
 - Testes de usabilidade (se aplicável)
-- **Cobertura E2E**: Fluxos críticos devem ter E2E Tests automatizados
 
 ### 7.2 Geração Automática
 
@@ -307,13 +176,9 @@ Antes da liberação (FASE 4):
 - [ ] Todos os testes unitários: 100% pass
 - [ ] Cobertura de código: ≥ 80%
 - [ ] Testes de integração: 100% pass
-- [ ] Smoke Tests E2E: 100% pass
-- [ ] Sanity Tests E2E: 100% pass
-- [ ] E2E Tests (críticos): 100% pass
-- [ ] Regression Tests E2E: 100% pass
 - [ ] SAST: Quality Gate A
 - [ ] DAST: Sem vulnerabilidades críticas/altas
-- [ ] Testes funcionais (manuais): 100% pass
+- [ ] Testes funcionais: 100% pass
 - [ ] Testes de usabilidade somativos: Aprovados
 - [ ] Certificado de segurança: 0 vulnerabilidades críticas/altas
 - [ ] Matriz de rastreabilidade: Gerada
@@ -349,15 +214,11 @@ Conforme SLA do SOP-003:
 | Atividade | Responsável |
 |-----------|-------------|
 | Escrita de testes unitários | Developer |
-| Escrita de testes E2E | Developer (com feature) / QA |
 | Execução de testes de integração | DevOps |
-| Execução de testes E2E (pipeline) | DevOps |
-| Manutenção de testes E2E | Developer (com feature) / QA |
 | Testes de usabilidade formativos | UX/PO |
 | Testes de usabilidade somativos | QA |
 | Testes funcionais manuais | QA |
 | Execução de DAST | AppSec/DevOps |
-| Aprovação de padrões E2E | QA Leader |
 | Aprovação de release | QA Leader |
 
 ## 11. Referências
@@ -367,5 +228,4 @@ Conforme SLA do SOP-003:
 - SOP-001: SDLC
 - SOP-002: Gestão de Riscos
 - SOP-003: Gestão de Vulnerabilidades
-- ANALISE-E-PLANEJAMENTO-TESTES-AUTOMATIZADOS.md: Planejamento detalhado de testes E2E
 
