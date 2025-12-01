@@ -14,7 +14,7 @@ const phases: PhaseStatus[] = [
     description: 'Garantir que funcionalidades são seguras, necessárias e usáveis',
     status: 'approved',
     artifacts: [
-      'Especificação de Feature (Spec-Kit)',
+      'Especificação de Requisitos',
       'Análise de Riscos (ISO 14971)',
       'Especificação de Usabilidade (IEC 62366-1)',
       'Work Items no Azure DevOps',
@@ -22,8 +22,14 @@ const phases: PhaseStatus[] = [
     ],
     tools: [
       'Azure Boards',
-      'Spec-Kit',
+      'Azure DevOps',
       'SharePoint Online'
+    ],
+    documents: [
+      { title: 'SOP-002: Gestão de Riscos', path: 'sop/SOP-002-Risk-Management.md', type: 'sop' },
+      { title: 'ISO 14971: Gestão de Riscos', path: 'regulatory/ISO-14971/README.md', type: 'regulatory' },
+      { title: 'IEC 62366-1: Engenharia de Usabilidade', path: 'regulatory/IEC-62366-1/README.md', type: 'regulatory' },
+      { title: 'PROCESS.md: Processo Integrado', path: 'PROCESS.md', type: 'process' }
     ],
     outputs: [
       'Especificações aprovadas',
@@ -44,11 +50,15 @@ const phases: PhaseStatus[] = [
       'Código Terraform (IaC)'
     ],
     tools: [
-      'Git/GitHub',
       'Azure DevOps Repos',
       'Pre-commit Hooks',
       'Terraform',
       'VS Code'
+    ],
+    documents: [
+      { title: 'SOP-001: SDLC - Ciclo de Vida', path: 'sop/SOP-001-SDLC.md', type: 'sop' },
+      { title: 'Infrastructure as Code (Azure)', path: 'infrastructure/azure/README.md', type: 'process' },
+      { title: 'PROCESS.md: Processo Integrado', path: 'PROCESS.md', type: 'process' }
     ],
     outputs: [
       'Código desenvolvido e testado',
@@ -79,6 +89,12 @@ const phases: PhaseStatus[] = [
       'Código verificado',
       'Sem vulnerabilidades críticas/altas',
       'Pipeline aprovado'
+    ],
+    documents: [
+      { title: 'SOP-003: Gestão de Vulnerabilidades', path: 'sop/SOP-003-Vulnerability-Management.md', type: 'sop' },
+      { title: 'Pipeline Azure DevOps', path: 'pipelines/azure-pipelines.yml', type: 'process' },
+      { title: 'ISO 27001 & 27701: Segurança', path: 'regulatory/ISO-27001-27701/README.md', type: 'regulatory' },
+      { title: 'Manual DefectDojo', path: 'manuals/defectdojo/README.md', type: 'process' }
     ]
   },
   {
@@ -104,6 +120,12 @@ const phases: PhaseStatus[] = [
       'Versão liberada',
       'DHF documentado e assinado',
       'Tag v1.0.0 criada'
+    ],
+    documents: [
+      { title: 'SOP-004: Verificação e Validação', path: 'sop/SOP-004-Verification-Validation.md', type: 'sop' },
+      { title: 'SOP-005: Controle de Mudança', path: 'sop/SOP-005-Change-Control.md', type: 'sop' },
+      { title: 'DHF Template', path: 'dhf/TEMPLATE.md', type: 'template' },
+      { title: 'Manual SharePoint', path: 'manuals/sharepoint/README.md', type: 'process' }
     ]
   },
   {
@@ -129,6 +151,11 @@ const phases: PhaseStatus[] = [
       'Sistema monitorado',
       'Vulnerabilidades gerenciadas',
       'Riscos reavaliados'
+    ],
+    documents: [
+      { title: 'SOP-003: Gestão de Vulnerabilidades', path: 'sop/SOP-003-Vulnerability-Management.md', type: 'sop' },
+      { title: 'ASSETS.md: Arquitetura de Ativos', path: 'demo-app/docs/ASSETS.md', type: 'process' },
+      { title: 'Manual Azure DevOps', path: 'manuals/azure-devops/README.md', type: 'process' }
     ]
   }
 ]

@@ -11,8 +11,7 @@ interface PhaseFlowDiagramProps {
 const phaseFlows = {
   1: `flowchart TD
     A[Azure Boards<br/>Work Item Criado] --> B[PO/UX Define<br/>Perfil de Usuário]
-    B --> C[Gerar Especificação<br/>Spec-Kit]
-    C --> D[Análise de Riscos<br/>ISO 14971]
+    B --> D[Análise de Riscos<br/>ISO 14971]
     D --> E[Consultar DefectDojo<br/>Histórico de Vulnerabilidades]
     E --> F[uFMEA<br/>Análise de Erro de Uso]
     F --> G[Registrar Riscos<br/>Work Items no ADO]

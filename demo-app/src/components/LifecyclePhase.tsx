@@ -2,8 +2,14 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { CheckCircle2, Circle, AlertCircle, Clock, FileText, Settings, Package } from "lucide-react"
+import { CheckCircle2, Circle, AlertCircle, Clock, FileText, Settings, Package, BookOpen, ExternalLink } from "lucide-react"
 import { PhaseFlowDiagram } from "./PhaseFlowDiagram"
+
+export interface DocumentLink {
+  title: string
+  path: string
+  type?: 'sop' | 'regulatory' | 'process' | 'template'
+}
 
 export interface PhaseStatus {
   id: string
@@ -13,6 +19,7 @@ export interface PhaseStatus {
   artifacts: string[]
   tools: string[]
   outputs: string[]
+  documents?: DocumentLink[]
 }
 
 interface LifecyclePhaseProps {
@@ -124,6 +131,35 @@ export function LifecyclePhase({ phase, phaseNumber }: LifecyclePhaseProps) {
             ))}
           </ul>
         </div>
+
+        {/* Documentos */}
+        {phase.documents && phase.documents.length > 0 && (
+          <div className="space-y-3">
+            <div className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+              <BookOpen className="h-4 w-4 text-primary" />
+              <span>Documentação Relacionada</span>
+            </div>
+            <ul className="space-y-2 ml-6">
+              {phase.documents.map((doc, idx) => {
+                const githubUrl = `https://github.com/resper1965/ionic-health-pq44/blob/main/${doc.path}`
+                return (
+                  <li key={idx} className="text-sm text-gray-600">
+                    <a
+                      href={githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-primary hover:text-primary/80 hover:underline transition-smooth"
+                    >
+                      <FileText className="h-4 w-4 flex-shrink-0" />
+                      <span>{doc.title}</span>
+                      <ExternalLink className="h-3 w-3 flex-shrink-0" />
+                    </a>
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
+        )}
       </CardContent>
       
       {/* Diagrama de Fluxo */}

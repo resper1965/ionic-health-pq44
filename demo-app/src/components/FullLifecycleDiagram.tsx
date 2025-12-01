@@ -7,11 +7,11 @@ const fullLifecycleFlow = `flowchart TD
     Start([Início do Projeto]) --> Phase1[FASE 1:<br/>Planejamento, Risco<br/>e Infraestrutura]
     
     Phase1 --> Phase1_1[Azure Boards<br/>Work Item]
-    Phase1_1 --> Phase1_2[Spec-Kit<br/>Especificações]
+    Phase1_1 --> Phase1_2[Especificações<br/>e Requisitos]
     Phase1_2 --> Phase1_3[Análise de Riscos<br/>ISO 14971]
     Phase1_3 --> Phase1_4[Gate de Aprovação<br/>QA Leader]
     Phase1_4 -->|Aprovado| Phase2[FASE 2:<br/>Desenvolvimento<br/>e Codificação]
-    Phase1_4 -->|Rejeitado| Phase1_2
+    Phase1_4 -->|Rejeitado| Phase1_1
     
     Phase2 --> Phase2_1[Git Branch<br/>feat/WORKITEM-ID]
     Phase2_1 --> Phase2_2[Desenvolvimento<br/>Código Fonte]
