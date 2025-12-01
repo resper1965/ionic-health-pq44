@@ -26,10 +26,10 @@ const phases: PhaseStatus[] = [
       'SharePoint Online'
     ],
     documents: [
-      { title: 'SOP-002: Gestão de Riscos', path: 'sop/SOP-002-Risk-Management.md', type: 'sop' },
-      { title: 'ISO 14971: Gestão de Riscos', path: 'regulatory/ISO-14971/README.md', type: 'regulatory' },
-      { title: 'IEC 62366-1: Engenharia de Usabilidade', path: 'regulatory/IEC-62366-1/README.md', type: 'regulatory' },
-      { title: 'PROCESS.md: Processo Integrado', path: 'PROCESS.md', type: 'process' }
+      { title: 'SOP-002: Gestão de Riscos', path: 'docs/sop/SOP-002-Risk-Management.md', type: 'sop' },
+      { title: 'ISO 14971: Gestão de Riscos', path: 'docs/regulatory/ISO-14971/README.md', type: 'regulatory' },
+      { title: 'IEC 62366-1: Engenharia de Usabilidade', path: 'docs/regulatory/IEC-62366-1/README.md', type: 'regulatory' },
+      { title: 'PROCESS.md: Processo Integrado', path: 'docs/PROCESS.md', type: 'process' }
     ],
     outputs: [
       'Especificações aprovadas',
@@ -56,9 +56,9 @@ const phases: PhaseStatus[] = [
       'VS Code'
     ],
     documents: [
-      { title: 'SOP-001: SDLC - Ciclo de Vida', path: 'sop/SOP-001-SDLC.md', type: 'sop' },
+      { title: 'SOP-001: SDLC - Ciclo de Vida', path: 'docs/sop/SOP-001-SDLC.md', type: 'sop' },
       { title: 'Infrastructure as Code (Azure)', path: 'infrastructure/azure/README.md', type: 'process' },
-      { title: 'PROCESS.md: Processo Integrado', path: 'PROCESS.md', type: 'process' }
+      { title: 'PROCESS.md: Processo Integrado', path: 'docs/PROCESS.md', type: 'process' }
     ],
     outputs: [
       'Código desenvolvido e testado',
@@ -91,10 +91,10 @@ const phases: PhaseStatus[] = [
       'Pipeline aprovado'
     ],
     documents: [
-      { title: 'SOP-003: Gestão de Vulnerabilidades', path: 'sop/SOP-003-Vulnerability-Management.md', type: 'sop' },
+      { title: 'SOP-003: Gestão de Vulnerabilidades', path: 'docs/sop/SOP-003-Vulnerability-Management.md', type: 'sop' },
       { title: 'Pipeline Azure DevOps', path: 'pipelines/azure-pipelines.yml', type: 'process' },
-      { title: 'ISO 27001 & 27701: Segurança', path: 'regulatory/ISO-27001-27701/README.md', type: 'regulatory' },
-      { title: 'Manual DefectDojo', path: 'manuals/defectdojo/README.md', type: 'process' }
+      { title: 'ISO 27001 & 27701: Segurança', path: 'docs/regulatory/ISO-27001-27701/README.md', type: 'regulatory' },
+      { title: 'Manual DefectDojo', path: 'docs/manuals/defectdojo/README.md', type: 'process' }
     ]
   },
   {
@@ -122,10 +122,10 @@ const phases: PhaseStatus[] = [
       'Tag v1.0.0 criada'
     ],
     documents: [
-      { title: 'SOP-004: Verificação e Validação', path: 'sop/SOP-004-Verification-Validation.md', type: 'sop' },
-      { title: 'SOP-005: Controle de Mudança', path: 'sop/SOP-005-Change-Control.md', type: 'sop' },
-      { title: 'DHF Template', path: 'dhf/TEMPLATE.md', type: 'template' },
-      { title: 'Manual SharePoint', path: 'manuals/sharepoint/README.md', type: 'process' }
+      { title: 'SOP-004: Verificação e Validação', path: 'docs/sop/SOP-004-Verification-Validation.md', type: 'sop' },
+      { title: 'SOP-005: Controle de Mudança', path: 'docs/sop/SOP-005-Change-Control.md', type: 'sop' },
+      { title: 'DHF Template', path: 'docs/dhf/TEMPLATE.md', type: 'template' },
+      { title: 'Manual SharePoint', path: 'docs/manuals/sharepoint/README.md', type: 'process' }
     ]
   },
   {
@@ -153,9 +153,9 @@ const phases: PhaseStatus[] = [
       'Riscos reavaliados'
     ],
     documents: [
-      { title: 'SOP-003: Gestão de Vulnerabilidades', path: 'sop/SOP-003-Vulnerability-Management.md', type: 'sop' },
+      { title: 'SOP-003: Gestão de Vulnerabilidades', path: 'docs/sop/SOP-003-Vulnerability-Management.md', type: 'sop' },
       { title: 'ASSETS.md: Arquitetura de Ativos', path: 'demo-app/docs/ASSETS.md', type: 'process' },
-      { title: 'Manual Azure DevOps', path: 'manuals/azure-devops/README.md', type: 'process' }
+      { title: 'Manual Azure DevOps', path: 'docs/manuals/azure-devops/README.md', type: 'process' }
     ]
   }
 ]
