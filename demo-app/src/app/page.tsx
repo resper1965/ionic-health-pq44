@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { ArrowRight, CheckCircle2, FileText, Shield, AlertTriangle, Lock, Link2, FileCheck, CheckSquare, Settings, Home as HomeIcon, BookOpen, Zap, PlayCircle, Workflow } from 'lucide-react'
@@ -85,9 +86,20 @@ export default function Home() {
       <section className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-primary/5 to-transparent border-b-2 border-primary/20">
         <div className="container mx-auto px-4 py-20 max-w-7xl">
           <div className="text-center space-y-6">
-            <div className="inline-flex items-center justify-center gap-3 mb-4">
-              <div className="h-16 w-16 rounded-full bg-primary/20 flex items-center justify-center">
-                <Zap className="h-10 w-10 text-primary" />
+            <div className="flex flex-col items-center justify-center gap-4 mb-6">
+              <div className="flex items-center justify-center gap-4">
+                <Image
+                  src="/images/ionic-logo.png"
+                  alt="Ionic Health"
+                  width={200}
+                  height={70}
+                  className="h-16 w-auto object-contain"
+                  priority
+                />
+                <div className="h-12 w-px bg-gray-300"></div>
+                <div className="h-16 w-16 rounded-full bg-primary/20 flex items-center justify-center">
+                  <Zap className="h-10 w-10 text-primary" />
+                </div>
               </div>
               <h1 className="text-6xl md:text-7xl font-bold text-gradient-primary">
                 nCommand Lite

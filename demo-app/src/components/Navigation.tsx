@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/utils/cn'
 import { Home, FileText, Settings, Menu, X, Shield, AlertTriangle, Lock, Link2, FileCheck, CheckSquare } from 'lucide-react'
@@ -62,9 +63,18 @@ export function Navigation() {
     <>
       {/* Desktop Navigation */}
       <nav className="hidden md:flex items-center gap-1 bg-white border-b border-gray-200 px-6 py-4 shadow-sm">
-        <div className="flex items-center gap-2 mr-8">
+        <Link href="/" className="flex items-center gap-3 mr-8 hover:opacity-80 transition-opacity">
+          <Image
+            src="/images/ionic-logo.png"
+            alt="Ionic Health"
+            width={120}
+            height={40}
+            className="h-10 w-auto object-contain"
+            priority
+          />
+          <div className="h-8 w-px bg-gray-300"></div>
           <h1 className="text-xl font-bold text-gray-800">nCommand Lite</h1>
-        </div>
+        </Link>
         <div className="flex items-center gap-1">
           {navigation.map((item) => {
             const Icon = item.icon
@@ -91,7 +101,18 @@ export function Navigation() {
       {/* Mobile Navigation */}
       <nav className="md:hidden bg-white border-b border-gray-200 shadow-sm">
         <div className="flex items-center justify-between px-4 py-3">
-          <h1 className="text-lg font-bold text-gray-800">nCommand Lite</h1>
+          <Link href="/" className="flex items-center gap-2">
+            <Image
+              src="/images/ionic-logo.png"
+              alt="Ionic Health"
+              width={80}
+              height={30}
+              className="h-8 w-auto object-contain"
+              priority
+            />
+            <div className="h-6 w-px bg-gray-300"></div>
+            <h1 className="text-lg font-bold text-gray-800">nCommand Lite</h1>
+          </Link>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="p-2 rounded-lg text-gray-700 hover:bg-gray-100"
