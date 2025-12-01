@@ -1,13 +1,17 @@
-# Aplicação Demonstrativa - nCommand Lite
+# Aplicação de Apresentação - Processo nCommand Lite
 
-**Aplicação**: Health Check Demo  
+**Aplicação**: Aplicação de Apresentação/Demonstração  
 **Versão**: 1.0.0  
-**Tipo**: SaMD - Software as a Medical Device  
-**Classificação**: IEC 62304 Class B
+**Tipo**: Aplicação Web de Apresentação  
+**Propósito**: Demonstrar o processo de desenvolvimento SaMD
+
+## ⚠️ Importante
+
+Esta é uma **aplicação de apresentação e demonstração** que visualiza e explica o processo completo de desenvolvimento do nCommand Lite. **NÃO é parte do produto nCommand Lite em si**, mas sim uma ferramenta educacional para demonstração do ciclo de vida regulatório.
 
 ## Objetivo
 
-Esta aplicação demonstra o ciclo de vida completo do desenvolvimento de software médico, seguindo todas as fases do processo regulatório estabelecido:
+Esta aplicação demonstra visualmente o ciclo de vida completo do processo de desenvolvimento de software médico utilizado no nCommand Lite, seguindo todas as fases do processo regulatório estabelecido:
 
 - ✅ **FASE 1**: Planejamento, Risco e Infraestrutura
 - ✅ **FASE 2**: Desenvolvimento e Codificação

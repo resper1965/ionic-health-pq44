@@ -1,9 +1,14 @@
-# Setup e Deploy na Vercel - Projeto ihpq44
+# Setup e Deploy na Vercel - Aplicação de Apresentação
 
-**Projeto**: ihpq44  
+**Projeto Vercel**: ihpq44  
+**Aplicação**: Aplicação de Apresentação/Demonstração do Processo nCommand Lite  
 **Repositório**: https://github.com/resper1965/ionic-health-pq44  
 **Diretório Root**: `demo-app`  
 **Framework**: Next.js 14
+
+## ⚠️ Importante
+
+Esta aplicação é uma **aplicação de apresentação/demonstração** do processo de desenvolvimento do nCommand Lite. **NÃO é parte do produto nCommand Lite em si**, mas sim uma ferramenta educacional para demonstrar o ciclo de vida completo do processo regulatório.
 
 ## Criar Projeto na Vercel
 

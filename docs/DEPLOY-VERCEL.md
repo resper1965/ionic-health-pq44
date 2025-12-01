@@ -1,12 +1,17 @@
-# Deploy na Vercel - nCommand Lite Demo
+# Deploy na Vercel - Aplicação de Apresentação
 
 **Projeto Vercel**: ihpq44  
-**Aplicação**: demo-app (Next.js)  
+**Aplicação**: Aplicação de Apresentação do Processo nCommand Lite  
+**Diretório**: `demo-app` (Next.js)  
 **Versão**: 1.0.0
+
+## ⚠️ Importante
+
+Esta é uma **aplicação de apresentação/demonstração** que mostra o processo completo de desenvolvimento do nCommand Lite. **NÃO é parte do produto nCommand Lite em si**, mas sim uma ferramenta educacional e demonstrativa.
 
 ## Visão Geral
 
-Este documento descreve o processo de deploy da aplicação demonstrativa na Vercel.
+Este documento descreve o processo de deploy da aplicação de apresentação na Vercel para demonstração do processo regulatório.
 
 ## Estrutura do Projeto
 
