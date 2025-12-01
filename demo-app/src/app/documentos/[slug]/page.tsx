@@ -17,7 +17,7 @@ interface DocumentPageProps {
 function getPathFromSlug(slug: string): string | null {
   // Inverter o mapeamento
   const entries = Object.entries(documentPathToSlug)
-  const entry = entries.find(([_path, pathSlug]) => pathSlug === slug)
+  const entry = entries.find(([, pathSlug]) => pathSlug === slug)
   return entry ? entry[0] : null
 }
 
