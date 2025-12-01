@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/utils/cn'
-import { Home, FileText, Settings, Menu, X, Shield, AlertTriangle, Lock } from 'lucide-react'
+import { Home, FileText, Settings, Menu, X, Shield, AlertTriangle, Lock, Link2, FileCheck } from 'lucide-react'
 import { useState } from 'react'
 
 const navigation = [
@@ -31,6 +31,16 @@ const navigation = [
     name: 'Segurança',
     href: '/seguranca',
     icon: Lock,
+  },
+  {
+    name: 'Rastreabilidade',
+    href: '/rastreabilidade',
+    icon: Link2,
+  },
+  {
+    name: 'Auditoria',
+    href: '/auditoria',
+    icon: FileCheck,
   },
   {
     name: 'Automação',
