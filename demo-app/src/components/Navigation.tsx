@@ -4,14 +4,19 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/utils/cn'
-import { Home, FileText, Settings, Menu, X, Shield, AlertTriangle, Lock, Link2, FileCheck, CheckSquare } from 'lucide-react'
+import { Home, FileText, Settings, Menu, X, Shield, AlertTriangle, Lock, Link2, FileCheck, CheckSquare, Workflow } from 'lucide-react'
 import { useState } from 'react'
 
 const navigation = [
   {
-    name: 'Ciclo de Vida',
-    href: '/',
+    name: 'Home',
+    href: '/home',
     icon: Home,
+  },
+  {
+    name: 'Ciclo de Vida',
+    href: '/ciclo-de-vida',
+    icon: Workflow,
   },
   {
     name: 'Documentos',
