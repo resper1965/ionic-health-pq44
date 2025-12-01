@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { ArrowRight, CheckCircle2, FileText, Shield, AlertTriangle, Lock, Link2, FileCheck, CheckSquare, Settings, Home as HomeIcon, BookOpen, Zap, PlayCircle, Workflow } from 'lucide-react'
+import { ArrowRight, CheckCircle2, FileText, Shield, AlertTriangle, Lock, Link2, FileCheck, CheckSquare, Settings, BookOpen, Zap, PlayCircle, Workflow } from 'lucide-react'
 import Link from 'next/link'
 
 const pageIndex = [

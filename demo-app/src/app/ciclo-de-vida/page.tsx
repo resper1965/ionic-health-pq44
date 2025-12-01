@@ -2,7 +2,6 @@
 
 import { LifecyclePhase, PhaseStatus } from '@/components/LifecyclePhase'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
 import { ArrowRight, CheckCircle2, ChevronRight } from 'lucide-react'
 import { FullLifecycleDiagram } from '@/components/FullLifecycleDiagram'
 import { AssetsArchitectureDiagram } from '@/components/AssetsArchitectureDiagram'
