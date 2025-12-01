@@ -3,7 +3,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { MermaidDiagram } from '@/components/MermaidDiagram'
-import { FileCheck, Shield, AlertCircle, ExternalLink, FileText, GitBranch, CheckCircle2, XCircle, Link2 } from 'lucide-react'
+import { FileCheck, Shield, AlertCircle, ExternalLink, FileText, CheckCircle2, XCircle, Link2 } from 'lucide-react'
 import Link from 'next/link'
 
 const securityGateToDastFlow = `flowchart TD
@@ -73,43 +73,6 @@ const securityGateToDastFlow = `flowchart TD
     style DefectDojoAPI fill:#0078d4,stroke:#005a9e,stroke-width:2px,color:#fff
     style ProcessDAST fill:#0078d4,stroke:#005a9e,stroke-width:2px,color:#fff`
 
-const changeManagementFlow = `flowchart TD
-    ChangeReq[Change Request<br/>Necessário?] --> ChangeType{Tipo de<br/>Mudança?}
-    
-    ChangeType -->|Desenvolvimento<br/>FASE 2| DevFlow[Fluxo Normal<br/>Branch feat/ + PR]
-    DevFlow --> NoChangeReq[❌ Não Requer<br/>Change Request]
-    
-    ChangeType -->|Produção<br/>Hotfix/Security| ProdFlow[Change Request<br/>Work Item ADO]
-    ChangeType -->|Produção<br/>Feature Nova| ProdFlow
-    ChangeType -->|Infraestrutura| ProdFlow
-    
-    ProdFlow --> AnalyzeImpact[Análise de Impacto<br/>QA Leader + Arquiteto]
-    AnalyzeImpact --> RiskAnalysis[Análise de Risco<br/>SOP-002]
-    RiskAnalysis --> RegAssessment{Avaliação<br/>Regulatória}
-    
-    RegAssessment -->|Bug/Segurança<br/>Não Crítico| LTF[Letter to File<br/>LTF Preparado]
-    RegAssessment -->|Hotfix Crítico<br/>SLA 24h| EmergencyChange[Change Request<br/>Aprovação Emergencial]
-    RegAssessment -->|Feature Nova<br/>Mudança Arquitetural| FullSubmission[Submissão<br/>Regulatória Completa]
-    
-    LTF --> ApproveLTF[QA Leader<br/>Aprova LTF]
-    EmergencyChange --> ApproveEmergency[QA Leader<br/>Aprovação Imediata]
-    FullSubmission --> WaitApproval[Aguardar Aprovação<br/>Regulatória]
-    
-    ApproveLTF --> ImplementChange[Implementação<br/>via Hotfix/Release]
-    ApproveEmergency --> ImplementChange
-    WaitApproval -->|Aprovado| ImplementChange
-    
-    ImplementChange --> DeployValidation[Deploy + Validação<br/>Pós-Deploy]
-    DeployValidation --> UpdateDocs[Atualizar Documentação<br/>DHF/SharePoint]
-    UpdateDocs --> ChangeComplete[✅ Mudança<br/>Completa]
-    
-    style ChangeReq fill:#54c4cd,stroke:#48b3bb,stroke-width:2px,color:#fff
-    style ChangeComplete fill:#10b981,stroke:#059669,stroke-width:2px,color:#fff
-    style NoChangeReq fill:#6b7280,stroke:#4b5563,stroke-width:2px,color:#fff
-    style LTF fill:#3b82f6,stroke:#2563eb,stroke-width:2px,color:#fff
-    style EmergencyChange fill:#ef4444,stroke:#dc2626,stroke-width:2px,color:#fff
-    style FullSubmission fill:#8b5cf6,stroke:#7c3aed,stroke-width:2px,color:#fff`
-
 export default function QARAPage() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
@@ -124,7 +87,7 @@ export default function QARAPage() {
             <Badge variant="secondary" className="text-lg px-3 py-1">Quality Assurance & Regulatory Affairs</Badge>
           </div>
           <p className="text-xl text-gray-700 font-light max-w-3xl mx-auto">
-            Detalhamento do processo de verificação entre o Gate de Segurança e a Aprovação do DAST, incluindo gestão de mudanças (GMUD).
+            Detalhamento do processo de verificação entre o Gate de Segurança e a Aprovação do DAST.
           </p>
         </div>
 
@@ -201,86 +164,6 @@ export default function QARAPage() {
           </CardContent>
         </Card>
 
-        {/* Change Management (GMUD) */}
-        <Card className="mb-8 border-cyan shadow-lg">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-3">
-              <GitBranch className="h-6 w-6 text-primary" />
-              Gestão de Mudanças (GMUD) - Onde se Encaixa no Processo?
-            </CardTitle>
-            <CardDescription>
-              O processo de Change Management (GMUD) está integrado ao ciclo de vida e ocorre em diferentes momentos dependendo do tipo de mudança.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <MermaidDiagram chart={changeManagementFlow} />
-            
-            <div className="mt-6 space-y-4 text-gray-700">
-              <div className="p-4 bg-gray-50 border border-gray-200 rounded-lg">
-                <h3 className="font-semibold text-lg mb-2">Mudanças em Desenvolvimento (FASE 2)</h3>
-                <p className="text-sm">
-                  <strong>Não requer Change Request.</strong> Mudanças normais de desenvolvimento seguem o fluxo padrão: Branch <code className="bg-white px-2 py-1 rounded">feat/WORKITEM-ID</code> → Pull Request → Review → Merge. O controle é feito via PR e histórico Git.
-                </p>
-              </div>
-
-              <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                <h3 className="font-semibold text-lg mb-2">Mudanças em Produção (FASE 5)</h3>
-                <p className="text-sm mb-2">
-                  <strong>Requer Change Request obrigatório.</strong> Qualquer mudança em produção (hotfix, feature nova, mudança de infraestrutura) deve passar por:
-                </p>
-                <ul className="list-disc list-inside ml-4 text-sm space-y-1">
-                  <li>Change Request criado no Azure DevOps (Work Item)</li>
-                  <li>Análise de impacto (QA Leader + Arquiteto)</li>
-                  <li>Análise de risco conforme SOP-002</li>
-                  <li>Avaliação regulatória (LTF, Submissão completa, ou aprovação emergencial)</li>
-                  <li>Aprovação formal do QA Leader</li>
-                </ul>
-              </div>
-
-              <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-                <h3 className="font-semibold text-lg mb-2">Tipos de Mudança e Exigências Regulatórias</h3>
-                <div className="overflow-x-auto mt-2">
-                  <table className="min-w-full text-sm border border-gray-200 rounded-lg">
-                    <thead className="bg-gray-100">
-                      <tr>
-                        <th className="px-4 py-2 text-left border-b">Tipo de Mudança</th>
-                        <th className="px-4 py-2 text-left border-b">Change Request</th>
-                        <th className="px-4 py-2 text-left border-b">Exigência Regulatória</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td className="px-4 py-2 border-b">Bug não crítico</td>
-                        <td className="px-4 py-2 border-b">Sim (Produção)</td>
-                        <td className="px-4 py-2 border-b">Letter to File (LTF)</td>
-                      </tr>
-                      <tr>
-                        <td className="px-4 py-2 border-b">Hotfix de Segurança (SLA 24h)</td>
-                        <td className="px-4 py-2 border-b">Sim (Emergencial)</td>
-                        <td className="px-4 py-2 border-b">LTF ou Submissão</td>
-                      </tr>
-                      <tr>
-                        <td className="px-4 py-2 border-b">Feature Nova</td>
-                        <td className="px-4 py-2 border-b">Sim</td>
-                        <td className="px-4 py-2 border-b">Submissão Completa</td>
-                      </tr>
-                      <tr>
-                        <td className="px-4 py-2 border-b">Mudança Arquitetural</td>
-                        <td className="px-4 py-2 border-b">Sim</td>
-                        <td className="px-4 py-2 border-b">Submissão Completa</td>
-                      </tr>
-                      <tr>
-                        <td className="px-4 py-2">Infraestrutura (IaC)</td>
-                        <td className="px-4 py-2">Sim (via Work Item)</td>
-                        <td className="px-4 py-2">Conforme tipo de mudança</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
 
         {/* Integration Points */}
         <Card className="mb-8 border-cyan shadow-lg">

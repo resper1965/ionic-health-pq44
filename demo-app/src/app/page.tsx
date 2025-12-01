@@ -3,9 +3,10 @@
 import { LifecyclePhase, PhaseStatus } from '@/components/LifecyclePhase'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { ArrowRight, CheckCircle2, ChevronRight } from 'lucide-react'
+import { ArrowRight, CheckCircle2, ChevronRight, FileText, Shield, AlertTriangle, Lock, Link2, FileCheck, CheckSquare, Settings, Home, BookOpen } from 'lucide-react'
 import { FullLifecycleDiagram } from '@/components/FullLifecycleDiagram'
 import { AssetsArchitectureDiagram } from '@/components/AssetsArchitectureDiagram'
+import Link from 'next/link'
 
 const phases: PhaseStatus[] = [
   {
@@ -160,6 +161,151 @@ const phases: PhaseStatus[] = [
   }
 ]
 
+const pageIndex = [
+  {
+    name: 'Ciclo de Vida',
+    href: '/',
+    icon: Home,
+    description: 'Visão geral completa do ciclo de vida com as 5 fases, diagramas interativos e status de cada etapa do processo regulatório.',
+    whatToExpect: [
+      'Diagrama completo do ciclo de vida em Mermaid',
+      'Visão geral das 5 fases do processo',
+      'Arquitetura de ativos e ferramentas',
+      'Status e progresso de cada fase',
+      'Artefatos, ferramentas e documentos de cada fase'
+    ]
+  },
+  {
+    name: 'Documentos',
+    href: '/documentos',
+    icon: FileText,
+    description: 'Repositório centralizado de toda a documentação do projeto, incluindo SOPs, normas regulatórias, manuais e templates.',
+    whatToExpect: [
+      'Lista completa de documentos organizados por categoria',
+      'SOPs (Standard Operating Procedures)',
+      'Normas regulatórias (ISO, IEC, RDC, FDA)',
+      'Manuais de ferramentas (Azure DevOps, DefectDojo, SharePoint, etc.)',
+      'Templates e formulários',
+      'Visualização de documentos em Markdown',
+      'Fluxo de documentos explicado'
+    ]
+  },
+  {
+    name: 'Conformidade',
+    href: '/conformidade',
+    icon: Shield,
+    description: 'Visão geral da conformidade regulatória, mostrando como cada norma é implementada no processo e onde encontrar evidências.',
+    whatToExpect: [
+      'Matriz de conformidade por norma regulatória',
+      'Descrição de como cada norma é implementada',
+      'Links para documentos e processos relacionados',
+      'Evidências de conformidade por norma',
+      'ISO 13485, IEC 62304, IEC 62366-1, ISO 14971, ISO/IEC 27001 & 27701, RDC 657/2022, FDA 21 CFR Part 820, CE Mark'
+    ]
+  },
+  {
+    name: 'Riscos',
+    href: '/riscos',
+    icon: AlertTriangle,
+    description: 'Gestão de riscos conforme ISO 14971, incluindo cálculo de RPN, tipos de riscos, processo de aceitação e acompanhamento via FMEA.',
+    whatToExpect: [
+      'Processo completo de gestão de riscos',
+      'Cálculo de RPN (Risk Priority Number)',
+      'Tipos de riscos: Safety, Security, Usability',
+      'Fluxo de aceitação de riscos',
+      'Acompanhamento de riscos e FMEA',
+      'Links para SOP-002 e documentos relacionados'
+    ]
+  },
+  {
+    name: 'Segurança',
+    href: '/seguranca',
+    icon: Lock,
+    description: 'Gestão centralizada de vulnerabilidades usando OWASP DefectDojo, incluindo scans SAST/SCA/DAST, SLAs e processo completo.',
+    whatToExpect: [
+      'Diagrama Mermaid do fluxo de gestão de vulnerabilidades',
+      'Arquitetura: DefectDojo como Fonte da Verdade',
+      'Scans automatizados (SAST, SCA, DAST)',
+      'Classificação de severidade e SLAs',
+      'Processo completo: identificação → deduplicação → triagem → correção → auto-close',
+      'Monitoramento contínuo',
+      'Links para SOP-003 e processos automatizados'
+    ]
+  },
+  {
+    name: 'Rastreabilidade',
+    href: '/rastreabilidade',
+    icon: Link2,
+    description: 'Rastreabilidade completa de requisitos, código, testes e releases, garantindo visibilidade total do ciclo de vida.',
+    whatToExpect: [
+      'Explicação do conceito de rastreabilidade',
+      'Importância para conformidade regulatória',
+      'Como a rastreabilidade é alcançada',
+      'Ferramentas utilizadas (Azure DevOps, Git, SharePoint)',
+      'Matriz de rastreabilidade',
+      'Links para documentos relacionados'
+    ]
+  },
+  {
+    name: 'Auditoria',
+    href: '/auditoria',
+    icon: FileCheck,
+    description: 'Evidências de auditoria organizadas por norma regulatória, mostrando onde encontrar cada tipo de evidência e como acessá-las.',
+    whatToExpect: [
+      'Evidências organizadas por norma regulatória',
+      'Onde encontrar cada tipo de evidência',
+      'Como acessar as evidências',
+      'Checklist pré-auditoria',
+      'Sistemas de armazenamento (Azure DevOps, DefectDojo, SharePoint, SonarCloud)',
+      'Tipos de evidências por fase do ciclo de vida'
+    ]
+  },
+  {
+    name: 'QA & RA',
+    href: '/qa-ra',
+    icon: CheckSquare,
+    description: 'Detalhamento do processo de Quality Assurance & Regulatory Affairs, do Gate de Segurança até a aprovação do DAST.',
+    whatToExpect: [
+      'Diagrama Mermaid detalhado: Gate de Segurança → DAST Aprovado',
+      'Pontos de decisão críticos explicados',
+      'Fluxo completo com todos os caminhos possíveis',
+      'Integração com DefectDojo e Azure DevOps',
+      'Testes E2E (Smoke, Sanity, Full E2E)',
+      'Processo de DAST (OWASP ZAP)',
+      'Links para SOPs relacionados'
+    ]
+  },
+  {
+    name: 'Automação',
+    href: '/automacao',
+    icon: Settings,
+    description: 'Lista completa de processos automatizados, incluindo totalizadores dinâmicos, diagramas de fluxo e integrações.',
+    whatToExpect: [
+      'Totalizadores dinâmicos de processos automatizados',
+      'Processos por trigger (automático, agendado, sob demanda)',
+      'Diagrama Mermaid do pipeline CI/CD completo',
+      'Diagrama de integrações automatizadas',
+      'Lista detalhada de cada processo automatizado',
+      'Evidências geradas por automação',
+      'Links para documentação completa'
+    ]
+  },
+  {
+    name: 'Aceitação de Riscos',
+    href: '/aceitacao-riscos',
+    icon: AlertTriangle,
+    description: 'Processo de aceitação de riscos residuais, incluindo fluxo, princípios e documentação necessária.',
+    whatToExpect: [
+      'Diagrama Mermaid do fluxo de aceitação de riscos',
+      'Princípios de aceitação de riscos',
+      'Níveis de aprovação',
+      'Documentação necessária',
+      'Processo de reavaliação',
+      'Links para Risk Acceptance Plan e formulários'
+    ]
+  }
+]
+
 export default function Home() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
@@ -180,6 +326,112 @@ export default function Home() {
             <Badge variant="outline" className="px-4 py-1.5 border-gray-300">ISO 14971:2019</Badge>
           </div>
         </div>
+
+        {/* O que é o Ciclo de Vida */}
+        <Card className="mb-12 border-cyan shadow-lg">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-3 text-2xl">
+              <BookOpen className="h-8 w-8 text-primary" />
+              O que é o Ciclo de Vida de Software Médico?
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4 text-gray-700">
+            <p className="text-lg leading-relaxed">
+              O <strong>ciclo de vida de software médico (SaMD - Software as a Medical Device)</strong> é um processo estruturado 
+              que garante que o software desenvolvido seja seguro, eficaz e esteja em conformidade com as normas regulatórias 
+              aplicáveis. O nCommand Lite segue rigorosamente o padrão <strong>IEC 62304 Class B</strong>, que estabelece 
+              requisitos para o ciclo de vida de software médico.
+            </p>
+            
+            <div className="p-4 bg-primary/5 border border-primary/20 rounded-lg">
+              <h3 className="font-semibold text-lg mb-2 text-gray-800">Princípio: Compliance as Code</h3>
+              <p className="text-sm leading-relaxed">
+                O nCommand Lite implementa <strong>"Compliance as Code"</strong>, onde todas as exigências regulatórias são 
+                impostas por <strong>barreiras técnicas automatizadas (Gates)</strong> dentro da esteira de produção, garantindo 
+                conformidade sem dependência de processos manuais. Isso significa que a conformidade é verificada automaticamente 
+                em cada etapa do desenvolvimento.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-lg mb-3 text-gray-800">As 5 Fases do Ciclo de Vida</h3>
+              <ol className="list-decimal list-inside space-y-2 text-sm">
+                <li><strong>FASE 1 - Planejamento, Risco e Infraestrutura:</strong> Garantir que funcionalidades são seguras, necessárias e usáveis antes do desenvolvimento.</li>
+                <li><strong>FASE 2 - Desenvolvimento e Codificação:</strong> Produção controlada do código fonte com validações automáticas.</li>
+                <li><strong>FASE 3 - Verificação Automatizada e Ingestão de Segurança:</strong> Validação técnica e centralização de achados de segurança.</li>
+                <li><strong>FASE 4 - Validação e Liberação (Release):</strong> Congelamento da versão e geração do Design History File (DHF).</li>
+                <li><strong>FASE 5 - Monitoramento e Gestão de Vulnerabilidades:</strong> Tratativa contínua de riscos pós-mercado.</li>
+              </ol>
+            </div>
+
+            <div className="p-4 bg-gray-50 border border-gray-200 rounded-lg">
+              <h3 className="font-semibold text-lg mb-2 text-gray-800">Ferramentas e Fontes da Verdade</h3>
+              <ul className="list-disc list-inside space-y-1 text-sm">
+                <li><strong>Azure DevOps:</strong> Fonte da Verdade de Execução (requisitos, código, testes)</li>
+                <li><strong>OWASP DefectDojo:</strong> Fonte da Verdade de Segurança (vulnerabilidades centralizadas)</li>
+                <li><strong>SharePoint Online:</strong> Repositório Legal (DHF e documentos imutáveis)</li>
+                <li><strong>Azure Cloud (IaC):</strong> Infraestrutura Imutável gerenciada via Terraform</li>
+              </ul>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Índice de Páginas */}
+        <Card className="mb-12 border-cyan shadow-lg">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-3 text-2xl">
+              <FileText className="h-8 w-8 text-primary" />
+              Índice de Páginas
+            </CardTitle>
+            <CardDescription>
+              Navegue pelas páginas da aplicação para explorar cada aspecto do ciclo de vida
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {pageIndex.map((page) => {
+                const Icon = page.icon
+                return (
+                  <Link
+                    key={page.href}
+                    href={page.href}
+                    className="p-6 border border-gray-200 rounded-lg hover:border-primary hover:shadow-lg transition-all group"
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="flex-shrink-0 p-3 bg-primary/10 rounded-lg group-hover:bg-primary group-hover:text-white transition-colors">
+                        <Icon className="h-6 w-6 text-primary group-hover:text-white" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-semibold text-lg mb-2 text-gray-800 group-hover:text-primary transition-colors">
+                          {page.name}
+                        </h3>
+                        <p className="text-sm text-gray-600 mb-3 leading-relaxed">
+                          {page.description}
+                        </p>
+                        <div className="mt-4">
+                          <p className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">O que você encontrará:</p>
+                          <ul className="space-y-1">
+                            {page.whatToExpect.slice(0, 3).map((item, idx) => (
+                              <li key={idx} className="text-xs text-gray-600 flex items-start gap-2">
+                                <span className="text-primary mt-1">•</span>
+                                <span>{item}</span>
+                              </li>
+                            ))}
+                            {page.whatToExpect.length > 3 && (
+                              <li className="text-xs text-primary font-medium mt-1">
+                                + {page.whatToExpect.length - 3} itens adicionais...
+                              </li>
+                            )}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                )
+              })}
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Arquitetura de Ativos */}
         <AssetsArchitectureDiagram />

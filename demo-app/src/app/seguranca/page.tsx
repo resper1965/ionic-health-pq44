@@ -2,9 +2,9 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import { MermaidDiagram } from '@/components/MermaidDiagram'
 import { Shield, FileText, ExternalLink, Lock, AlertTriangle, CheckCircle2 } from 'lucide-react'
 import Link from 'next/link'
-import { getSlugFromPath } from '@/lib/document-slugs'
 
 export default function SegurancaPage() {
   return (
@@ -155,10 +155,78 @@ export default function SegurancaPage() {
           </CardContent>
         </Card>
 
-        {/* Process Flow */}
+        {/* Process Flow Diagram */}
         <Card className="mb-8 border-cyan shadow-lg">
           <CardHeader>
-            <CardTitle>Processo de Gestão de Vulnerabilidades</CardTitle>
+            <CardTitle className="flex items-center gap-3">
+              <Shield className="h-6 w-6 text-primary" />
+              Fluxo de Gestão de Vulnerabilidades
+            </CardTitle>
+            <CardDescription>
+              Diagrama completo do processo de gestão de vulnerabilidades desde a identificação até o monitoramento contínuo
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <MermaidDiagram 
+              chart={`flowchart TD
+    Start([Início do Processo]) --> Identify[Identificação<br/>FASE 3: Pipeline CI/CD]
+    
+    Identify --> Scan1[SAST: SonarCloud<br/>Análise Estática]
+    Identify --> Scan2[SCA: Trivy<br/>Bibliotecas e Dependências]
+    Identify --> Scan3[DAST: OWASP ZAP<br/>Aplicação em Runtime]
+    
+    Scan1 --> Ingest1[Ingestão DefectDojo<br/>Script defectdojo-ingest.sh]
+    Scan2 --> Ingest1
+    Scan3 --> Ingest1
+    
+    Ingest1 --> Dedup[Deduplicação Automática<br/>DefectDojo identifica duplicatas]
+    Dedup --> Classify[Classificação<br/>Por Severidade CVSS]
+    
+    Classify --> Critical{Vulnerabilidade<br/>Crítica/Alta?}
+    
+    Critical -->|Sim| Block[❌ Pipeline Bloqueado<br/>Exit Code 1]
+    Block --> CreateBug[DefectDojo → Azure DevOps<br/>Bug Criado Automaticamente]
+    CreateBug --> Assign[Atribuído ao<br/>Desenvolvedor]
+    
+    Critical -->|Não| Continue[✅ Pipeline Continua]
+    
+    Classify --> Triage[Triagem<br/>AppSec/QA]
+    Triage --> Decision{True Positive<br/>ou False Positive?}
+    
+    Decision -->|False Positive| MarkFP[Marcar False Positive<br/>Não Impacta Métricas]
+    Decision -->|True Positive| PushADO[Push para Azure DevOps<br/>Criar Bug Work Item]
+    
+    PushADO --> Assign
+    Assign --> Fix[Desenvolvedor Corrige<br/>Código]
+    Fix --> Commit[Commit com Referência<br/>ao Work Item]
+    Commit --> NewScan[Novo Scan Executado]
+    NewScan --> AutoClose[Auto-Close<br/>DefectDojo fecha como Mitigated]
+    
+    Continue --> Monitor[Monitoramento Contínuo<br/>FASE 5]
+    AutoClose --> Monitor
+    
+    Monitor --> DailyScan[Scan Diário<br/>Trivy em Imagens Produção]
+    DailyScan --> DailyIngest[Ingestão Diária<br/>DefectDojo]
+    DailyIngest --> Triage
+    
+    style Start fill:#54c4cd,stroke:#48b3bb,stroke-width:2px,color:#fff
+    style Identify fill:#54c4cd,stroke:#48b3bb,stroke-width:2px,color:#fff
+    style Block fill:#ef4444,stroke:#dc2626,stroke-width:2px,color:#fff
+    style Continue fill:#10b981,stroke:#059669,stroke-width:2px,color:#fff
+    style AutoClose fill:#10b981,stroke:#059669,stroke-width:2px,color:#fff
+    style Critical fill:#f59e0b,stroke:#d97706,stroke-width:2px,color:#fff
+    style Decision fill:#f59e0b,stroke:#d97706,stroke-width:2px,color:#fff
+    style Dedup fill:#0078d4,stroke:#005a9e,stroke-width:2px,color:#fff
+    style Monitor fill:#8b5cf6,stroke:#7c3aed,stroke-width:2px,color:#fff`}
+              className="min-h-[600px]"
+            />
+          </CardContent>
+        </Card>
+
+        {/* Process Steps */}
+        <Card className="mb-8 border-cyan shadow-lg">
+          <CardHeader>
+            <CardTitle>Processo de Gestão de Vulnerabilidades - Etapas Detalhadas</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
