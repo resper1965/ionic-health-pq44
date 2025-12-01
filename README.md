@@ -36,12 +36,11 @@
 ├── security/                # Gestão de segurança
 │   ├── defectdojo/          # Scripts de integração DefectDojo
 │   └── scans/               # Configurações de scanners
-├── spec-kit/                # Kit de Gestão de Especificações
-│   ├── templates/           # Templates de especificação
-│   ├── tools/               # Ferramentas de automação
-│   ├── scripts/             # Scripts auxiliares
-│   └── specs/               # Especificações geradas
 ├── demo-app/                # Aplicação de apresentação (não parte do produto)
+│   ├── spec-kit/            # Kit de Gestão de Especificações (para apresentação)
+│   │   ├── templates/       # Templates de especificação
+│   │   ├── tools/           # Ferramentas de automação
+│   │   └── specs/           # Especificações geradas
 │   └── (Aplicação web para visualizar o processo)
 ├── src/                     # Código fonte da aplicação
 └── tests/                   # Testes automatizados
@@ -55,7 +54,7 @@ O desenvolvimento segue o processo integrado documentado em `docs/sop/SOP-001.md
 ### Fases do Processo
 
 1. **Planejamento, Risco e Infraestrutura**: Gestão de demanda, análise de risco e aprovação
-2. **Desenvolvimento e Codificação**: Versionamento Gitflow, desenvolvimento e PRs
+2. **Desenvolvimento e Codificação**: Versionamento Azure Repos (Gitflow), desenvolvimento e PRs
 3. **Verificação Automatizada**: CI/CD com integração DefectDojo
 4. **Validação e Liberação**: Testes, DHF e gates de aprovação
 5. **Monitoramento**: Vigilância pós-mercado e gestão de vulnerabilidades
@@ -65,23 +64,13 @@ O desenvolvimento segue o processo integrado documentado em `docs/sop/SOP-001.md
 ### Para Desenvolvedores
 
 1. Leia `docs/GETTING-STARTED.md` para configuração inicial
-2. Configure o Spec-Kit: `spec-kit/USAGE.md`
-3. Revise os SOPs em `docs/sop/`
-
-### Spec-Kit
-
-O **Spec-Kit** é o conjunto de ferramentas para gestão de especificações técnicas:
-
-- **Templates**: Especificações de features, APIs, infraestrutura e usabilidade
-- **Ferramentas**: Geração automática, sincronização com Azure DevOps, rastreabilidade
-- **Validação**: Verificação de estrutura e conformidade
-
-**Guia de Uso**: `spec-kit/USAGE.md`
+2. Revise os SOPs em `docs/sop/`
+3. Configure acesso ao Azure DevOps (Repos, Boards, Pipelines)
 
 ## Documentação
 
 - **Processo Integrado**: `docs/PROCESS.md`
 - **SOPs**: `docs/sop/`
-- **Spec-Kit**: `spec-kit/README.md`
+- **Aplicação de Apresentação**: `demo-app/README.md`
 - **Conformidade Regulatória**: `docs/regulatory/COMPLIANCE-MATRIX.md`
 

@@ -54,9 +54,9 @@ O QA Leader aprova o início apenas com riscos mitigados.
 
 **Objetivo**: Produção controlada.
 
-#### Versionamento (Gitflow)
+#### Versionamento (Azure Repos - Gitflow)
 
-- Branches `feat/ID-Item`
+- Branches `feat/ID-Item` no Azure Repos
 
 #### Desenvolvimento & UX Formativo
 
