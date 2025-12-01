@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { ArrowRight, Zap } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 
 export default function LandingPage() {
   return (
@@ -13,7 +13,7 @@ export default function LandingPage() {
         {/* Hero Section */}
         <div className="text-center space-y-8 mb-16">
           <div className="flex flex-col items-center justify-center gap-6 mb-8">
-            <div className="flex items-center justify-center gap-4">
+            <div className="flex items-center justify-center">
               <Image
                 src="/images/ionic-logo.png"
                 alt="Ionic Health"
@@ -22,10 +22,6 @@ export default function LandingPage() {
                 className="h-20 w-auto object-contain"
                 priority
               />
-              <div className="h-16 w-px bg-gray-300"></div>
-              <div className="h-20 w-20 rounded-full bg-primary/20 flex items-center justify-center">
-                <Zap className="h-12 w-12 text-primary" />
-              </div>
             </div>
             <h1 className="text-6xl md:text-7xl font-bold text-gradient-primary">
               nCommand Lite
