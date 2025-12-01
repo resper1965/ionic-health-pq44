@@ -67,7 +67,7 @@ export function Navigation() {
   return (
     <>
       {/* Desktop Navigation */}
-      <nav className="hidden md:flex items-center gap-1 bg-white border-b border-gray-200 px-6 py-4 shadow-sm">
+      <nav className="hidden md:flex items-center gap-1 bg-white border-b border-gray-200 px-6 py-4 shadow-sm fixed top-0 left-0 right-0 z-50">
         <Link href="/" className="flex items-center gap-3 mr-8 hover:opacity-80 transition-opacity">
           <Image
             src="/images/ionic-logo.png"
@@ -104,7 +104,7 @@ export function Navigation() {
       </nav>
 
       {/* Mobile Navigation */}
-      <nav className="md:hidden bg-white border-b border-gray-200 shadow-sm">
+      <nav className="md:hidden bg-white border-b border-gray-200 shadow-sm fixed top-0 left-0 right-0 z-50">
         <div className="flex items-center justify-between px-4 py-3">
           <Link href="/" className="flex items-center gap-2">
             <Image
