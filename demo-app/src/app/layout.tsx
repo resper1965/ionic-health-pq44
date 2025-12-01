@@ -6,7 +6,8 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'nCommand Lite - Ciclo de Vida Regulatório',
-  description: 'Demonstração do ciclo de vida completo de desenvolvimento de SaMD',
+  description: 'Aplicação de apresentação demonstrando o ciclo de vida completo de desenvolvimento de SaMD',
+  viewport: 'width=device-width, initial-scale=1',
 }
 
 export default function RootLayout({
@@ -20,4 +21,3 @@ export default function RootLayout({
     </html>
   )
 }
-
