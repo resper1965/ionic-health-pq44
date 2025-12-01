@@ -41,6 +41,8 @@
 │   ├── tools/               # Ferramentas de automação
 │   ├── scripts/             # Scripts auxiliares
 │   └── specs/               # Especificações geradas
+├── demo-app/                # Aplicação de apresentação (não parte do produto)
+│   └── (Aplicação web para visualizar o processo)
 ├── src/                     # Código fonte da aplicação
 └── tests/                   # Testes automatizados
 

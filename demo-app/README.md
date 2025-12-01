@@ -21,13 +21,14 @@ Esta aplicação demonstra visualmente o ciclo de vida completo do processo de d
 
 ## Funcionalidade
 
-Aplicação web simples que permite ao usuário registrar e visualizar informações básicas de saúde:
+Aplicação web interativa que apresenta visualmente:
 
-- **Calculadora de IMC** (Índice de Massa Corporal)
-- **Registro de Sintomas** (diário simples)
-- **Visualização de Histórico** (gráficos básicos)
+- **Visualização das 5 Fases** do ciclo de vida regulatório
+- **Diagramas Mermaid** dos fluxos de processo
+- **Arquitetura de Ativos** (ferramentas, clouds, plataformas)
+- **Documentação Interativa** do processo completo
 
-**Nota**: Esta é uma aplicação de demonstração. **NÃO deve ser usada para diagnóstico médico real**.
+**Propósito**: Educacional e demonstrativo para apresentações, treinamentos e referência do processo.
 
 ## Estrutura
 
@@ -89,9 +90,17 @@ Consulte a documentação completa em `docs/`:
 - **FASE 4**: `docs/phase-4/` - Release, DHF, certificados
 - **FASE 5**: `docs/phase-5/` - Monitoramento, pós-mercado
 
-## Aviso Legal
+## Sobre Esta Aplicação
 
-⚠️ **Esta é uma aplicação demonstrativa**. Não deve ser usada para fins médicos reais. Para uso em produção, consulte os requisitos regulatórios completos.
+⚠️ **Esta é uma aplicação de apresentação/demonstração** do processo de desenvolvimento do nCommand Lite. 
+
+- ✅ Visualiza o processo completo de desenvolvimento SaMD
+- ✅ Serve como material educacional e de apresentação
+- ❌ **NÃO é parte do produto nCommand Lite**
+- ❌ **NÃO é uma aplicação médica**
+- ❌ **NÃO é usada em produção**
+
+Para informações sobre o produto nCommand Lite, consulte a documentação principal do projeto.
 
 ---
 
