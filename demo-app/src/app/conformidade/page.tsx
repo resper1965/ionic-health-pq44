@@ -126,7 +126,7 @@ export default function ConformidadePage() {
             </h1>
           </div>
           <p className="text-xl text-gray-700 font-light max-w-3xl mx-auto">
-            Visão completa das normas e regulamentações aplicáveis ao nCommand Lite e como são implementadas através do processo "Compliance as Code".
+            Visão completa das normas e regulamentações aplicáveis ao nCommand Lite e como são implementadas através do processo &quot;Compliance as Code&quot;.
           </p>
         </div>
 
@@ -135,7 +135,7 @@ export default function ConformidadePage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-3">
               <CheckCircle2 className="h-6 w-6 text-primary" />
-              Metodologia "Compliance as Code"
+              Metodologia &quot;Compliance as Code&quot;
             </CardTitle>
           </CardHeader>
           <CardContent>

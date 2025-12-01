@@ -2,10 +2,9 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { FileCheck, ExternalLink, Info, FileText, Shield, ChevronDown, ChevronUp } from 'lucide-react'
+import { FileCheck, ExternalLink, Info, FileText, ChevronDown, ChevronUp } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
-import { getSlugFromPath } from '@/lib/document-slugs'
 
 interface RegulatoryEvidence {
   norm: string

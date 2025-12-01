@@ -2,9 +2,8 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { FileCheck, AlertTriangle, FileText, ExternalLink } from 'lucide-react'
+import { FileCheck, AlertTriangle, FileText } from 'lucide-react'
 import Link from 'next/link'
-import { getSlugFromPath } from '@/lib/document-slugs'
 import { MermaidDiagram } from '@/components/MermaidDiagram'
 
 const acceptanceFlow = `flowchart TD
@@ -146,7 +145,7 @@ export default function AceitacaoRiscosPage() {
                 <h3 className="font-semibold text-gray-800 mb-2">4. Armazenamento</h3>
                 <p className="text-sm text-gray-700">
                   O formulário assinado é armazenado no SharePoint no diretório `/Risk Management/Risk Acceptance Forms/`, 
-                  e o Work Item no Azure DevOps é atualizado com o status "Accepted" e link para o documento.
+                  e o Work Item no Azure DevOps é atualizado com o status &quot;Accepted&quot; e link para o documento.
                 </p>
               </div>
 

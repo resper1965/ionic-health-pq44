@@ -177,8 +177,8 @@ export default function QARAPage() {
                 Após deploy em staging, três níveis de testes E2E são executados sequencialmente:
               </p>
               <ul className="list-disc list-inside ml-4 mt-2 text-sm space-y-1">
-                <li><strong>Smoke Tests:</strong> Validação básica de sistema (< 2 min). <strong>Bloqueio:</strong> Se falhar, pipeline bloqueado</li>
-                <li><strong>Sanity Tests:</strong> Funcionalidades críticas básicas (< 5 min). <strong>Bloqueio:</strong> Se falhar, pipeline bloqueado</li>
+                <li><strong>Smoke Tests:</strong> Validação básica de sistema (&lt; 2 min). <strong>Bloqueio:</strong> Se falhar, pipeline bloqueado</li>
+                <li><strong>Sanity Tests:</strong> Funcionalidades críticas básicas (&lt; 5 min). <strong>Bloqueio:</strong> Se falhar, pipeline bloqueado</li>
                 <li><strong>E2E Tests:</strong> Fluxos críticos completos (10-30 min). <strong>Aviso:</strong> Falhas geram notificação mas não bloqueiam pipeline</li>
               </ul>
             </div>
