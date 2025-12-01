@@ -3,13 +3,12 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { ArrowRight, CheckCircle2, FileText, Shield, AlertTriangle, Lock, Link2, FileCheck, CheckSquare, Settings, Home as HomeIcon, BookOpen, Zap, PlayCircle, Workflow } from 'lucide-react'
-import { FullLifecycleDiagram } from '@/components/FullLifecycleDiagram'
 import Link from 'next/link'
 
 const pageIndex = [
   {
     name: 'Ciclo de Vida',
-    href: '/',
+    href: '/ciclo-de-vida',
     icon: Workflow,
     description: 'Visualização completa das 5 fases do ciclo de vida regulatório com diagramas interativos e detalhamento de cada etapa.',
     color: 'primary'
@@ -206,7 +205,7 @@ export default function Home() {
           </Card>
         </section>
 
-        {/* Fluxo do Ciclo de Vida - Destaque */}
+        {/* Link para Ciclo de Vida Detalhado */}
         <section className="mb-16">
           <Card className="border-2 border-primary shadow-xl bg-gradient-to-br from-primary/5 via-white to-primary/5">
             <CardHeader className="pb-4">
@@ -218,8 +217,17 @@ export default function Home() {
                 Visualize o processo completo desde o planejamento até o monitoramento pós-mercado
               </CardDescription>
             </CardHeader>
-            <CardContent>
-              <FullLifecycleDiagram />
+            <CardContent className="text-center py-8">
+              <Link
+                href="/ciclo-de-vida"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors font-semibold text-lg shadow-lg"
+              >
+                Ver Detalhamento Completo das 5 Fases
+                <ArrowRight className="h-6 w-6" />
+              </Link>
+              <p className="text-sm text-gray-600 mt-4">
+                Diagramas interativos, artefatos, ferramentas e documentação de cada fase
+              </p>
             </CardContent>
           </Card>
         </section>
