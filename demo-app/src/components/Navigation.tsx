@@ -19,6 +19,11 @@ const navigation = [
     icon: FileText,
   },
   {
+    name: 'PQ.039',
+    href: '/pq39',
+    icon: FileText,
+  },
+  {
     name: 'Ciclo de Vida',
     href: '/ciclo-de-vida',
     icon: Workflow,

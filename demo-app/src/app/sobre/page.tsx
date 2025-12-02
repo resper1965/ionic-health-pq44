@@ -97,6 +97,13 @@ const pageIndex = [
     icon: TrendingUp,
     description: 'Comparativo detalhado entre o processo tradicional e a automação nCommand Lite.',
     color: 'green'
+  },
+  {
+    name: 'PQ.039 (Evolução)',
+    href: '/pq39',
+    icon: TrendingUp,
+    description: 'Comparativo detalhado do Design Control: processo tradicional vs automação nCommand Lite.',
+    color: 'blue'
   }
 ]
 
