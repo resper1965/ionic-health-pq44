@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { ArrowRight, CheckCircle2, FileText, Shield, AlertTriangle, Lock, Link2, FileCheck, CheckSquare, Settings, BookOpen, Zap, PlayCircle, Workflow } from 'lucide-react'
+import { ArrowRight, CheckCircle2, FileText, Shield, AlertTriangle, Lock, Link2, FileCheck, CheckSquare, Settings, BookOpen, Zap, PlayCircle, Workflow, Users, TrendingUp } from 'lucide-react'
 import Link from 'next/link'
 
 const pageIndex = [
@@ -76,6 +76,27 @@ const pageIndex = [
     icon: AlertTriangle,
     description: 'Processo de aceitação de riscos residuais com fluxo completo, princípios e documentação.',
     color: 'yellow'
+  },
+  {
+    name: 'Usabilidade',
+    href: '/usabilidade',
+    icon: Users,
+    description: 'Engenharia de Usabilidade conforme IEC 62366, com testes formativos e somativos integrados ao design.',
+    color: 'pink'
+  },
+  {
+    name: 'Ferramentas',
+    href: '/ferramentas',
+    icon: Settings,
+    description: 'Guias de configuração e uso das ferramentas do ecossistema (Azure DevOps, PyTM, etc).',
+    color: 'gray'
+  },
+  {
+    name: 'PQ.044 (Evolução)',
+    href: '/pq44',
+    icon: TrendingUp,
+    description: 'Comparativo detalhado entre o processo tradicional e a automação nCommand Lite.',
+    color: 'green'
   }
 ]
 
@@ -158,46 +179,6 @@ const phases = [
 export default function SobrePage() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-primary/5 to-transparent border-b-2 border-primary/20">
-        <div className="container mx-auto px-4 py-20 max-w-7xl">
-          <div className="text-center space-y-6">
-            <div className="flex flex-col items-center justify-center gap-4 mb-6">
-              <div className="flex items-center justify-center gap-4">
-                <Image
-                  src="/images/ionic-logo.png"
-                  alt="Ionic Health"
-                  width={200}
-                  height={70}
-                  className="h-16 w-auto object-contain"
-                  priority
-                />
-                <div className="h-12 w-px bg-gray-300"></div>
-                <div className="h-16 w-16 rounded-full bg-primary/20 flex items-center justify-center">
-                  <Zap className="h-10 w-10 text-primary" />
-                </div>
-              </div>
-              <h1 className="text-6xl md:text-7xl font-bold text-gradient-primary">
-                nCommand Lite
-              </h1>
-            </div>
-            <p className="text-2xl md:text-3xl text-gray-700 font-light max-w-3xl mx-auto leading-relaxed">
-              Ciclo de Vida Completo de Desenvolvimento SaMD
-            </p>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              Plataforma de apresentação demonstrando o processo regulatório completo de software médico,
-              desde o planejamento até o monitoramento pós-mercado, seguindo rigorosamente as normas IEC 62304 Class B.
-            </p>
-            <div className="flex justify-center gap-3 mt-8 flex-wrap">
-              <Badge variant="gray" className="px-4 py-2 text-sm">IEC 62304 Class B</Badge>
-              <Badge variant="outline" className="px-4 py-2 text-sm border-gray-300">ISO 13485:2016</Badge>
-              <Badge variant="outline" className="px-4 py-2 text-sm border-gray-300">ISO 14971:2019</Badge>
-              <Badge variant="outline" className="px-4 py-2 text-sm border-gray-300">Compliance as Code</Badge>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <div className="container mx-auto px-4 py-16 max-w-7xl">
         {/* O que é */}
         <section className="mb-16">
@@ -408,15 +389,15 @@ export default function SobrePage() {
                 >
                   <div className="flex items-start gap-4">
                     <div className={`flex-shrink-0 p-3 rounded-lg bg-white border-2 border-current transition-colors ${page.color === 'primary' ? 'text-primary' :
-                        page.color === 'gray' ? 'text-gray-600' :
-                          page.color === 'blue' ? 'text-blue-600' :
-                            page.color === 'orange' ? 'text-orange-600' :
-                              page.color === 'red' ? 'text-red-600' :
-                                page.color === 'purple' ? 'text-purple-600' :
-                                  page.color === 'green' ? 'text-green-600' :
-                                    page.color === 'cyan' ? 'text-cyan-600' :
-                                      page.color === 'indigo' ? 'text-indigo-600' :
-                                        'text-yellow-600'
+                      page.color === 'gray' ? 'text-gray-600' :
+                        page.color === 'blue' ? 'text-blue-600' :
+                          page.color === 'orange' ? 'text-orange-600' :
+                            page.color === 'red' ? 'text-red-600' :
+                              page.color === 'purple' ? 'text-purple-600' :
+                                page.color === 'green' ? 'text-green-600' :
+                                  page.color === 'cyan' ? 'text-cyan-600' :
+                                    page.color === 'indigo' ? 'text-indigo-600' :
+                                      'text-yellow-600'
                       }`}>
                       <Icon className="h-6 w-6" />
                     </div>
