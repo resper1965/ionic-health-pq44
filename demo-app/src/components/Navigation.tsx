@@ -4,8 +4,14 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/utils/cn'
-import { Home, FileText, Settings, Menu, X, Shield, AlertTriangle, Lock, Link2, FileCheck, CheckSquare, Workflow } from 'lucide-react'
+import { Home, FileText, Settings, Menu, X, Shield, AlertTriangle, Lock, Link2, FileCheck, CheckSquare, Workflow, ChevronDown } from 'lucide-react'
 import { useState } from 'react'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 
 const navigation = [
   {
@@ -75,6 +81,11 @@ const navigation = [
   },
 ]
 
+// Itens principais que ficam visíveis (primeiros 5)
+const mainNavigation = navigation.slice(0, 5)
+// Itens secundários que vão para o menu "Mais"
+const moreNavigation = navigation.slice(5)
+
 export function Navigation() {
   const pathname = usePathname()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -83,7 +94,7 @@ export function Navigation() {
     <>
       {/* Desktop Navigation */}
       <nav className="hidden md:flex items-center gap-1 bg-white border-b border-gray-200 px-6 py-4 shadow-sm fixed top-0 left-0 right-0 z-50">
-        <Link href="/" className="flex items-center gap-3 mr-8 hover:opacity-80 transition-opacity">
+        <Link href="/" className="flex items-center gap-3 mr-8 hover:opacity-80 transition-opacity flex-shrink-0">
           <Image
             src="/images/ionic-logo.png"
             alt="Ionic Health"
@@ -95,8 +106,8 @@ export function Navigation() {
           <div className="h-8 w-px bg-gray-300"></div>
           <h1 className="text-xl font-bold text-gray-800">nCommand Lite</h1>
         </Link>
-        <div className="flex items-center gap-1">
-          {navigation.map((item) => {
+        <div className="flex items-center gap-1 flex-1 min-w-0">
+          {mainNavigation.map((item) => {
             const Icon = item.icon
             const isActive = pathname === item.href
             return (
@@ -104,7 +115,7 @@ export function Navigation() {
                 key={item.name}
                 href={item.href}
                 className={cn(
-                  'flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-smooth',
+                  'flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-smooth whitespace-nowrap flex-shrink-0',
                   isActive
                     ? 'bg-primary text-white shadow-cyan'
                     : 'text-gray-700 hover:bg-gray-100 hover:text-primary'
@@ -115,6 +126,42 @@ export function Navigation() {
               </Link>
             )
           })}
+          
+          {moreNavigation.length > 0 && (
+            <DropdownMenu>
+              <DropdownMenuTrigger
+                className={cn(
+                  'flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-smooth whitespace-nowrap flex-shrink-0 outline-none',
+                  moreNavigation.some(item => pathname === item.href)
+                    ? 'bg-primary text-white shadow-cyan'
+                    : 'text-gray-700 hover:bg-gray-100 hover:text-primary'
+                )}
+              >
+                <span>Mais</span>
+                <ChevronDown className="h-4 w-4" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                {moreNavigation.map((item) => {
+                  const Icon = item.icon
+                  const isActive = pathname === item.href
+                  return (
+                    <DropdownMenuItem key={item.name} asChild>
+                      <Link
+                        href={item.href}
+                        className={cn(
+                          'flex items-center gap-2',
+                          isActive && 'bg-gray-100 font-medium'
+                        )}
+                      >
+                        <Icon className="h-4 w-4" />
+                        <span>{item.name}</span>
+                      </Link>
+                    </DropdownMenuItem>
+                  )
+                })}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
         </div>
       </nav>
 
