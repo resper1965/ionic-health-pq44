@@ -14,6 +14,11 @@ const navigation = [
     icon: Home,
   },
   {
+    name: 'PQ.044',
+    href: '/pq44',
+    icon: FileText,
+  },
+  {
     name: 'Ciclo de Vida',
     href: '/ciclo-de-vida',
     icon: Workflow,
