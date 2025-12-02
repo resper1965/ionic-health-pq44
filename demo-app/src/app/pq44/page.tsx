@@ -245,6 +245,174 @@ export default function PQ44Page() {
                     })}
                 </div>
 
+                {/* Detailed Improvements Banner */}
+                <Card className="mb-12 border-4 border-gradient-to-r from-green-500 to-blue-500 shadow-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-hidden">
+                    <div className="absolute inset-0 bg-grid-white/5 [mask-image:linear-gradient(0deg,transparent,black)]"></div>
+                    <CardHeader className="relative z-10 text-center pb-8">
+                        <div className="inline-block px-6 py-2 mb-4 bg-green-500/20 border border-green-400/50 rounded-full">
+                            <span className="text-green-300 font-semibold text-sm">📊 IMPACTO QUANTIFICADO</span>
+                        </div>
+                        <CardTitle className="text-4xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-green-300 via-blue-300 to-purple-300 bg-clip-text text-transparent">
+                            Ganhos por Etapa do PQ.044
+                        </CardTitle>
+                        <CardDescription className="text-gray-300 text-lg max-w-3xl mx-auto">
+                            Redução de tempo e automação implementada em cada fase do processo regulatório
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent className="relative z-10">
+                        {/* Main Stats Grid */}
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                            <div className="bg-gradient-to-br from-blue-600/30 to-blue-700/20 border border-blue-400/30 rounded-xl p-6 text-center backdrop-blur-sm">
+                                <div className="text-5xl font-bold text-blue-300 mb-2">~70%</div>
+                                <div className="text-sm text-blue-200 font-medium">Tempo Total Economizado</div>
+                                <div className="text-xs text-gray-400 mt-2">Média geral do ciclo</div>
+                            </div>
+                            <div className="bg-gradient-to-br from-green-600/30 to-green-700/20 border border-green-400/30 rounded-xl p-6 text-center backdrop-blur-sm">
+                                <div className="text-5xl font-bold text-green-300 mb-2">100%</div>
+                                <div className="text-sm text-green-200 font-medium">Compliance Automatizada</div>
+                                <div className="text-xs text-gray-400 mt-2">Gates técnicos obrigatórios</div>
+                            </div>
+                            <div className="bg-gradient-to-br from-purple-600/30 to-purple-700/20 border border-purple-400/30 rounded-xl p-6 text-center backdrop-blur-sm">
+                                <div className="text-5xl font-bold text-purple-300 mb-2">15</div>
+                                <div className="text-sm text-purple-200 font-medium">Registros Automatizados</div>
+                                <div className="text-xs text-gray-400 mt-2">Upload automático p/ Docnix</div>
+                            </div>
+                            <div className="bg-gradient-to-br from-orange-600/30 to-orange-700/20 border border-orange-400/30 rounded-xl p-6 text-center backdrop-blur-sm">
+                                <div className="text-5xl font-bold text-orange-300 mb-2">12+</div>
+                                <div className="text-sm text-orange-200 font-medium">Quality Gates</div>
+                                <div className="text-xs text-gray-400 mt-2">Checkpoints automatizados</div>
+                            </div>
+                        </div>
+
+                        {/* Stage-by-Stage Improvements */}
+                        <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
+                            <h3 className="text-2xl font-bold text-center mb-8 text-white">Melhorias Detalhadas por Etapa</h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                {/* Stage 6.2 */}
+                                <div className="bg-gradient-to-br from-blue-500/10 to-transparent border border-blue-400/20 rounded-xl p-5">
+                                    <div className="text-xs font-semibold text-blue-400 mb-2">ETAPA 6.2</div>
+                                    <div className="text-lg font-bold text-white mb-3">Demand Entry</div>
+                                    <div className="flex items-baseline gap-2 mb-2">
+                                        <div className="text-4xl font-bold text-blue-300">75%</div>
+                                        <TrendingUp className="h-5 w-5 text-blue-400" />
+                                    </div>
+                                    <div className="text-sm text-gray-300">redução em aprovações</div>
+                                    <div className="text-xs text-gray-500 mt-2">2-4 sem → 2-5 dias</div>
+                                </div>
+
+                                {/* Stage 6.3 */}
+                                <div className="bg-gradient-to-br from-green-500/10 to-transparent border border-green-400/20 rounded-xl p-5">
+                                    <div className="text-xs font-semibold text-green-400 mb-2">ETAPA 6.3</div>
+                                    <div className="text-lg font-bold text-white mb-3">Risk Management</div>
+                                    <div className="flex items-baseline gap-2 mb-2">
+                                        <div className="text-4xl font-bold text-green-300">60%</div>
+                                        <TrendingUp className="h-5 w-5 text-green-400" />
+                                    </div>
+                                    <div className="text-sm text-gray-300">análise mais rápida</div>
+                                    <div className="text-xs text-gray-500 mt-2">1-2 sem → 1-3 dias</div>
+                                </div>
+
+                                {/* Stage 6.4 */}
+                                <div className="bg-gradient-to-br from-purple-500/10 to-transparent border border-purple-400/20 rounded-xl p-5">
+                                    <div className="text-xs font-semibold text-purple-400 mb-2">ETAPA 6.4</div>
+                                    <div className="text-lg font-bold text-white mb-3">Specification</div>
+                                    <div className="flex items-baseline gap-2 mb-2">
+                                        <div className="text-4xl font-bold text-purple-300">50%</div>
+                                        <TrendingUp className="h-5 w-5 text-purple-400" />
+                                    </div>
+                                    <div className="text-sm text-gray-300">especificação acelerada</div>
+                                    <div className="text-xs text-gray-500 mt-2">3-6 sem → 1-2 sem</div>
+                                </div>
+
+                                {/* Stage 6.5 */}
+                                <div className="bg-gradient-to-br from-orange-500/10 to-transparent border border-orange-400/20 rounded-xl p-5">
+                                    <div className="text-xs font-semibold text-orange-400 mb-2">ETAPA 6.5</div>
+                                    <div className="text-lg font-bold text-white mb-3">Planning</div>
+                                    <div className="flex items-baseline gap-2 mb-2">
+                                        <div className="text-4xl font-bold text-orange-300">65%</div>
+                                        <TrendingUp className="h-5 w-5 text-orange-400" />
+                                    </div>
+                                    <div className="text-sm text-gray-300">redução em overhead</div>
+                                    <div className="text-xs text-gray-500 mt-2">2-3 sem → 3-5 dias</div>
+                                </div>
+
+                                {/* Stage 6.6 */}
+                                <div className="bg-gradient-to-br from-red-500/10 to-transparent border border-red-400/20 rounded-xl p-5">
+                                    <div className="text-xs font-semibold text-red-400 mb-2">ETAPA 6.6</div>
+                                    <div className="text-lg font-bold text-white mb-3">Development</div>
+                                    <div className="flex items-baseline gap-2 mb-2">
+                                        <div className="text-4xl font-bold text-red-300">90%</div>
+                                        <TrendingUp className="h-5 w-5 text-red-400" />
+                                    </div>
+                                    <div className="text-sm text-gray-300">menos verificação manual</div>
+                                    <div className="text-xs text-gray-500 mt-2">Feedback instantâneo</div>
+                                </div>
+
+                                {/* Stage 6.7 */}
+                                <div className="bg-gradient-to-br from-cyan-500/10 to-transparent border border-cyan-400/20 rounded-xl p-5">
+                                    <div className="text-xs font-semibold text-cyan-400 mb-2">ETAPA 6.7</div>
+                                    <div className="text-lg font-bold text-white mb-3">Verification</div>
+                                    <div className="flex items-baseline gap-2 mb-2">
+                                        <div className="text-4xl font-bold text-cyan-300">80%</div>
+                                        <TrendingUp className="h-5 w-5 text-cyan-400" />
+                                    </div>
+                                    <div className="text-sm text-gray-300">verificação mais rápida</div>
+                                    <div className="text-xs text-gray-500 mt-2">2-4 sem → 2-3 dias</div>
+                                </div>
+
+                                {/* Stage 6.8 */}
+                                <div className="bg-gradient-to-br from-pink-500/10 to-transparent border border-pink-400/20 rounded-xl p-5">
+                                    <div className="text-xs font-semibold text-pink-400 mb-2">ETAPA 6.8</div>
+                                    <div className="text-lg font-bold text-white mb-3">Validation</div>
+                                    <div className="flex items-baseline gap-2 mb-2">
+                                        <div className="text-4xl font-bold text-pink-300">95%</div>
+                                        <TrendingUp className="h-5 w-5 text-pink-400" />
+                                    </div>
+                                    <div className="text-sm text-gray-300">manutenção de matriz</div>
+                                    <div className="text-xs text-gray-500 mt-2">1-2 sem → Tempo real</div>
+                                </div>
+
+                                {/* Stage 6.9 */}
+                                <div className="bg-gradient-to-br from-yellow-500/10 to-transparent border border-yellow-400/20 rounded-xl p-5">
+                                    <div className="text-xs font-semibold text-yellow-400 mb-2">ETAPA 6.9</div>
+                                    <div className="text-lg font-bold text-white mb-3">Release</div>
+                                    <div className="flex items-baseline gap-2 mb-2">
+                                        <div className="text-4xl font-bold text-yellow-300">85%</div>
+                                        <TrendingUp className="h-5 w-5 text-yellow-400" />
+                                    </div>
+                                    <div className="text-sm text-gray-300">processo acelerado</div>
+                                    <div className="text-xs text-gray-500 mt-2">3-5 dias → 4-8 horas</div>
+                                </div>
+                            </div>
+
+                            {/* Summary Bar */}
+                            <div className="mt-8 pt-8 border-t border-white/10">
+                                <div className="flex flex-wrap justify-center gap-6 text-center">
+                                    <div>
+                                        <div className="text-3xl font-bold text-green-300 mb-1">6 semanas</div>
+                                        <div className="text-sm text-gray-400">economizadas por release</div>
+                                    </div>
+                                    <div className="hidden md:block w-px bg-white/20"></div>
+                                    <div>
+                                        <div className="text-3xl font-bold text-blue-300 mb-1">Zero</div>
+                                        <div className="text-sm text-gray-400">erros manuais</div>
+                                    </div>
+                                    <div className="hidden md:block w-px bg-white/20"></div>
+                                    <div>
+                                        <div className="text-3xl font-bold text-purple-300 mb-1">100%</div>
+                                        <div className="text-sm text-gray-400">rastreabilidade</div>
+                                    </div>
+                                    <div className="hidden md:block w-px bg-white/20"></div>
+                                    <div>
+                                        <div className="text-3xl font-bold text-orange-300 mb-1">Instantâneo</div>
+                                        <div className="text-sm text-gray-400">feedback de qualidade</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
+
                 {/* Comparison Tables */}
                 <div className="space-y-8 mb-12">
                     <div className="text-center mb-8">
