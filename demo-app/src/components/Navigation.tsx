@@ -29,6 +29,11 @@ const navigation = [
     icon: FileText,
   },
   {
+    name: 'Ferramentas',
+    href: '/ferramentas',
+    icon: Settings,
+  },
+  {
     name: 'Conformidade',
     href: '/conformidade',
     icon: Shield,
