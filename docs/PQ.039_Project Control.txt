@@ -1,0 +1,785 @@
+SUMMARY
+
+OBJECTIVE2
+
+REFERENCES2
+
+SCOPE2
+
+RESPONSIBILITIES2
+
+TERMS AND DEFINITIONS3
+
+PROCEDURE5
+
+FLOW CHART6
+
+DESIGN STAGES8
+
+DEVELOPMENT RECORDS11
+
+DEVICE MASTER RECORD (RMP)13
+
+DESIGN HISTORY FILE (RHPJ)15
+
+NOMENCLATURE OF RECORDS15
+
+PILOT LOT16
+
+VERSION CONTROL16
+
+DESIGN CHANGE (APJ)17
+
+RECORDS AND STORAGE LOCATIONS18
+
+REVISION HISTORY20
+
+APPROVAL TABLE20
+
+OBJECTIVE
+
+Establish and maintain a design control procedure to ensure that all products developed by IONIC Health are safe, effective, and meet regulatory requirements during their lifetime.
+
+REFERENCES
+
+COLLEGIATE BOARD RESOLUTION – RDC NO. 665 OF 30 MARCH 2022 – Provides for the Good
+
+Manufacturing Practices for Medical Products and In Vitro Diagnostic Products.
+
+ISO 13485:2016 Medical devices - Quality management systems: Requirements for regulatory purposes Medical Devices Regulation (EU) 2017/745
+
+FDA 21 CFR Part 820 - Quality System Regulation
+
+ABNT NBR 16752:2020 Technical drawing - Requirements for presentation on drawing sheets
+
+SCOPE
+
+This procedure applies to the Technology sector and to the person responsible for production control.
+
+RESPONSIBILITIES
+
+Chief Technology Officer (CTO) or his delegate
+
+Ensure the necessary resources for the products to meet all determined and mandatory requirements.
+
+Ensure the approval of procedures related to their areas.
+
+Head of Engineering or his delegate
+
+Ensure that this procedure is kept up-to-date and that all other staff members are properly instructed in its use.
+
+Ensure the approval (review) of this procedure.
+
+Analysts, Designers, Technicians and Engineers
+
+Responsible for the correct implementation of this procedure.
+
+Ensure that development requirements are met.
+
+Ensure that deadlines are met.
+
+Responsible for the PCP
+
+Comply with the requirements related to the manufacture of pilot batch.
+
+TERMS AND DEFINITIONS
+
+Risk Management File: A set of records and other documents produced by the risk management process.
+
+Input Data: A list of the usage and performance requirements of a product that are used as the basis for the project.
+
+Output Data: Result of the work in each phase of the project and the total effort to complete it.
+
+Essential Performance: is the performance of a clinical function of the medical device whose loss or degradation beyond acceptable limits may result in unacceptable risk to the patient, user or third parties.
+
+Technical Dossier: set of documents that describe the elements that make up the product, indicating the characteristics, purpose, mode of use, content, special precautions, potential risks, production process and additional information.
+
+Specifications: requirements to which products, components, production activities, technical assistance, services, quality systems or any other activity must conform.
+
+Work Instruction: documents that define the instructions for a specific activity, containing detailed explanations.
+
+Project Release: This step aims to ensure that the project is not released for production until it has been approved by the people assigned to do so. Designated persons should review all records required for the project's history, ensuring that the project is complete and that the final project is compatible with approved plans prior to release.
+
+Pilot Batch: consists of the manufacture of a significant number of parts, where the parts are separated for verification and must undergo real or simulated tests and trials to verify the consistency of the production process.
+
+Technical Standards: documents issued by an officially recognized body that establish guidelines and restrictions for the development of a technical activity or product.
+
+Finished Product: any finished product or accessory suitable for use, properly packaged and identified, ready for sale.
+
+Project Review: documented, systematic and complete examination carried out during the project to assess its adequacy to the established planning and objectives.
+
+Device Master Record (DMR): set of records necessary for the realization of a product, referring to all the details of methods, controls, manufacturing facilities, necessary conditions and everything else required for the manufacture of the finished product.
+
+QMS: Quality Management System
+
+SRS – Software Requirements Specification: is the document that contains the specification of software requirements, describing in a complete, clear and verifiable way all the functions, restrictions and interfaces that the software must meet.
+
+Project Transfer: Ensuring that the design bases for a product and its components are correctly translated into terms of production specifications. The approval, including the project ID, date, and person approving the specifications, must be documented. A pilot batch must be selected for testing under real or simulated conditions. These tests must be performed in accordance with established procedures and/or current standards for the product, and records of the tests must be kept. These tests should also be carried out, if necessary, when there are changes in the product or manufacturing process.
+
+Project Validation: confirmation through analysis and objective evidence that the requirements defined for a given purpose consistently lead to the expected outcome. In relation to a project, it means establishing and documenting objective evidence that the product specifications meet the needs of the user and its intended use. In relation to a process, it means establishing and documenting objective evidence that the process will consistently produce an outcome that meets predetermined specifications.
+
+Project Verification: verification carried out by competent personnel in a timely manner. It must verify that the project output meets the entry requirements and that the project is suitable for its intended use. The results of the project verification, including the identification of the verified project, verification methods, date, and description of the person responsible for the verification, must be documented in the historical record of the project.
+
+Service life: period estimated by the manufacturer during which a product correctly fulfills the functions for which it was designed.
+
+PROCEDURE
+
+Design control consists of a structured set of activities used to transform user requirements and clinical needs into a safe, effective, and compliant medical device. Through design control, monitoring and documentation is carried out from the definition of user needs to the transfer of a product ready for production, covering all phases of product design and development.
+
+Through this process, it is possible to ensure that each decision and/or change is traceable, that the project meets the regulatory requirements of the regions determined for commercialization, that it meets safety requirements, and that the results correspond to clinical and functional expectations.
+
+Several other processes complement and occur concurrently with this process, generating records that are also part of the project's technical documentation, such as:
+
+PQ.040 – RISK MANAGEMENT
+
+PQ.044 – SOFTWARE PRODUCT CONTROL
+
+PQ.061 – VALIDATION OF OPERATIONS AND PROJECT TRANSFER
+
+PQ.068 – SOFTWARE QA & COMPLIANCE PROCESS
+
+In addition to the above, there are also other processes such as: usability, clinical evaluation, registrations and certification, technical documentation, post-market surveillance, among others.
+
+The design control process flow adopted at IONIC Health is based on the waterfall model, commonly found in medical device guides and standards. It has sequential phases from the user's needs to obtaining a medical device, however, in practice it is common that during development it is necessary to go back to previous phases, making the necessary adjustments until the completion of the product. The figure below shows the model described:
+
+Figure 1 – Waterfall model of project management.
+
+FLOW CHART
+
+IONIC Health's design control process is shown in the following flowchart. Next to each stage are listed the records that are usually generated, and there may be more or less records according to each project or project change.
+
+Figure 2 – Design control flowchart.
+
+DESIGN STAGES
+
+Design control is divided into several steps that are documented according to the forms set out in the QMS, this evidence is known as design records.
+
+Design records are documents that are generated according to the stage at which the project is located and are updated whenever necessary. Through the design records, it is possible to identify inputs and outputs, expected results, verifications and validations, critical analyses, foreseeable risks of misuse or failure of the product, evaluate the manufacturing process, establish appropriate controls, and other aspects of the project.
+
+The records related to each project must conform to the language(s) in which the project will be applicable, and the templates used must reflect this scenario. In situations where there are no approved models in the document system in place, a translation of the actual model must be made and the reference "Translated to [insert language] from official source, refer to the original in [insert source language] in IONIC Health's quality system" must be included in a footnote.
+
+In addition to the templates pre-established by this procedure, there are also other records or documents that complement the project records. These other documents may come from other procedures, documents of external origin or specific records that are necessary to meet some requirement.
+
+Below are described the stages of the project as well as the indication of the existing form for its respective documentation:
+
+Stage
+
+Form
+
+Project Request (NPJ)
+
+It is the formal registration of the request for a new project for the company's engineering. It has a brief rationale and description of the need/opportunity to create a new project.
+
+R039.001
+
+Request
+
+–
+
+Project
+
+Project Charter (OPJ)
+
+The project charter is the document that formalizes the approval of a new project. In it, those responsible for carrying out the activities are designated.
+
+R039.002
+
+Charter
+
+–
+
+Project
+
+Project Plan (CPJ)
+
+The project schedule (or planning) is responsible for pointing out the stages of the project, determining their respective responsible parties and indicating the expected
+
+R039.003
+
+Plan
+
+–
+
+Project
+
+Stage
+
+Form
+
+dates for completion of each stage. It is documented through R039.003 – Project Plan
+
+and must be updated as the stages progress.
+
+For projects involving software, the software development plan is also part of this planning stage, including those responsible for the steps, methodologies, resources, and other information of the software life cycle.
+
+Input Data (EPJ)
+
+The input data presents all the requirements that the project must meet, whether they are normative, regulatory, or performance. They present all the documentary references used in the development of the project, involving bibliographic, normative or material references, including other products already on the market.
+
+These should be complete and well-defined, without ambiguous or conflicting data. Input data must be quantitatively and/or qualitatively measurable, allowing the definition of test methods with tolerances and approval criteria.
+
+The input data documentation contains the product description, the technical and commercial description, the risk class, the applicable regulations, the market data, the benchmarking (if any), the intention to use, the specific cleanliness requirements (where applicable), the component specifications, the packaging and labeling requirements, the interface with other devices, usability and security requirements, verification and validation methods, and risk management control requirements.
+
+The Software Requirements Specifications (SRS) also integrate the input data when it is a project involving software.
+
+R039.004 – Input Data
+
+Output Data (SPJ)
+
+This step corresponds not only to the project outputs, but also to the verification step.
+
+Output data is the results from development that must meet the input requirements. As a result of the development process, the following can be obtained: material specifications, bills of materials, work instructions, production processes, test reports, laboratory tests, risk management files, manuals, training material and other documents that are essential to enable verification between inputs and outputs.
+
+R039.007–Output Data
+
+Stage
+
+Form
+
+Design verification is the confirmation of results through evidence, to ensure that the output data met the input data, meeting the acceptance criteria, as determined. Among the outputs that are evidence of verification of the project are: label testing, electromagnetic compatibility test reports, safety and efficacy report, user manual, among others.
+
+In a project involving software, the definition of the architecture is understood as an output data, detailing each module and its respective interfaces. Unit tests and integration tests are part of the design verification.
+
+Project Review (RPJ)
+
+The project must undergo reviews throughout its design and development, verifying that the results meet the requirements and that adjustments and new actions are necessary. This stage of critical analysis takes place with several participants, involving representatives necessary according to each specific project.
+
+R039.008–Project Review
+
+Project Transfer (TPJ)
+
+Once all project outputs have been verified, the next step is to carry out the transfer from the project (to production). The transfer of projects makes it possible to produce pilot batches, where the following will be taken into account: production capacity (delivering quality products), availability of components and raw materials, qualification of suppliers, training of personnel and validation of new processes.
+
+In projects that include software, software release also integrates project transfer.
+
+R039.005–Project Transfer
+
+Project Validation (VPJ)
+
+Unlike verification that seeks data confirmation, design validation seeks to demonstrate that the design specifications meet the determined requirements and that the product meets the user's needs.
+
+When it involves hardware, this step occurs only after the production of the pilot batch, confirming the essential performance of the product. In the case of software, the validation would be on a release candidate, a stable version with all the features implemented.
+
+R039.006–Project Validation
+
+Stage
+
+Form
+
+When there is a product family, if validation is not performed on all models, it must be performed on a representative product.
+
+Validation is accomplished by confirming, through analysis and objective evidence, that the requirements defined for a given purpose consistently lead to the expected outcome, i.e., it means establishing and documenting objective evidence that the product specifications meet the user's needs and intended use.
+
+Validation can occur according to PQ.061 – VALIDATION OF OPERATIONS AND DESIGN TRANSFER or PQ.068 – SOFTWARE QA & COMPLIANCE PROCESS
+
+according to the particularities of the project.
+
+Project Release (LPJ)
+
+The product is only released for production after it has been released by a designated person. For release, the RHPJ records are verified and approval is carried out by means of digital signature, using the appropriate means for the QMS.
+
+R039.009–Project Release
+
+DEVELOPMENT RECORDS
+
+During the development of a project, several documents and records are generated to document the outputs. The generation of this documentation will occur according to the need in each project, with specific models as presented below, and the use of all of them is not mandatory for each project.
+
+Description
+
+Document or Record
+
+Testing and Validation Report (RTV)
+
+Report to describe tests, trials and studies carried out on parts, prototypes, pilots or any component of the product. Test reports are used as evidence during the validation phase of the project. The report shall contain the objectives, validation methods, relevant references, tools used, a description of the results, the persons involved in the tests, where the tests were carried out and the identifications of the constituents, where appropriate.
+
+R039.018–Testing and Validation Report
+
+Work Instructions
+
+IT – Work Instruction
+
+Description
+
+Document or Record
+
+The creation and standardization of Work Instructions are guided by PQ.001 – Control of Documents and Records. Some examples of work instructions are: assembly instructions, packaging and labeling instructions, assembly diagrams, instructions for technical assistance, instructions for installation, among others.
+
+Firmware Validation (VFW)
+
+Firmware verification is evidence that the hardware works with the firmware. It must verify that all hardware functionalities work as defined in the project input data. This document should include the hardware version, firmware version, verified functionality, and notes on the performance of the hardware with the specified firmware.
+
+R039.019 – Firmware Validation
+
+Technical Drawing (DES)
+
+The purpose of a technical drawing is to visually communicate how something works or is manufactured. For ease of understanding, the symbols, perspectives, units of measurement, and page layout should be standardized. Technical drawings need to be clear and objective, and a drawing or a set of drawings makes it possible to manufacture a part.
+
+Whenever possible, the NBR 16752:2020 standard should be used as a reference when creating technical drawings or changing page layouts. Where applicable, these drawings shall be referenced in R039.015 – Component Specification.
+
+Technical drawings may be generated from the software used, in which case, they will be referenced according to the Nomenclature of Records section. Technical drawings must have information on: version, date, responsible, unit of measurement and tolerance information (when applicable), material and color (when applicable) and other relevant information.
+
+R039.020 – Technical Drawing
+
+Product Accessories List (LAP)
+
+The product accessory list guides the production, logistics, and installation team on the accessories approved for use at the time of installation. These accessories should not be included in R039.013 – Bill of Materials, they are optional items necessary to ensure the operation of the product according to the customer's infrastructure and other scenarios mapped during product development.
+
+R039.027 – Product Accessories List
+
+Description
+
+Document or Record
+
+Document Change Request (SAD)
+
+List and evaluate changes to documents when the change control process is not required. Risks should be reviewed to ensure that no significant risks are introduced during this process.
+
+R039.024 – Document Change Request
+
+Manufacturing Files (FAB)
+
+Manufacturing files are the files or documents that are used as input into a manufacturing process. Examples of manufacturing files are the 3D models used with 3D printers or the set of Gerber files for the production of new electronic boards. The extensions used for 3D modeling are .stl and .stp. For electronic boards, the file is usually compressed in .zip or .rar format.
+
+Where applicable, these files should be referenced in the component specification -
+
+R039.015 – Component Specification.
+
+According to the file format
+
+Any supporting documentation required to assist in proper use, installation, safety, or other situations that may be critical to the correct operation and/or installation of the product must conform to established version control. Each of these documents should mention the version of the product for which it is intended, where applicable.
+
+This supporting documentation should be prepared considering the risks identified during the development of the project and recorded in the risk management file, in order to mitigate any deviation or misuse that arises after the product launch.
+
+DEVICE MASTER RECORD (RMP)
+
+R039.011 – Device Master Record consists of the set of records and documents that enable the standardized production of a product. The RMP (or DMR) contains all the information and specifications that are necessary for the manufacture of the product, and must be approved before the transfer of the product and, if necessary, reviewed before the release of the product.
+
+Product specifications include: technical drawings and diagrams; bills of materials; raw material specifications; software design specifications (source codes); printed circuit board layout; among others.
+
+The specifications of the production process include: infrastructure requirements necessary to manufacture that product (or part of it); equipment used in production; work instructions; specific conditions of the production environment (if necessary); qualified suppliers; among others.
+
+Packaging and labeling specifications include: methods to ensure proper packaging; technical drawings of labels and packaging; material specifications; label layout; among others.
+
+Inspection and testing procedures include, but are not restricted to, work instructions, including the respective acceptance criteria.
+
+Processes related to installation, maintenance and technical assistance include: work instructions, necessary training, installation manuals, technical assistance manuals; among others.
+
+Due to the specific nature of each project, some records may or may not be necessary, and it is necessary to justify the non-applicability when there is one. It may also be necessary to create unforeseen records on time, in which case the templates available by the company must be used. Although there is no specific code, they should be listed in the RMP (or DMR) as needed.
+
+Below are forms that are part of the RMP (or DMR):
+
+Description
+
+Form
+
+Bill of Materials (BOM)
+
+It is the list that indicates the coding, description and quantity of components and/or raw materials required to produce one unit of a semi-finished or finished product.
+
+R039.013–Billof Materials
+
+Packaging and Labeling Specifications (EMB)
+
+This document contains all the necessary markings on the labeling and packaging of the product. Along with the document, specific files may also be made available for the preparation of the labeling and/or packaging of the product and accessories.
+
+R039.014 – Packaging andLabeling Specifications
+
+Component Specification (EMP)
+
+This document contains information specific to a component or raw material of a product. The characteristics and requirements relevant to the purchase and receipt of these materials are indicated.
+
+R039.015–
+
+Component Specification
+
+Critical Components List (LCC)
+
+It consists of a list of all the critical components of the product and the supplier of each item. The criticality of each component must be assessed, taking into account the risk
+
+R039.017–Critical Components List
+
+of the component to the product, whether it is an impact on operations or the inability to purchase new parts.
+
+Device History Record (RHP)
+
+The RHP is a form used to record all stages of a product’s manufacturing process, demonstrating that it was produced in accordance with the RMP specifications. All relevant information is recorded, such as the manufacturing date, reference documents used (including their version), test and inspection results, labeling and packaging, and the person responsible for the release of the finished product.
+
+R039.016–Device History Record
+
+DESIGN HISTORY FILE (RHPJ)
+
+R039.010 – Design History File (RHPJ) references all records and documents necessary to prove that the project was developed in accordance with previously planned requirements. This document has a compilation of documents that are part of the design and development of a product, containing the user's inputs and needs, outputs that were generated during development, verification and validation protocols, reports, analyses and reviews, and other records generated to demonstrate compliance with applicable requirements.
+
+The RHPJ is issued after all the stages of validation of a product or change to it, being one of the requirements for the project release to be carried out.
+
+NOMENCLATURE OF RECORDS
+
+The coding of the records occurs according to the standards established in the company's QMS, and their automatic numbering is carried out according to the system used for document management.
+
+However, a good practice is established for the inclusion of acronyms and coding according to IT.114 – Nomenclature Standard, in addition to the version of the product in the title of each registration, facilitating the identification and search of registrations.
+
+Thus, the nomenclature follows the model below:
+
+[Acronym]. [Internal Code] [Registry Type] [Product] [Version] Taking as an example a bill of materials of Robot RMGE01 version 1.2.1, we have:
+
+BOM.006.01.001 Robot Bill of Materials RMGE01 1.2.1GOOD006.01.001Bill of MaterialsRobot RMGE011.2.1BOM.006.01.001 Robot Bill of Materials RMGE01 1.2.1GOOD006.01.001Bill of MaterialsRobot RMGE011.2.1
+
+BOM.006.01.001 Robot Bill of Materials RMGE01 1.2.1
+
+GOOD
+
+006.01.001
+
+Bill of Materials
+
+Robot RMGE01
+
+1.2.1
+
+BOM.006.01.001 Robot Bill of Materials RMGE01 1.2.1
+
+GOOD
+
+006.01.001
+
+Bill of Materials
+
+Robot RMGE01
+
+1.2.1
+
+R039.013 Acronym –Bill of MaterialsInternalCodeRecord TypeProduct/ModelProductVersionR039.013 Acronym –Bill of MaterialsInternalCodeRecord TypeProduct/ModelProductVersion
+
+R039.013 Acronym –
+
+Bill of Materials
+
+Internal
+
+Code
+
+Record Type
+
+Product/Model
+
+Product
+
+Version
+
+R039.013 Acronym –
+
+Bill of Materials
+
+Internal
+
+Code
+
+Record Type
+
+Product/Model
+
+Product
+
+Version
+
+PILOT LOT
+
+The pilot lot is a controlled manufacturing that is carried out after the completion of the development and verification phase of the project. The production of the pilot batch aims to validate the manufacturing methods and processes, perform essential performance, usability, safety, inspection and testing tests, and identify necessary adjustments before normal production begins. For these reasons, the pilot batch must be manufactured under conditions equivalent to those of normal production, using representative materials, equipment, work instructions and quality controls, in order to ensure traceability, compliance with regulatory requirements and generation of evidence for process validation and regulatory submissions when applicable.
+
+The request for a pilot batch is carried out by Product Engineering, which must apply the necessary training in advance. The responsibility for supervising the processes and parameters is the responsibility of Product Engineering, accompanying the production team. If the pilot batch is for a new version of an existing product, it is up to engineering to determine which processes will be monitored. Quality controls are normally carried out by the Quality & Regulatory team. At the end of the entire process, the final approval is carried out through Product Engineering.
+
+If there is a need to review the RMP after the manufacture of the pilot batch, versioning is carried out before the project release stage.
+
+VERSION CONTROL
+
+Semantic versioning is adopted for product version control.
+
+Each version of the project/product is to be identified by an X.Y.Z code, being:
+
+LevelChange TypeRegulatory ImpactExamples
+
+X (Major Version)Significant change that
+
+impacts safety, essential performance, clinical requirements, or intent to use
+
+Discharge: typically requires new regulatory submission or formal notification
+
+Hardware:
+
+Architecture change Software:
+
+New clinical algorithm
+
+New mode of operation
+
+Inclusion of critical functionality
+
+Architecture change
+
+Y (Minor Version)Moderate change, with no
+
+direct impact on essential requirements or security, but changes performance, internal architecture, or usability.
+
+Medium: does not require submission. It must be documented and controlled internally. Requires review of risk management.
+
+Hardware:
+
+Replacing components or parts Software:
+
+Performance optimization
+
+Improved usability in the UI
+
+Algorithm adjustment with no clinical impact
+
+Non-critical software or firmware change
+
+Z (Fixes/Patch)Point-in-time, corrective, or
+
+cosmetic changes, with no impact on safety, performance, or intent to use requirements.
+
+Low: does not require submission. It must be documented and controlled internally.
+
+Hardware:
+
+Replacement of components with equivalents
+
+Mechanical tolerance adjustment Software:
+
+Bug Fixes
+
+Spelling corrections in the UI
+
+DESIGN CHANGE (APJ)
+
+Design changes can follow two paths, as shown in the flowchart, and are classified as critical or non-critical. The changes considered critical involve versioning of the larger type, in which case it must be followed by a review of all the steps from the input data. Non-critical changes, on the other hand, involve minor versioning and/or corrections/patches, where after the development stage they move on to the production of a pilot batch (if necessary) or go directly to the validation stage.
+
+All changes to the product must be recorded and documented, so that they are critically analyzed by responsible people in each area that has an impact on the changes. The documentation of the changes must be carried out in a complementary way, so as not to compromise the traceability of the information. Changes are made only after analysis and approvals by those involved, and are documented through R039.012 – Project Changes.
+
+As required, changes involving a product may also be tracked through IONIC Health's internal process, PQ.042 – Change Control. Monitoring by this process does not exclude the need for R039.012 – Project Changes.
+
+RECORDS AND STORAGE LOCATIONS
+
+Record
+
+Storage
+
+Retention time
+
+Discard
+
+R039.001 – Project Request
+
+Docnix/Sharepoint
+
+15 years after last commercial product release
+
+Discard/Delete
+
+R039.002 – Project Charter
+
+Docnix/Sharepoint
+
+15 years after last commercial product release
+
+Discard/Delete
+
+R039.003 – Project Plan
+
+Docnix/Sharepoint
+
+15 years after last commercial product release
+
+Discard/Delete
+
+R039.004 – Input Data
+
+Docnix/Sharepoint
+
+15 years after last commercial product release
+
+Discard/Delete
+
+R039.005 – Project Transfer
+
+Docnix/Sharepoint
+
+15 years after last commercial product release
+
+Discard/Delete
+
+R039.006 – Project Validation
+
+Docnix/Sharepoint
+
+15 years after last commercial product release
+
+Discard/Delete
+
+R039.007 – Output Data
+
+Docnix/Sharepoint
+
+15 years after last commercial product release
+
+Discard/Delete
+
+R039.008 – Project Review
+
+Docnix/Sharepoint
+
+15 years after last commercial product release
+
+Discard/Delete
+
+R039.009 – Project Release
+
+Docnix/Sharepoint
+
+15 years after last commercial product release
+
+Discard/Delete
+
+R039.010 – Design History File
+
+Docnix/Sharepoint
+
+15 years after last commercial product release
+
+Discard/Delete
+
+R039.011 – Device Master Record
+
+Docnix/Sharepoint
+
+15 years after last commercial product release
+
+Discard/Delete
+
+R039.012 – Project Changes
+
+Docnix/Sharepoint
+
+15 years after last commercial product release
+
+Discard/Delete
+
+R039.013 – Bill of Materials
+
+Docnix/Sharepoint
+
+15 years after last commercial product release
+
+Discard/Delete
+
+R039.014 – Packaging and Labeling Specifications
+
+Docnix/Sharepoint
+
+15 years after last commercial product release
+
+Discard/Delete
+
+R039.015 – Component Specification
+
+Docnix/Sharepoint
+
+15 years after last commercial product release
+
+Discard/Delete
+
+R039.016 – Device History Record
+
+Docnix/Sharepoint
+
+15 years after last commercial product release
+
+Discard/Delete
+
+R039.017 – List of Critical Components
+
+Docnix/Sharepoint
+
+15 years after last commercial product release
+
+Discard/Delete
+
+R039.018 – Testing and Validation Report
+
+Docnix/Sharepoint
+
+15 years after last commercial product release
+
+Discard/Delete
+
+R039.019 – Firmware Verification
+
+Docnix/Sharepoint
+
+15 years after last commercial product release
+
+Discard/Delete
+
+R039.020 – Technical Drawing
+
+Docnix/Sharepoint
+
+15 years after last commercial product release
+
+Discard/Delete
+
+R039.024 – Document Change Request
+
+Docnix/Sharepoint
+
+15 years after last commercial product release
+
+Discard/Delete
+
+R039.027 – Product Accessories List
+
+Docnix/Sharepoint
+
+15 years after last commercial product release
+
+Discard/Delete
+
+REVISION HISTORY
+
+Dateand Time
+
+Responsible
+
+V.
+
+Comment
+
+2025Sep
+
+16 17:29
+
+AlexandreSeiji Fukuda Ribas
+
+5
+
+Chapter 6 adjustment, Pilot lot section included, nomenclature of records included and design change description.
+
+APPROVAL TABLE
+
+PREPARED BY:
+
+REVIEWED BY:
+
+APPROVED BY:
+
+Alexandre Seiji Fukuda Ribas
+
+Rodrigo Luís Pereira Barreto
+
+Tarcia Marvilla Valga
+
+DATE: Feb 4, 2025
+
+DATE: Sep 16, 2025
+
+DATE: Sep 17, 2025
