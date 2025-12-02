@@ -48,4 +48,14 @@ tmp/
 temp/
 *.tmp
 
+# Documentation files (PDFs, Office documents - large files)
+*.pdf
+*.xlsx
+*.xls
+*.docx
+*.doc
+*.pptx
+*.ppt
+*.Zone.Identifier
+
 .vercel
