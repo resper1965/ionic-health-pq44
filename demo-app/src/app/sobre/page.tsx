@@ -79,7 +79,83 @@ const pageIndex = [
   }
 ]
 
-export default function HomePage() {
+const phases = [
+  {
+    number: 1,
+    title: 'Planejamento, Risco e Infraestrutura',
+    objective: 'Garantir que funcionalidades são seguras, necessárias e usáveis',
+    description: 'Features nascem no Azure Boards com análise completa de usabilidade (IEC 62366). O Arquiteto consulta o histórico do DefectDojo para evitar reintrodução de falhas antigas, realizando análise de erro de uso (uFMEA). Riscos viram Work Items vinculados aos requisitos.',
+    activities: [
+      'Gestão de demanda e definição de perfil de usuário',
+      'Análise de risco (Safety, Security & Usability)',
+      'Consulta histórica de vulnerabilidades no DefectDojo',
+      'Registro de riscos como Work Items vinculados'
+    ],
+    gate: 'QA Leader aprova início apenas com riscos mitigados',
+    color: 'blue'
+  },
+  {
+    number: 2,
+    title: 'Desenvolvimento e Codificação',
+    objective: 'Produção controlada do código fonte',
+    description: 'Branches feat/ID-Item no Azure Repos seguindo Gitflow. Dev codifica com Pre-commit hooks de segurança enquanto UX realiza testes formativos. Infraestrutura gerenciada via Terraform (IaC). Pull Requests com bloqueio automático sem Work Item, reviews, build ou sanity tests E2E.',
+    activities: [
+      'Versionamento via Azure Repos (Gitflow)',
+      'Desenvolvimento com Pre-commit hooks de segurança',
+      'UX realiza testes formativos em protótipos',
+      'Código Terraform para infraestrutura (alteração manual no Portal Azure é proibida)'
+    ],
+    gate: 'PR rejeitado automaticamente se: sem Work Item, sem 2 reviews, build falhou ou sanity tests E2E falharam',
+    color: 'green'
+  },
+  {
+    number: 3,
+    title: 'Verificação Automatizada',
+    objective: 'Validação técnica e centralização de achados',
+    description: 'Pipeline de CI executa Unit Tests (100% pass), SAST via SonarCloud (Quality Gate A) e SCA via Trivy. Deploy em staging seguido de Smoke, Sanity e E2E Tests automatizados. Relatórios enviados automaticamente para DefectDojo que deduplica e auto-fecha vulnerabilidades corrigidas.',
+    activities: [
+      'Execução de Unit Tests (Jest/NUnit) - Critério: 100% Pass',
+      'SAST via SonarCloud - Critério: Quality Gate A',
+      'SCA via Trivy (varredura de libs e OS)',
+      'Deploy staging + Smoke/Sanity/E2E Tests (Playwright) - 100% Pass',
+      'Ingestão automática de resultados no DefectDojo'
+    ],
+    gate: 'Build falha se DefectDojo registrar novas vulnerabilidades Críticas/Altas',
+    color: 'orange'
+  },
+  {
+    number: 4,
+    title: 'Validação e Liberação',
+    objective: 'Congelamento da versão e geração do DHF',
+    description: 'OWASP ZAP executa DAST no ambiente staging. QA executa testes funcionais complexos e usabilidade somativa (IEC 62366) no Azure Test Plans. Script automatizado gera Matriz de Rastreabilidade e Certificado de Segurança do DefectDojo. QA Leader aprova digitalmente e artefatos são salvos no SharePoint.',
+    activities: [
+      'DAST via OWASP ZAP (relatório enviado ao DefectDojo)',
+      'Testes manuais funcionais e usabilidade somativa',
+      'E2E automatizados reduzem carga de testes manuais',
+      'Geração automatizada do DHF (Matriz + Certificado de Segurança)',
+      'Aprovação digital do QA Leader'
+    ],
+    gate: 'Transferência de artefatos ao SharePoint e criação de tag vX.X.X',
+    color: 'purple'
+  },
+  {
+    number: 5,
+    title: 'Monitoramento Pós-Mercado',
+    objective: 'Tratativa contínua de riscos em produção',
+    description: 'Sentinel monitora incidentes em tempo real. Smoke Tests automatizados executam em produção após deploys. Trivy escaneia diariamente imagens em produção enviando para DefectDojo. AppSec/QA faz triagem, marca false positives e cria Bugs automaticamente no Azure DevOps via integração "Push to Azure".',
+    activities: [
+      'Vigilância via SIEM (Azure Sentinel)',
+      'Monitoramento E2E contínuo (Smoke Tests em produção)',
+      'Testes de regressão nightly (suíte completa E2E)',
+      'Scan diário via Trivy nas imagens de produção',
+      'Triagem de vulnerabilidades e criação automática de Bugs'
+    ],
+    gate: 'SLA de correção: Crítico 24h (Hotfix), Alto 7 dias. Change Requests obrigatórios com avaliação de LTF',
+    color: 'red'
+  }
+]
+
+export default function SobrePage() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50">
       {/* Hero Section */}
@@ -109,7 +185,7 @@ export default function HomePage() {
               Ciclo de Vida Completo de Desenvolvimento SaMD
             </p>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              Plataforma de apresentação demonstrando o processo regulatório completo de software médico, 
+              Plataforma de apresentação demonstrando o processo regulatório completo de software médico,
               desde o planejamento até o monitoramento pós-mercado, seguindo rigorosamente as normas IEC 62304 Class B.
             </p>
             <div className="flex justify-center gap-3 mt-8 flex-wrap">
@@ -137,52 +213,26 @@ export default function HomePage() {
             </CardHeader>
             <CardContent className="space-y-6 text-gray-700">
               <p className="text-lg leading-relaxed">
-                O <strong className="text-gray-900">nCommand Lite</strong> é uma plataforma SaMD (Software as a Medical Device) 
-                que implementa um ciclo de vida completo de desenvolvimento regulatório, seguindo rigorosamente o padrão 
-                <strong className="text-gray-900"> IEC 62304 Class B</strong>. Esta aplicação de apresentação demonstra 
+                O <strong className="text-gray-900">nCommand Lite</strong> é uma plataforma SaMD (Software as a Medical Device)
+                que implementa um ciclo de vida completo de desenvolvimento regulatório, seguindo rigorosamente o padrão
+                <strong className="text-gray-900"> IEC 62304 Class B</strong>. Esta aplicação de apresentação demonstra
                 visualmente todo o processo, desde o planejamento inicial até o monitoramento pós-mercado.
               </p>
-              
+
               <div className="p-6 bg-primary/10 border border-primary/30 rounded-lg">
                 <h3 className="font-semibold text-xl mb-3 text-gray-900 flex items-center gap-2">
                   <Zap className="h-5 w-5 text-primary" />
                   Princípio: Compliance as Code
                 </h3>
                 <p className="leading-relaxed">
-                  Todas as exigências regulatórias são impostas por <strong>barreiras técnicas automatizadas (Gates)</strong> 
-                  dentro da esteira de produção, garantindo conformidade sem dependência de processos manuais. 
-                  A conformidade é verificada automaticamente em cada etapa do desenvolvimento através de integrações 
+                  Todas as exigências regulatórias são impostas por <strong>barreiras técnicas automatizadas (Gates)</strong>
+                  dentro da esteira de produção, garantindo conformidade sem dependência de processos manuais.
+                  A conformidade é verificada automaticamente em cada etapa do desenvolvimento através de integrações
                   automatizadas e gates de segurança.
                 </p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                <div className="p-5 bg-white border border-gray-200 rounded-lg">
-                  <h3 className="font-semibold text-lg mb-3 text-gray-900">As 5 Fases do Ciclo de Vida</h3>
-                  <ol className="space-y-2 text-sm">
-                    <li className="flex items-start gap-2">
-                      <span className="text-primary font-bold">1.</span>
-                      <span><strong>Planejamento, Risco e Infraestrutura</strong> - Garantir que funcionalidades são seguras, necessárias e usáveis.</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-primary font-bold">2.</span>
-                      <span><strong>Desenvolvimento e Codificação</strong> - Produção controlada do código fonte.</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-primary font-bold">3.</span>
-                      <span><strong>Verificação Automatizada</strong> - Validação técnica e centralização de achados.</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-primary font-bold">4.</span>
-                      <span><strong>Validação e Liberação</strong> - Congelamento da versão e geração do DHF.</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-primary font-bold">5.</span>
-                      <span><strong>Monitoramento</strong> - Tratativa contínua de riscos pós-mercado.</span>
-                    </li>
-                  </ol>
-                </div>
-
                 <div className="p-5 bg-white border border-gray-200 rounded-lg">
                   <h3 className="font-semibold text-lg mb-3 text-gray-900">Ferramentas e Fontes da Verdade</h3>
                   <ul className="space-y-2 text-sm">
@@ -212,9 +262,90 @@ export default function HomePage() {
                     </li>
                   </ul>
                 </div>
+
+                <div className="p-5 bg-white border border-gray-200 rounded-lg">
+                  <h3 className="font-semibold text-lg mb-3 text-gray-900">Referências Normativas</h3>
+                  <ul className="space-y-2 text-sm">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                      <div><strong>ISO 13485:2016</strong> - Sistema de Gestão da Qualidade</div>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                      <div><strong>IEC 62304:2006+A1</strong> - Ciclo de Vida de Software Médico</div>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                      <div><strong>IEC 62366-1:2015</strong> - Engenharia de Usabilidade</div>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                      <div><strong>ISO 14971:2019</strong> - Gestão de Riscos</div>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </CardContent>
           </Card>
+        </section>
+
+        {/* As 5 Fases Detalhadas */}
+        <section className="mb-16">
+          <div className="text-center mb-10">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">As 5 Fases do Ciclo de Vida</h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Processo completo desde o planejamento até o monitoramento pós-mercado
+            </p>
+          </div>
+
+          <div className="space-y-6">
+            {phases.map((phase) => (
+              <Card key={phase.number} className={`border-2 border-${phase.color}-200 bg-gradient-to-br from-${phase.color}-50/30 to-white shadow-md hover:shadow-lg transition-shadow`}>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-4 text-2xl">
+                    <div className={`flex-shrink-0 w-12 h-12 rounded-full bg-${phase.color}-600 text-white flex items-center justify-center text-xl font-bold`}>
+                      {phase.number}
+                    </div>
+                    <div className="flex-1">
+                      <div className="text-gray-900">{phase.title}</div>
+                      <div className={`text-sm font-normal text-${phase.color}-700 mt-1`}>
+                        <strong>Objetivo:</strong> {phase.objective}
+                      </div>
+                    </div>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-gray-700 leading-relaxed">
+                    {phase.description}
+                  </p>
+
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div className="p-4 bg-white border border-gray-200 rounded-lg">
+                      <h4 className="font-semibold text-sm text-gray-900 mb-3">Atividades Principais:</h4>
+                      <ul className="space-y-2 text-sm text-gray-700">
+                        {phase.activities.map((activity, idx) => (
+                          <li key={idx} className="flex items-start gap-2">
+                            <span className={`text-${phase.color}-600 mt-1`}>▸</span>
+                            <span>{activity}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className={`p-4 bg-${phase.color}-100 border border-${phase.color}-300 rounded-lg`}>
+                      <h4 className={`font-semibold text-sm text-${phase.color}-900 mb-2 flex items-center gap-2`}>
+                        <Shield className="h-4 w-4" />
+                        Gate de Passagem:
+                      </h4>
+                      <p className={`text-sm text-${phase.color}-800 leading-relaxed`}>
+                        {phase.gate}
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </section>
 
         {/* Link para Ciclo de Vida */}
@@ -252,7 +383,7 @@ export default function HomePage() {
               Navegue pelas diferentes seções para entender cada aspecto do ciclo de vida regulatório
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {pageIndex.map((page) => {
               const Icon = page.icon
@@ -268,7 +399,7 @@ export default function HomePage() {
                 indigo: 'border-indigo-200 bg-indigo-50 hover:bg-indigo-100 hover:border-indigo-300',
                 yellow: 'border-yellow-200 bg-yellow-50 hover:bg-yellow-100 hover:border-yellow-300'
               }
-              
+
               return (
                 <Link
                   key={page.href}
@@ -276,18 +407,17 @@ export default function HomePage() {
                   className={`p-6 border-2 rounded-lg transition-all group ${colorClasses[page.color as keyof typeof colorClasses] || colorClasses.primary}`}
                 >
                   <div className="flex items-start gap-4">
-                    <div className={`flex-shrink-0 p-3 rounded-lg bg-white border-2 border-current transition-colors ${
-                      page.color === 'primary' ? 'text-primary' : 
-                      page.color === 'gray' ? 'text-gray-600' :
-                      page.color === 'blue' ? 'text-blue-600' :
-                      page.color === 'orange' ? 'text-orange-600' :
-                      page.color === 'red' ? 'text-red-600' :
-                      page.color === 'purple' ? 'text-purple-600' :
-                      page.color === 'green' ? 'text-green-600' :
-                      page.color === 'cyan' ? 'text-cyan-600' :
-                      page.color === 'indigo' ? 'text-indigo-600' :
-                      'text-yellow-600'
-                    }`}>
+                    <div className={`flex-shrink-0 p-3 rounded-lg bg-white border-2 border-current transition-colors ${page.color === 'primary' ? 'text-primary' :
+                        page.color === 'gray' ? 'text-gray-600' :
+                          page.color === 'blue' ? 'text-blue-600' :
+                            page.color === 'orange' ? 'text-orange-600' :
+                              page.color === 'red' ? 'text-red-600' :
+                                page.color === 'purple' ? 'text-purple-600' :
+                                  page.color === 'green' ? 'text-green-600' :
+                                    page.color === 'cyan' ? 'text-cyan-600' :
+                                      page.color === 'indigo' ? 'text-indigo-600' :
+                                        'text-yellow-600'
+                      }`}>
                       <Icon className="h-6 w-6" />
                     </div>
                     <div className="flex-1 min-w-0">
@@ -326,7 +456,7 @@ export default function HomePage() {
                   </div>
                   <h3 className="font-semibold text-lg mb-2">Explore os Fluxos</h3>
                   <p className="text-sm text-gray-600">
-                    Comece pela página <Link href="/ciclo-de-vida" className="text-primary hover:underline font-medium">Ciclo de Vida</Link> para entender 
+                    Comece pela página <Link href="/ciclo-de-vida" className="text-primary hover:underline font-medium">Ciclo de Vida</Link> para entender
                     o fluxo completo com diagramas interativos.
                   </p>
                 </div>
@@ -336,7 +466,7 @@ export default function HomePage() {
                   </div>
                   <h3 className="font-semibold text-lg mb-2">Consulte Documentos</h3>
                   <p className="text-sm text-gray-600">
-                    Acesse <Link href="/documentos" className="text-primary hover:underline font-medium">Documentos</Link> para 
+                    Acesse <Link href="/documentos" className="text-primary hover:underline font-medium">Documentos</Link> para
                     SOPs, normas regulatórias e manuais organizados.
                   </p>
                 </div>
@@ -357,4 +487,3 @@ export default function HomePage() {
     </main>
   )
 }
-

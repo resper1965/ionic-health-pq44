@@ -31,7 +31,7 @@ export default function LandingPage() {
             Ciclo de Vida Completo de Desenvolvimento SaMD
           </p>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            Plataforma de apresentação demonstrando o processo regulatório completo de software médico, 
+            Plataforma de apresentação demonstrando o processo regulatório completo de software médico,
             desde o planejamento até o monitoramento pós-mercado, seguindo rigorosamente as normas IEC 62304 Class B.
           </p>
           <div className="flex justify-center gap-3 mt-8 flex-wrap">
@@ -44,7 +44,7 @@ export default function LandingPage() {
 
         {/* Cards de Navegação */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Link href="/home">
+          <Link href="/sobre">
             <Card className="border-2 border-primary/20 hover:border-primary/40 hover:shadow-lg transition-all h-full">
               <CardHeader>
                 <CardTitle className="text-2xl">Sobre o Projeto</CardTitle>
@@ -54,7 +54,7 @@ export default function LandingPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-gray-600 mb-4">
-                  Conheça o nCommand Lite, as 5 fases do ciclo de vida, ferramentas e fontes da verdade, 
+                  Conheça o nCommand Lite, as 5 fases do ciclo de vida, ferramentas e fontes da verdade,
                   e navegue por todas as páginas da aplicação.
                 </p>
                 <div className="flex items-center gap-2 text-primary font-medium">
@@ -75,7 +75,7 @@ export default function LandingPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-gray-600 mb-4">
-                  Visualize os fluxos completos do ciclo de vida regulatório com diagramas Mermaid interativos 
+                  Visualize os fluxos completos do ciclo de vida regulatório com diagramas Mermaid interativos
                   e arquitetura de ativos.
                 </p>
                 <div className="flex items-center gap-2 text-primary font-medium">

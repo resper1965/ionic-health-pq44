@@ -9,8 +9,8 @@ import { useState } from 'react'
 
 const navigation = [
   {
-    name: 'Home',
-    href: '/home',
+    name: 'Sobre',
+    href: '/sobre',
     icon: Home,
   },
   {
