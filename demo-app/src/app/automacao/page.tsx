@@ -162,6 +162,36 @@ const automatedProcesses: AutomatedProcess[] = [
     E -->|Não| G[✅ Certificado<br/>Aprovado]
     G --> H[Gerar DHF<br/>Completo]
     H --> I[Arquivos<br/>Markdown]`
+  },
+  {
+    id: 'mds2-generation',
+    title: 'Geração Automática do MDS2 Form',
+    phase: 'FASE 4',
+    description: 'Script gera MDS2 Form (Medical Device Software) automaticamente a partir de dados do Azure DevOps via APIs',
+    trigger: 'Pipeline FASE 4 - Após validações',
+    evidence: 'SharePoint → DHF → R54.1-MDS2-vX.Y.Z.xlsx',
+    status: 'on-demand',
+    icon: <FileCheck className="h-5 w-5 text-primary" />,
+    flowDiagram: `flowchart TD
+    A[Pipeline FASE 4<br/>Após Testes] --> B[Script Geração<br/>MDS2]
+    B --> C[Coletar Dados<br/>via APIs]
+    C --> D[Azure Repos API<br/>Info Produto, Dependências]
+    C --> E[Azure Boards API<br/>Riscos, Requisitos]
+    C --> F[Azure Test Plans API<br/>Resultados Testes]
+    C --> G[DefectDojo API<br/>Vulnerabilidades]
+    C --> H[SharePoint API<br/>Documentação]
+    D --> I[Consolidar Dados]
+    E --> I
+    F --> I
+    G --> I
+    H --> I
+    I --> J[Preencher Template<br/>Excel MDS2]
+    J --> K[QA Leader<br/>Revisa]
+    K --> L{Aprovado?}
+    L -->|Não| M[Ajustes Manuais]
+    M --> K
+    L -->|Sim| N[Upload Automático<br/>SharePoint]
+    N --> O[✅ MDS2 Parte<br/>do DHF]`
   }
 ]
 

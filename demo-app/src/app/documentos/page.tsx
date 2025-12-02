@@ -93,6 +93,12 @@ const documentCategories: DocumentCategory[] = [
         path: 'docs/PLANEJAMENTO-CONFORMIDADE-COMPLETA.md',
         description: 'Análise de gaps e planejamento para total visibilidade e conformidade regulatória, riscos e segurança',
         type: 'process'
+      },
+      {
+        title: 'Análise: Automação do MDS2 Form',
+        path: 'docs/ANALISE-MDS2-AUTOMATIZACAO.md',
+        description: 'Análise completa do potencial de automação do formulário MDS2 (Medical Device Software) com diagramas do processo',
+        type: 'process'
       }
     ]
   },
