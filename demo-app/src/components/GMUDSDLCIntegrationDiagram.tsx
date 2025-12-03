@@ -92,7 +92,7 @@ graph TB
       </CardHeader>
       <CardContent>
         <div className="bg-white p-6 rounded-lg border border-gray-200">
-          <MermaidDiagram diagram={diagram} />
+          <MermaidDiagram chart={diagram} />
         </div>
         <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="p-4 bg-green-50 border-2 border-green-300 rounded-lg">
