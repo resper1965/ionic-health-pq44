@@ -2,258 +2,247 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { FileText, Zap, CheckCircle2, ArrowRight, TrendingUp, Clock, Shield, Activity, AlertTriangle } from 'lucide-react'
+import { RefreshCw, GitBranch, Zap, CheckCircle2, ArrowRight, TrendingUp, Clock, Shield, Activity, AlertTriangle, Workflow, Database, Cloud } from 'lucide-react'
 import Link from 'next/link'
+import { GMUDSDLCIntegrationDiagram } from '@/components/GMUDSDLCIntegrationDiagram'
+import { GMUDAutomationFlowDiagram } from '@/components/GMUDAutomationFlowDiagram'
+import { GMUDToolsIntegrationDiagram } from '@/components/GMUDToolsIntegrationDiagram'
 
-const pq042Process = [
+const sdlcPhases = [
     {
-        step: '1',
-        name: 'Solicitação e Criação',
-        form: 'R042.001',
-        traditional: {
-            process: 'Email manual para chamado@ionic.health, preenchimento de formulário Word',
-            tools: 'Email, Word, Excel para tracking, Reuniões presenciais',
-            time: '~1-2 semanas',
-            records: 'R042.001 em Docnix/SharePoint'
-        },
-        automated: {
-            process: 'Work Item "GMUD Request" no Azure Boards com campos customizados e templates',
-            tools: 'Azure Boards, Formulário digital estruturado, Auto-geração de GMUD ID',
-            time: '~1-2 dias',
-            records: 'Work Item com full audit trail + R042.001 PDF auto-gerado',
-            improvement: '85% reduction in request time'
-        }
+        phase: 'FASE 1',
+        name: 'Planejamento e Infraestrutura',
+        applicability: '⭐⭐⭐ Muito Alta',
+        color: 'green',
+        gmudExamples: [
+            {
+                id: 'GMUD-2025-001',
+                title: 'Setup Azure DevOps para nCommand Lite',
+                description: 'Configuração inicial do projeto, Work Item Types customizados, Branch Policies',
+                systems: ['Azure DevOps'],
+                impact: 'Major',
+                cycleTime: '2 semanas'
+            },
+            {
+                id: 'GMUD-2025-005',
+                title: 'Implementação DefectDojo v2.x',
+                description: 'Deploy DefectDojo, integração com pipelines, importação de vulnerabilidades',
+                systems: ['DefectDojo', 'Azure Pipelines'],
+                impact: 'Major',
+                cycleTime: '1.5 semanas'
+            },
+            {
+                id: 'GMUD-2025-008',
+                title: 'Configuração de Ambientes (Dev/Staging/Prod)',
+                description: 'Setup de infraestrutura Azure via Terraform',
+                systems: ['Azure Infrastructure', 'Terraform'],
+                impact: 'Major',
+                cycleTime: '2 semanas'
+            }
+        ],
+        integrations: [
+            'Azure Boards → Setup de projeto',
+            'Terraform → Infraestrutura como código (IaC)',
+            'DefectDojo → Sistema de gestão de vulnerabilidades'
+        ]
     },
     {
-        step: '2',
-        name: 'Análise de Risco',
-        form: 'R042.001 (Risk Assessment)',
-        traditional: {
-            process: 'Reuniões manuais para brainstorm, análise em Word/Excel',
-            tools: 'Reuniões presenciais, Word/Excel, Email para consolidação',
-            time: '~1-2 semanas',
-            records: 'Atas de reunião, planilhas de risco'
-        },
-        automated: {
-            process: 'Checklist de risco automatizado com scoring e sugestões baseadas em histórico',
-            tools: 'Azure Boards (checklist digital), Auto-scoring (Low/Medium/High), ML suggestions',
-            time: '~3-5 dias',
-            records: 'Risk assessment digital com rastreabilidade completa',
-            improvement: '65% reduction in risk analysis time'
-        }
+        phase: 'FASE 2',
+        name: 'Desenvolvimento e Codificação',
+        applicability: '⭐ Baixa',
+        color: 'gray',
+        gmudExamples: [
+            {
+                id: 'GMUD-2025-010',
+                title: 'Upgrade Terraform 1.5 → 1.7 (Breaking Changes)',
+                description: 'Atualização de ferramenta com breaking changes que impactam IaC',
+                systems: ['Terraform', 'Azure Pipelines'],
+                impact: 'Minor',
+                cycleTime: '1 semana'
+            }
+        ],
+        integrations: [
+            'Mudanças em ferramentas de desenvolvimento (raro)',
+            'Upgrades de IDE corporativo (se organizacional)'
+        ]
     },
     {
-        step: '3',
-        name: 'Aprovação Inicial',
-        form: 'R042.001 (Approvals)',
-        traditional: {
-            process: 'Aprovações sequenciais via email, espera por respostas, possíveis delays',
-            tools: 'Email (sequencial), Manual tracking de aprovações',
-            time: '~1-2 semanas',
-            records: 'Emails de aprovação arquivados'
-        },
-        automated: {
-            process: 'Workflow de aprovação paralela com notificações automáticas e SLA tracking',
-            tools: 'Azure Boards workflow, Notificações automáticas, SLA alerts (3 dias), Dashboard de aprovações',
-            time: '~2-3 dias',
-            records: 'Aprovações digitais com timestamp e assinatura eletrônica',
-            improvement: '75% faster approval process'
-        }
+        phase: 'FASE 3',
+        name: 'Verificação e Segurança',
+        applicability: '⭐⭐⭐ Muito Alta',
+        color: 'blue',
+        gmudExamples: [
+            {
+                id: 'GMUD-2025-015',
+                title: 'Upgrade DefectDojo 2.0 → 2.5',
+                description: 'Atualização do sistema de gestão de vulnerabilidades',
+                systems: ['DefectDojo'],
+                impact: 'Major',
+                cycleTime: '1 semana'
+            },
+            {
+                id: 'GMUD-2025-018',
+                title: 'Nova Política de Quality Gate (SonarCloud)',
+                description: 'Mudança em critérios de aprovação de código',
+                systems: ['SonarCloud', 'Azure Pipelines'],
+                impact: 'Major',
+                cycleTime: '1.5 semanas'
+            },
+            {
+                id: 'GMUD-2025-020',
+                title: 'Implementação OWASP ZAP para DAST',
+                description: 'Integração de nova ferramenta de segurança dinâmica',
+                systems: ['OWASP ZAP', 'Azure Pipelines', 'DefectDojo'],
+                impact: 'Major',
+                cycleTime: '2 semanas'
+            }
+        ],
+        integrations: [
+            'DefectDojo → Gestão centralizada de vulnerabilidades',
+            'SonarCloud → SAST (análise estática)',
+            'OWASP ZAP → DAST (análise dinâmica)',
+            'Azure Pipelines → Integração de testes de segurança'
+        ]
     },
     {
-        step: '4',
-        name: 'Execução das Ações',
-        form: 'R042.001 (Action Plan)',
-        traditional: {
-            process: 'Tracking manual via Excel, updates por email, sem visibilidade em tempo real',
-            tools: 'Excel para tracking, Email updates, Reuniões de status',
-            time: 'Variável (sem tracking automático)',
-            records: 'Excel atualizado manualmente'
-        },
-        automated: {
-            process: 'Sub-tasks no Azure Boards com progress tracking, alertas de atraso, upload estruturado de evidências',
-            tools: 'Azure Boards (sub-tasks), Progress bar automático, Dashboard em tempo real, Alerts automáticos',
-            time: 'Mesmo tempo de execução, mas visibilidade total',
-            records: 'Progress tracking em tempo real + evidências estruturadas',
-            improvement: '80% improvement in visibility and tracking'
-        }
+        phase: 'FASE 4',
+        name: 'Validação e Liberação',
+        applicability: '⭐⭐ Média',
+        color: 'yellow',
+        gmudExamples: [
+            {
+                id: 'GMUD-2025-022',
+                title: 'Novos Critérios de Validação Organizacional',
+                description: 'Mudança em processo de validação que afeta todos os projetos',
+                systems: ['Azure Test Plans'],
+                impact: 'Major',
+                cycleTime: '1 semana'
+            }
+        ],
+        integrations: [
+            'Azure Test Plans → Validação de testes',
+            'Mudanças em processo de validação (se organizacional)'
+        ]
     },
     {
-        step: '5',
-        name: 'Avaliação Pós-Mudança',
-        form: 'R042.002',
-        traditional: {
-            process: 'Preenchimento manual de formulário R042.002 em Word, envio por email',
-            tools: 'Word (R042.002), Email, Manual validation',
-            time: '~1 semana',
-            records: 'R042.002 PDF em Docnix/SharePoint'
-        },
-        automated: {
-            process: 'Checklist digital de validação com métricas automáticas e lições aprendidas catalogadas',
-            tools: 'Azure Boards (checklist R042.002), Métricas auto-calculadas (cycle time, efficiency), Knowledge base',
-            time: '~2-3 dias',
-            records: 'Post-change evaluation digital + R042.002 PDF auto-gerado',
-            improvement: '70% reduction in post-change evaluation time'
-        }
+        phase: 'FASE 5',
+        name: 'Monitoramento Pós-Mercado',
+        applicability: '⭐⭐⭐⭐ Altíssima',
+        color: 'purple',
+        gmudExamples: [
+            {
+                id: 'GMUD-2025-025',
+                title: 'Implementação Azure Sentinel (SIEM)',
+                description: 'Deploy de sistema de monitoramento de segurança',
+                systems: ['Azure Sentinel', 'Azure Monitor'],
+                impact: 'Major',
+                cycleTime: '3 semanas'
+            },
+            {
+                id: 'GMUD-2025-030',
+                title: 'Dashboards Power BI para Monitoramento',
+                description: 'Criação de dashboards de monitoramento pós-mercado',
+                systems: ['Power BI', 'Application Insights'],
+                impact: 'Major',
+                cycleTime: '2 semanas'
+            },
+            {
+                id: 'GMUD-2025-035',
+                title: 'Integração Application Insights',
+                description: 'Monitoramento de telemetria e performance',
+                systems: ['Application Insights', 'Azure Monitor'],
+                impact: 'Major',
+                cycleTime: '1.5 semanas'
+            }
+        ],
+        integrations: [
+            'Azure Sentinel → SIEM (Security Information and Event Management)',
+            'Power BI → Dashboards e analytics',
+            'Application Insights → Telemetria e monitoramento',
+            'Azure Monitor → Alertas e logs'
+        ]
+    }
+]
+
+const tools = [
+    {
+        name: 'Azure Boards',
+        icon: Database,
+        role: 'Fonte da Verdade de Execução',
+        description: 'Work Items GMUD, tracking, aprovações, sub-tasks',
+        integration: 'Work Item Type "GMUD Request" com campos customizados',
+        automation: 'Workflow automatizado, notificações, SLA tracking'
     },
     {
-        step: '6',
-        name: 'Fechamento e Arquivamento',
-        form: 'R042.002 (Final)',
-        traditional: {
-            process: 'Aprovação final via email, upload manual de documentos para SharePoint',
-            tools: 'Email para aprovação, Upload manual SharePoint',
-            time: '~3-5 dias',
-            records: 'Documentos arquivados manualmente'
-        },
-        automated: {
-            process: 'Aprovação digital, geração automática de PDFs, upload via API para SharePoint',
-            tools: 'Aprovação digital workflow, PDF generation (R042.001 + R042.002), SharePoint API auto-upload',
-            time: '~1 dia',
-            records: 'Arquivamento automático + métricas completas do ciclo',
-            improvement: '80% faster closure and archiving'
-        }
+        name: 'SharePoint',
+        icon: Cloud,
+        role: 'Repositório Legal (DHF)',
+        description: 'Armazenamento de R042.001/002 (PDFs assinados)',
+        integration: 'SharePoint API para upload automático',
+        automation: 'Geração automática de PDFs a partir do Work Item'
+    },
+    {
+        name: 'Terraform',
+        icon: GitBranch,
+        role: 'Infraestrutura como Código (IaC)',
+        description: 'Mudanças de infraestrutura versionadas e rastreáveis',
+        integration: 'Azure Repos → Terraform → Azure Pipelines',
+        automation: 'Apply automático após aprovação de GMUD'
+    },
+    {
+        name: 'DefectDojo',
+        icon: Shield,
+        role: 'Gestão de Vulnerabilidades',
+        description: 'Rastreamento de vulnerabilidades e evidências de segurança',
+        integration: 'DefectDojo API integrada com Work Items',
+        automation: 'Importação automática de vulnerabilidades, validação'
+    },
+    {
+        name: 'Power Automate',
+        icon: Workflow,
+        role: 'Orquestração de Workflows',
+        description: 'Notificações, aprovações, uploads automáticos',
+        integration: 'Workflows conectando Azure Boards ↔ SharePoint ↔ Email',
+        automation: 'Notificações automáticas, SLA alerts, arquivamento'
+    },
+    {
+        name: 'Power BI',
+        icon: TrendingUp,
+        role: 'Dashboards e Analytics',
+        description: 'Métricas em tempo real, KPIs, tendências',
+        integration: 'Conecta com Azure Boards para dados de GMUDs',
+        automation: 'Dashboard em tempo real, alertas de SLA, relatórios'
     }
 ]
 
 const metrics = [
     {
         icon: Clock,
-        label: 'Time Savings',
-        value: '~60%',
-        description: 'Average reduction in GMUD cycle time',
+        label: 'Redução de Tempo',
+        value: '50-60%',
+        description: '3-5 semanas → 1-2 semanas',
         color: 'blue'
     },
     {
-        icon: Shield,
-        label: 'Automation Level',
-        value: '70-75%',
-        description: 'From 20-30% to 70-75% automation',
+        icon: TrendingUp,
+        label: 'Automação',
+        value: '20% → 70%',
+        description: '+50 pontos percentuais',
         color: 'green'
     },
     {
         icon: Activity,
-        label: 'Traceability',
-        value: 'Real-time',
-        description: 'Full traceability vs manual tracking',
+        label: 'Rastreabilidade',
+        value: '100%',
+        description: 'De fragmentada para total',
         color: 'purple'
     },
     {
-        icon: TrendingUp,
-        label: 'Visibility',
-        value: '100%',
-        description: 'Dashboard em tempo real de GMUDs',
+        icon: Shield,
+        label: 'Conformidade',
+        value: 'Garantida',
+        description: 'Compliance as Code',
         color: 'orange'
-    }
-]
-
-const sdlcPhases = [
-    {
-        phase: 'FASE 1',
-        name: 'Planejamento e Infraestrutura',
-        applicability: 'Alta',
-        applicabilityLevel: 'high',
-        scenarios: [
-            'Setup de infraestrutura Azure (DevOps, DefectDojo)',
-            'Configuração de ambientes (Dev, Staging, Prod)',
-            'Processos de planejamento organizacional'
-        ],
-        examples: [
-            'GMUD-2025-001: Setup Azure DevOps para nCommand Lite',
-            'GMUD-2025-005: Implementação DefectDojo v2.x'
-        ]
-    },
-    {
-        phase: 'FASE 2',
-        name: 'Desenvolvimento e Codificação',
-        applicability: 'Baixa',
-        applicabilityLevel: 'low',
-        scenarios: [
-            'Mudança em ferramentas de desenvolvimento (raro)',
-            'Upgrade de IDE corporativo',
-            'Mudança em padrão de linting organizacional'
-        ],
-        examples: [
-            'GMUD-2025-010: Upgrade Terraform 1.5 → 1.7 (se breaking changes)'
-        ]
-    },
-    {
-        phase: 'FASE 3',
-        name: 'Verificação e Segurança',
-        applicability: 'Alta',
-        applicabilityLevel: 'high',
-        scenarios: [
-            'Mudanças no DefectDojo (upgrade, configuração)',
-            'Atualização de ferramentas de segurança (OWASP ZAP, Trivy)',
-            'Mudança em quality gates (SonarCloud)'
-        ],
-        examples: [
-            'GMUD-2025-015: Upgrade DefectDojo 2.0 → 2.5',
-            'GMUD-2025-018: Nova política de quality gate (SonarCloud)'
-        ]
-    },
-    {
-        phase: 'FASE 4',
-        name: 'Validação e Liberação',
-        applicability: 'Média',
-        applicabilityLevel: 'medium',
-        scenarios: [
-            'Mudança em processo de validação',
-            'Upgrade de ferramentas de teste (Playwright)',
-            'Novos gates de liberação'
-        ],
-        examples: [
-            'GMUD-2025-020: Novos critérios de validação organizacional'
-        ]
-    },
-    {
-        phase: 'FASE 5',
-        name: 'Monitoramento Pós-Mercado',
-        applicability: 'Muito Alta',
-        applicabilityLevel: 'very-high',
-        scenarios: [
-            'Implementação Azure Sentinel (SIEM)',
-            'Novos dashboards Power BI',
-            'Mudança em processo de vigilância',
-            'Application Insights e analytics'
-        ],
-        examples: [
-            'GMUD-2025-025: Implementação Azure Sentinel',
-            'GMUD-2025-030: Dashboards Power BI para monitoramento'
-        ]
-    }
-]
-
-const pq039vs042 = [
-    {
-        aspect: 'Escopo',
-        pq039: 'Controle de projetos de produtos (nCommand Lite)',
-        pq042: 'Controle de mudanças em sistemas auxiliares, infraestrutura e processos'
-    },
-    {
-        aspect: 'Aplicação',
-        pq039: 'Desenvolvimento do produto nCommand Lite',
-        pq042: 'Infraestrutura, ferramentas, sistemas auxiliares, processos organizacionais'
-    },
-    {
-        aspect: 'Quando Usar',
-        pq039: 'Nova feature, bug fix, mudança no código do produto',
-        pq042: 'Mudança em Azure DevOps, DefectDojo, infraestrutura, processos'
-    },
-    {
-        aspect: 'Formulários',
-        pq039: '12+ formulários (R039.001 a R039.012)',
-        pq042: '2 formulários (R042.001 e R042.002)'
-    },
-    {
-        aspect: 'Etapas',
-        pq039: '9 etapas (NPJ → OPJ → CPJ → EPJ → SPJ → RPJ → TPJ → VPJ → LPJ)',
-        pq042: '6 etapas (Solicitação → Análise → Aprovação → Execução → Avaliação → Fechamento)'
-    },
-    {
-        aspect: 'Automação Atual',
-        pq039: '70-80% automatizado',
-        pq042: '20-30% automatizado (oportunidade de melhoria!)'
     }
 ]
 
@@ -263,62 +252,71 @@ export default function PQ42Page() {
             <div className="container mx-auto px-4 py-12 max-w-7xl">
                 {/* Header */}
                 <div className="mb-12 text-center space-y-4">
-                    <Badge variant="outline" className="px-4 py-2 text-sm border-orange-300">
+                    <Badge variant="outline" className="px-4 py-2 text-sm border-orange-300 bg-orange-50">
+                        <RefreshCw className="h-4 w-4 inline mr-2" />
                         PQ.042 - Change Control (GMUD)
                     </Badge>
-                    <h1 className="text-5xl font-bold text-gradient-primary">
-                        Gestão de Mudanças Automatizada
+                    <h1 className="text-5xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
+                        GMUD Integrado ao SDLC
                     </h1>
                     <p className="text-xl text-gray-700 font-light max-w-3xl mx-auto">
-                        De processos manuais e fragmentados para <strong>GMUD Automatizado</strong>:
-                        Como o nCommand Lite pode transformar o PQ.042
+                        Como mudanças em <strong>infraestrutura, sistemas auxiliares e processos</strong> são controladas
+                        e integradas com o ciclo de vida do nCommand Lite
                     </p>
                 </div>
 
-                {/* Overview */}
+                {/* Overview Card */}
                 <Card className="mb-12 border-2 border-orange-200 shadow-lg">
                     <CardHeader>
                         <CardTitle className="flex items-center gap-3 text-2xl">
-                            <FileText className="h-7 w-7 text-orange-600" />
-                            Sobre o PQ.042
+                            <RefreshCw className="h-7 w-7 text-orange-600" />
+                            PQ.042: Gestão de Mudanças (GMUD)
                         </CardTitle>
                         <CardDescription className="text-base">
-                            Procedimento de Controle de Mudanças (GMUD) da IONIC Health
+                            Controle de mudanças que suportam o desenvolvimento do nCommand Lite
                         </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <p className="text-gray-700 leading-relaxed">
-                            O <strong>PQ.042</strong> estabelece o procedimento de controle de mudanças (GMUD - Gestão de Mudanças) para controlar
-                            mudanças em sistemas auxiliares, software, equipamentos e processos que podem influenciar a qualidade dos produtos.
-                            Baseado na <strong>ISO 13485</strong>, <strong>ISO/IEC 27001</strong> e <strong>RDC 665</strong> da ANVISA.
+                            O <strong>PQ.042</strong> estabelece o controle de mudanças (GMUD) para <strong>sistemas auxiliares,
+                            infraestrutura, equipamentos e processos</strong> que podem influenciar a qualidade dos produtos.
+                            Este procedimento é essencial para garantir que mudanças que <strong>suportam o ciclo de desenvolvimento</strong> sejam
+                            controladas, rastreadas e validadas.
                         </p>
-                        <div className="p-4 bg-orange-50 border border-orange-200 rounded-lg">
-                            <p className="text-sm text-orange-900 font-semibold mb-2">
-                                ⚠️ Ponto Crítico de Exclusão:
+
+                        <div className="p-4 bg-red-50 border-2 border-red-300 rounded-lg">
+                            <p className="text-sm text-red-900 font-semibold mb-2">
+                                ⚠️ Diferença Crítica: PQ.042 vs PQ.039
                             </p>
-                            <p className="text-sm text-orange-900">
-                                <em>"Changes regarding IONIC Health products and/or projects must follow the guidelines according to PQ.039 – Project Control,
-                                and are not controlled by this procedure."</em>
-                            </p>
-                            <p className="text-sm text-orange-900 mt-2">
-                                <strong>Implicação:</strong> Mudanças no <strong>produto nCommand Lite</strong> seguem PQ.039 e NÃO são controladas pelo PQ.042.
-                                O PQ.042 controla mudanças em <strong>sistemas auxiliares, infraestrutura e processos</strong> que suportam o desenvolvimento.
-                            </p>
+                            <div className="text-sm text-red-900 space-y-1">
+                                <p><strong>PQ.039 (Project Control):</strong> Controla o <strong>PRODUTO</strong> (nCommand Lite).
+                                   Mudanças no código, features, bugs → use PQ.039 ou SOP-005.</p>
+                                <p><strong>PQ.042 (Change Control):</strong> Controla <strong>INFRAESTRUTURA, SISTEMAS AUXILIARES e PROCESSOS</strong>.
+                                   Mudanças em Azure DevOps, DefectDojo, processos organizacionais → use PQ.042.</p>
+                            </div>
                         </div>
-                        <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                            <p className="text-sm text-blue-900">
-                                <strong>Desafio:</strong> O processo tradicional de GMUD envolve múltiplos emails, formulários Word manuais,
-                                aprovações sequenciais que podem levar semanas, tracking manual em Excel, e rastreabilidade fragmentada.
-                                Tempo total: <strong>3-5 semanas</strong>. Automação atual: <strong>~20-30%</strong>.
-                            </p>
-                        </div>
-                        <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
-                            <p className="text-sm text-green-900 flex items-start gap-2">
-                                <Zap className="h-5 w-5 flex-shrink-0 mt-0.5" />
-                                <span><strong>Solução Proposta:</strong> Implementar Work Item Type "GMUD Request" no Azure Boards com workflow automatizado,
-                                    checklist de risco digital, aprovações paralelas, progress tracking em tempo real, e geração automática de PDFs (R042.001 e R042.002).
-                                    Tempo alvo: <strong>1-2 semanas</strong> (50-60% redução). Automação alvo: <strong>70-75%</strong>.</span>
-                            </p>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+                                <p className="text-sm text-green-900 font-semibold mb-2">✅ Quando Usar PQ.042 (GMUD)</p>
+                                <ul className="text-sm text-green-800 space-y-1 list-disc list-inside">
+                                    <li>Mudanças em infraestrutura Azure</li>
+                                    <li>Upgrade de Azure DevOps, DefectDojo</li>
+                                    <li>Implementação de novos sistemas (Sentinel, Power BI)</li>
+                                    <li>Mudanças em processos organizacionais</li>
+                                    <li>Mudanças em ferramentas de desenvolvimento</li>
+                                </ul>
+                            </div>
+                            <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                                <p className="text-sm text-blue-900 font-semibold mb-2">🎯 Objetivo da Automação</p>
+                                <ul className="text-sm text-blue-800 space-y-1 list-disc list-inside">
+                                    <li>Reduzir tempo de ciclo em 50-60%</li>
+                                    <li>Aumentar automação de 20% para 70%</li>
+                                    <li>Rastreabilidade total e em tempo real</li>
+                                    <li>Dashboards e métricas automatizadas</li>
+                                    <li>Integração completa com SDLC e ferramentas</li>
+                                </ul>
+                            </div>
                         </div>
                     </CardContent>
                 </Card>
@@ -328,11 +326,11 @@ export default function PQ42Page() {
                     {metrics.map((metric) => {
                         const Icon = metric.icon
                         return (
-                            <Card key={metric.label} className={`border-2 border-${metric.color}-200 bg-${metric.color}-50/50`}>
+                            <Card key={metric.label} className={`border-2 border-${metric.color}-200 bg-${metric.color}-50/50 hover:shadow-lg transition-shadow`}>
                                 <CardContent className="pt-6">
                                     <div className="flex items-center gap-3 mb-2">
                                         <Icon className={`h-8 w-8 text-${metric.color}-600`} />
-                                        <div className={`text-3xl font-bold text-${metric.color}-700`}>{metric.value}</div>
+                                        <div className={`text-2xl font-bold text-${metric.color}-700`}>{metric.value}</div>
                                     </div>
                                     <div className="text-sm font-semibold text-gray-900 mb-1">{metric.label}</div>
                                     <div className="text-xs text-gray-600">{metric.description}</div>
@@ -342,98 +340,87 @@ export default function PQ42Page() {
                     })}
                 </div>
 
-                {/* PQ.039 vs PQ.042 Comparison */}
-                <Card className="mb-12 border-2 border-purple-200 shadow-lg">
-                    <CardHeader>
-                        <CardTitle className="flex items-center gap-3 text-2xl">
-                            <AlertTriangle className="h-7 w-7 text-purple-600" />
-                            PQ.039 vs PQ.042: Quando Usar Cada Um?
-                        </CardTitle>
-                        <CardDescription className="text-base">
-                            Diferenças fundamentais e matriz de decisão
-                        </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="overflow-x-auto">
-                            <table className="w-full border-collapse">
-                                <thead>
-                                    <tr className="bg-gray-100">
-                                        <th className="border border-gray-300 px-4 py-3 text-left font-semibold">Aspecto</th>
-                                        <th className="border border-gray-300 px-4 py-3 text-left font-semibold">PQ.039 (Project Control)</th>
-                                        <th className="border border-gray-300 px-4 py-3 text-left font-semibold">PQ.042 (Change Control)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {pq039vs042.map((row, idx) => (
-                                        <tr key={idx} className={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                                            <td className="border border-gray-300 px-4 py-3 font-medium text-gray-900">{row.aspect}</td>
-                                            <td className="border border-gray-300 px-4 py-3 text-gray-700">{row.pq039}</td>
-                                            <td className="border border-gray-300 px-4 py-3 text-gray-700">{row.pq042}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                        <div className="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-                            <p className="text-sm text-yellow-900 font-semibold mb-2">
-                                🔑 Regra de Ouro:
-                            </p>
-                            <ul className="text-sm text-yellow-900 space-y-1 list-disc list-inside">
-                                <li><strong>É mudança no PRODUTO (nCommand Lite)?</strong> → Use PQ.039 ou SOP-005</li>
-                                <li><strong>É mudança em INFRAESTRUTURA/SISTEMA AUXILIAR?</strong> → Use PQ.042 (GMUD)</li>
-                                <li><strong>É mudança em PROCESSO ORGANIZACIONAL?</strong> → Use PQ.042 (GMUD)</li>
-                                <li><strong>Mudanças em IaC podem requerer AMBOS</strong> → GMUD (decisão) + Change Request (implementação)</li>
-                            </ul>
-                        </div>
-                    </CardContent>
-                </Card>
+                {/* Diagrams */}
+                <GMUDSDLCIntegrationDiagram />
+                <GMUDAutomationFlowDiagram />
+                <GMUDToolsIntegrationDiagram />
 
-                {/* SDLC Integration */}
-                <Card className="mb-12 border-2 border-indigo-200 shadow-lg">
+                {/* SDLC Phases with GMUD Examples */}
+                <Card className="mb-12 border-2 border-primary/30 shadow-xl">
                     <CardHeader>
-                        <CardTitle className="flex items-center gap-3 text-2xl">
-                            <Activity className="h-7 w-7 text-indigo-600" />
-                            Integração com SDLC (5 Fases do nCommand Lite)
+                        <CardTitle className="text-2xl md:text-3xl">
+                            GMUDs por Fase do SDLC: Exemplos Práticos
                         </CardTitle>
                         <CardDescription className="text-base">
-                            Onde o PQ.042 se aplica em cada fase do ciclo de vida
+                            Como cada fase do ciclo de vida interage com GMUDs, com exemplos concretos e integrações
                         </CardDescription>
                     </CardHeader>
-                    <CardContent className="space-y-6">
+                    <CardContent className="space-y-8">
                         {sdlcPhases.map((phase) => {
-                            const applicabilityColors = {
-                                'very-high': 'bg-green-100 border-green-300 text-green-800',
-                                'high': 'bg-blue-100 border-blue-300 text-blue-800',
-                                'medium': 'bg-yellow-100 border-yellow-300 text-yellow-800',
-                                'low': 'bg-gray-100 border-gray-300 text-gray-800'
+                            const colorClasses = {
+                                green: 'border-green-300 bg-green-50',
+                                gray: 'border-gray-300 bg-gray-50',
+                                blue: 'border-blue-300 bg-blue-50',
+                                yellow: 'border-yellow-300 bg-yellow-50',
+                                purple: 'border-purple-300 bg-purple-50'
                             }
-                            const applicabilityColor = applicabilityColors[phase.applicabilityLevel as keyof typeof applicabilityColors]
+                            const badgeColors = {
+                                green: 'bg-green-100 text-green-800 border-green-300',
+                                gray: 'bg-gray-100 text-gray-800 border-gray-300',
+                                blue: 'bg-blue-100 text-blue-800 border-blue-300',
+                                yellow: 'bg-yellow-100 text-yellow-800 border-yellow-300',
+                                purple: 'bg-purple-100 text-purple-800 border-purple-300'
+                            }
 
                             return (
-                                <div key={phase.phase} className="border-2 border-gray-200 rounded-lg p-5 bg-white">
-                                    <div className="flex items-center justify-between mb-3">
+                                <div key={phase.phase} className={`border-2 rounded-lg p-6 ${colorClasses[phase.color as keyof typeof colorClasses]}`}>
+                                    <div className="flex items-center justify-between mb-4">
                                         <div className="flex items-center gap-3">
-                                            <div className="font-bold text-lg text-indigo-600">{phase.phase}</div>
-                                            <div className="font-semibold text-gray-900">{phase.name}</div>
+                                            <Badge className="text-lg px-3 py-1">{phase.phase}</Badge>
+                                            <h3 className="text-xl font-bold text-gray-900">{phase.name}</h3>
                                         </div>
-                                        <Badge className={applicabilityColor}>
-                                            Aplicabilidade: {phase.applicability}
+                                        <Badge className={`${badgeColors[phase.color as keyof typeof badgeColors]} border`}>
+                                            {phase.applicability}
                                         </Badge>
                                     </div>
-                                    <div className="mb-3">
-                                        <div className="text-sm font-semibold text-gray-700 mb-2">Cenários de Aplicação:</div>
-                                        <ul className="text-sm text-gray-600 space-y-1 list-disc list-inside">
-                                            {phase.scenarios.map((scenario, idx) => (
-                                                <li key={idx}>{scenario}</li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <div className="text-sm font-semibold text-gray-700 mb-2">Exemplos de GMUD:</div>
-                                        <div className="space-y-1">
-                                            {phase.examples.map((example, idx) => (
-                                                <div key={idx} className="text-sm text-gray-600 bg-gray-50 px-3 py-2 rounded border border-gray-200">
-                                                    {example}
+
+                                    <div className="space-y-4">
+                                        <div className="bg-white p-4 rounded-lg border border-gray-200">
+                                            <div className="font-semibold text-gray-900 mb-2">🔗 Integrações com Ferramentas:</div>
+                                            <ul className="text-sm text-gray-700 space-y-1">
+                                                {phase.integrations.map((integration, idx) => (
+                                                    <li key={idx} className="flex items-start gap-2">
+                                                        <ArrowRight className="h-4 w-4 text-gray-500 flex-shrink-0 mt-0.5" />
+                                                        <span>{integration}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+
+                                        <div className="space-y-3">
+                                            <div className="font-semibold text-gray-900">📋 Exemplos de GMUDs:</div>
+                                            {phase.gmudExamples.map((gmud) => (
+                                                <div key={gmud.id} className="bg-white p-4 rounded-lg border-2 border-gray-300 hover:border-primary transition-colors">
+                                                    <div className="flex items-start justify-between mb-2">
+                                                        <div className="flex items-center gap-2">
+                                                            <code className="px-2 py-1 bg-gray-100 border border-gray-300 rounded text-sm font-mono">
+                                                                {gmud.id}
+                                                            </code>
+                                                            <Badge variant={gmud.impact === 'Major' ? 'destructive' : 'secondary'} className="text-xs">
+                                                                {gmud.impact}
+                                                            </Badge>
+                                                        </div>
+                                                        <span className="text-xs text-gray-600">⏱️ {gmud.cycleTime}</span>
+                                                    </div>
+                                                    <div className="font-semibold text-gray-900 mb-1">{gmud.title}</div>
+                                                    <p className="text-sm text-gray-700 mb-2">{gmud.description}</p>
+                                                    <div className="flex flex-wrap gap-2">
+                                                        {gmud.systems.map((system, idx) => (
+                                                            <span key={idx} className="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded border border-blue-200">
+                                                                {system}
+                                                            </span>
+                                                        ))}
+                                                    </div>
                                                 </div>
                                             ))}
                                         </div>
@@ -444,201 +431,99 @@ export default function PQ42Page() {
                     </CardContent>
                 </Card>
 
-                {/* Detailed Improvements Banner */}
-                <Card className="mb-12 border-2 border-primary/20 shadow-xl bg-white overflow-hidden">
-                    <div className="absolute inset-0 bg-grid-slate-200/50 [mask-image:linear-gradient(0deg,transparent,black)]"></div>
-                    <CardHeader className="relative z-10 text-center pb-8">
-                        <div className="inline-block px-6 py-2 mb-4 bg-orange-100 border border-orange-200 rounded-full">
-                            <span className="text-orange-700 font-semibold text-sm">📊 GANHOS PROPOSTOS (ATUAL → FUTURO)</span>
-                        </div>
-                        <CardTitle className="text-4xl md:text-5xl font-bold mb-3 text-gray-900">
-                            Transformação do Processo GMUD
+                {/* Tools Integration */}
+                <Card className="mb-12 border-2 border-purple-200 shadow-xl">
+                    <CardHeader>
+                        <CardTitle className="text-2xl md:text-3xl">
+                            Ferramentas Integradas: Ecossistema GMUD
                         </CardTitle>
-                        <CardDescription className="text-gray-600 text-lg max-w-3xl mx-auto">
-                            De processo manual e fragmentado para automação inteligente
+                        <CardDescription className="text-base">
+                            Como cada ferramenta se integra com o processo GMUD automatizado
                         </CardDescription>
                     </CardHeader>
-                    <CardContent className="relative z-10">
-                        {/* Main Stats Grid */}
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                            <div className="bg-blue-50 border border-blue-100 rounded-xl p-6 text-center">
-                                <div className="text-5xl font-bold text-blue-600 mb-2">~60%</div>
-                                <div className="text-sm text-blue-800 font-medium">Redução de Tempo Total</div>
-                                <div className="text-xs text-blue-600/70 mt-2">3-5 semanas → 1-2 semanas</div>
-                            </div>
-                            <div className="bg-green-50 border border-green-100 rounded-xl p-6 text-center">
-                                <div className="text-5xl font-bold text-green-600 mb-2">+50pp</div>
-                                <div className="text-sm text-green-800 font-medium">Ganho de Automação</div>
-                                <div className="text-xs text-green-600/70 mt-2">20-30% → 70-75%</div>
-                            </div>
-                            <div className="bg-purple-50 border border-purple-100 rounded-xl p-6 text-center">
-                                <div className="text-5xl font-bold text-purple-600 mb-2">100%</div>
-                                <div className="text-sm text-purple-800 font-medium">Rastreabilidade</div>
-                                <div className="text-xs text-purple-600/70 mt-2">De manual para automática</div>
-                            </div>
-                            <div className="bg-orange-50 border border-orange-100 rounded-xl p-6 text-center">
-                                <div className="text-5xl font-bold text-orange-600 mb-2">75%</div>
-                                <div className="text-sm text-orange-800 font-medium">Aprovação Mais Rápida</div>
-                                <div className="text-xs text-orange-600/70 mt-2">1-2 semanas → 2-3 dias</div>
-                            </div>
-                        </div>
-
-                        {/* Stage-by-Stage Improvements */}
-                        <div className="bg-slate-50 rounded-2xl p-8 border border-slate-200">
-                            <h3 className="text-2xl font-bold text-center mb-8 text-gray-900">Melhorias Detalhadas por Etapa</h3>
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                {pq042Process.map((stage) => (
-                                    <div key={stage.step} className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
-                                        <div className="text-xs font-semibold text-orange-600 mb-2">ETAPA {stage.step}</div>
-                                        <div className="text-lg font-bold text-gray-900 mb-1">{stage.name}</div>
-                                        <div className="text-xs text-gray-500 mb-3">{stage.form}</div>
-                                        {stage.automated.improvement && (
-                                            <div className="flex items-baseline gap-2 mb-2">
-                                                <div className="text-3xl font-bold text-green-600">{stage.automated.improvement.split(' ')[0]}</div>
-                                                <TrendingUp className="h-5 w-5 text-green-500" />
+                    <CardContent>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {tools.map((tool) => {
+                                const Icon = tool.icon
+                                return (
+                                    <div key={tool.name} className="p-6 border-2 border-gray-200 rounded-lg bg-white hover:shadow-lg transition-shadow">
+                                        <div className="flex items-center gap-3 mb-3">
+                                            <Icon className="h-8 w-8 text-primary" />
+                                            <div>
+                                                <div className="font-bold text-lg text-gray-900">{tool.name}</div>
+                                                <div className="text-sm text-gray-600">{tool.role}</div>
                                             </div>
-                                        )}
-                                        <div className="text-sm text-gray-600">
-                                            {stage.traditional.time} → {stage.automated.time}
+                                        </div>
+                                        <div className="space-y-2 text-sm">
+                                            <div>
+                                                <span className="font-semibold text-gray-700">Descrição: </span>
+                                                <span className="text-gray-600">{tool.description}</span>
+                                            </div>
+                                            <div>
+                                                <span className="font-semibold text-gray-700">Integração: </span>
+                                                <span className="text-gray-600">{tool.integration}</span>
+                                            </div>
+                                            <div>
+                                                <span className="font-semibold text-gray-700">Automação: </span>
+                                                <span className="text-gray-600">{tool.automation}</span>
+                                            </div>
                                         </div>
                                     </div>
-                                ))}
-                            </div>
+                                )
+                            })}
                         </div>
                     </CardContent>
                 </Card>
 
-                {/* Comparison Tables */}
-                <div className="space-y-8 mb-12">
-                    <div className="text-center mb-8">
-                        <h2 className="text-3xl font-bold text-gray-900 mb-2">Comparação Detalhada por Etapa</h2>
-                        <p className="text-gray-600">Processo tradicional vs automação proposta</p>
-                    </div>
-
-                    {pq042Process.map((item) => (
-                        <Card key={item.step} className="border-2 border-gray-200 shadow-md overflow-hidden">
-                            <CardHeader className="bg-gradient-to-r from-gray-50 to-white border-b-2 border-gray-200">
-                                <CardTitle className="flex items-center gap-3 text-xl">
-                                    <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-orange-600 text-white flex items-center justify-center font-bold text-lg">
-                                        {item.step}
-                                    </div>
-                                    <div className="flex-1">
-                                        <div>{item.name}</div>
-                                        <div className="text-sm font-normal text-gray-500">{item.form}</div>
-                                    </div>
-                                    {item.automated.improvement && (
-                                        <Badge variant="default" className="bg-green-600 text-white">
-                                            <TrendingUp className="h-3 w-3 mr-1" />
-                                            {item.automated.improvement}
-                                        </Badge>
-                                    )}
-                                </CardTitle>
-                            </CardHeader>
-                            <CardContent className="p-0">
-                                <div className="grid grid-cols-1 lg:grid-cols-2">
-                                    {/* Traditional Process */}
-                                    <div className="p-6 border-r-2 border-gray-200 bg-red-50/30">
-                                        <h3 className="font-semibold text-lg mb-4 text-red-800 flex items-center gap-2">
-                                            <FileText className="h-5 w-5" />
-                                            Processo Tradicional (Manual)
-                                        </h3>
-                                        <div className="space-y-3 text-sm">
-                                            <div>
-                                                <div className="font-medium text-gray-700 mb-1">Processo:</div>
-                                                <div className="text-gray-600">{item.traditional.process}</div>
-                                            </div>
-                                            <div>
-                                                <div className="font-medium text-gray-700 mb-1">Ferramentas:</div>
-                                                <div className="text-gray-600">{item.traditional.tools}</div>
-                                            </div>
-                                            <div>
-                                                <div className="font-medium text-gray-700 mb-1">Tempo Médio:</div>
-                                                <div className="text-gray-600">{item.traditional.time}</div>
-                                            </div>
-                                            <div>
-                                                <div className="font-medium text-gray-700 mb-1">Registros:</div>
-                                                <div className="text-gray-600">{item.traditional.records}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {/* Automated Process */}
-                                    <div className="p-6 bg-green-50/30">
-                                        <h3 className="font-semibold text-lg mb-4 text-green-800 flex items-center gap-2">
-                                            <Zap className="h-5 w-5" />
-                                            Processo Automatizado (Proposto)
-                                        </h3>
-                                        <div className="space-y-3 text-sm">
-                                            <div>
-                                                <div className="font-medium text-gray-700 mb-1">Processo:</div>
-                                                <div className="text-gray-600">{item.automated.process}</div>
-                                            </div>
-                                            <div>
-                                                <div className="font-medium text-gray-700 mb-1">Ferramentas:</div>
-                                                <div className="text-gray-600">{item.automated.tools}</div>
-                                            </div>
-                                            <div>
-                                                <div className="font-medium text-gray-700 mb-1">Tempo Médio:</div>
-                                                <div className="text-gray-600 font-semibold">{item.automated.time}</div>
-                                            </div>
-                                            <div>
-                                                <div className="font-medium text-gray-700 mb-1">Registros:</div>
-                                                <div className="text-gray-600">{item.automated.records}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </CardContent>
-                        </Card>
-                    ))}
-                </div>
-
-                {/* Key Benefits */}
-                <Card className="mb-12 border-2 border-primary/20 shadow-lg">
+                {/* Benefits */}
+                <Card className="mb-12 border-2 border-green-200 shadow-xl">
                     <CardHeader>
-                        <CardTitle className="text-2xl">Benefícios Principais da Automação</CardTitle>
+                        <CardTitle className="text-2xl md:text-3xl flex items-center gap-3">
+                            <CheckCircle2 className="h-8 w-8 text-green-600" />
+                            Benefícios da Integração GMUD ↔ SDLC
+                        </CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div className="space-y-3">
-                                <h3 className="font-semibold text-lg text-gray-900">Eficiência Operacional</h3>
+                                <h3 className="font-semibold text-lg text-gray-900">🚀 Eficiência Operacional</h3>
                                 <ul className="space-y-2 text-sm text-gray-700">
                                     <li className="flex items-start gap-2">
-                                        <ArrowRight className="h-4 w-4 text-orange-600 flex-shrink-0 mt-1" />
-                                        <span>Redução de 50-60% no tempo total do ciclo GMUD</span>
+                                        <TrendingUp className="h-4 w-4 text-green-600 flex-shrink-0 mt-1" />
+                                        <span><strong>50-60% redução</strong> no tempo de ciclo GMUD (3-5 semanas → 1-2 semanas)</span>
                                     </li>
                                     <li className="flex items-start gap-2">
-                                        <ArrowRight className="h-4 w-4 text-orange-600 flex-shrink-0 mt-1" />
-                                        <span>Aprovações 75% mais rápidas (1-2 semanas → 2-3 dias)</span>
+                                        <TrendingUp className="h-4 w-4 text-green-600 flex-shrink-0 mt-1" />
+                                        <span><strong>+50 pontos percentuais</strong> de automação (20-30% → 70-75%)</span>
                                     </li>
                                     <li className="flex items-start gap-2">
-                                        <ArrowRight className="h-4 w-4 text-orange-600 flex-shrink-0 mt-1" />
-                                        <span>Visibilidade em tempo real (dashboard de GMUDs)</span>
+                                        <TrendingUp className="h-4 w-4 text-green-600 flex-shrink-0 mt-1" />
+                                        <span><strong>Visibilidade em tempo real</strong> de todos os GMUDs via dashboard</span>
                                     </li>
                                     <li className="flex items-start gap-2">
-                                        <ArrowRight className="h-4 w-4 text-orange-600 flex-shrink-0 mt-1" />
-                                        <span>70-75% de automação (vs 20-30% atual)</span>
+                                        <TrendingUp className="h-4 w-4 text-green-600 flex-shrink-0 mt-1" />
+                                        <span><strong>Aprovações 75% mais rápidas</strong> com workflow paralelo</span>
                                     </li>
                                 </ul>
                             </div>
                             <div className="space-y-3">
-                                <h3 className="font-semibold text-lg text-gray-900">Conformidade e Qualidade</h3>
+                                <h3 className="font-semibold text-lg text-gray-900">✅ Conformidade e Rastreabilidade</h3>
                                 <ul className="space-y-2 text-sm text-gray-700">
                                     <li className="flex items-start gap-2">
-                                        <ArrowRight className="h-4 w-4 text-green-600 flex-shrink-0 mt-1" />
-                                        <span>Rastreabilidade 100% automática e em tempo real</span>
+                                        <CheckCircle2 className="h-4 w-4 text-green-600 flex-shrink-0 mt-1" />
+                                        <span><strong>Rastreabilidade 100%</strong> automática: GMUD → Ferramentas → SDLC</span>
                                     </li>
                                     <li className="flex items-start gap-2">
-                                        <ArrowRight className="h-4 w-4 text-green-600 flex-shrink-0 mt-1" />
-                                        <span>Evidências estruturadas e organizadas por tipo</span>
+                                        <CheckCircle2 className="h-4 w-4 text-green-600 flex-shrink-0 mt-1" />
+                                        <span><strong>Compliance garantido</strong> via gates técnicos e checklists obrigatórios</span>
                                     </li>
                                     <li className="flex items-start gap-2">
-                                        <ArrowRight className="h-4 w-4 text-green-600 flex-shrink-0 mt-1" />
-                                        <span>Auditoria simplificada (tudo centralizado no Azure Boards)</span>
+                                        <CheckCircle2 className="h-4 w-4 text-green-600 flex-shrink-0 mt-1" />
+                                        <span><strong>Evidências estruturadas</strong> e organizadas por tipo no Work Item</span>
                                     </li>
                                     <li className="flex items-start gap-2">
-                                        <ArrowRight className="h-4 w-4 text-green-600 flex-shrink-0 mt-1" />
-                                        <span>Métricas e KPIs em tempo real (cycle time, eficiência, qualidade)</span>
+                                        <CheckCircle2 className="h-4 w-4 text-green-600 flex-shrink-0 mt-1" />
+                                        <span><strong>Auditoria simplificada</strong> com histórico completo centralizado</span>
                                     </li>
                                 </ul>
                             </div>
@@ -650,17 +535,18 @@ export default function PQ42Page() {
                 <Card className="border-2 border-primary shadow-xl bg-gradient-to-br from-primary/5 via-white to-primary/5">
                     <CardContent className="text-center py-12">
                         <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                            Explore o Processo Completo
+                            Explore Mais sobre o Ecossistema nCommand Lite
                         </h2>
                         <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-                            Veja como o PQ.042 se integra com o SDLC completo do nCommand Lite e compare com o PQ.039
+                            Veja como o PQ.042 se integra com o ciclo de vida completo e compare com o PQ.039
                         </p>
                         <div className="flex flex-wrap justify-center gap-4">
                             <Link
                                 href="/ciclo-de-vida"
                                 className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors font-semibold shadow-lg"
                             >
-                                Ver Fluxos do Ciclo de Vida
+                                <Workflow className="h-5 w-5" />
+                                Ver Ciclo de Vida Completo
                                 <ArrowRight className="h-5 w-5" />
                             </Link>
                             <Link
@@ -668,6 +554,13 @@ export default function PQ42Page() {
                                 className="inline-flex items-center gap-2 px-6 py-3 bg-white text-primary border-2 border-primary rounded-lg hover:bg-primary/5 transition-colors font-semibold"
                             >
                                 Comparar com PQ.039
+                                <ArrowRight className="h-5 w-5" />
+                            </Link>
+                            <Link
+                                href="/ferramentas"
+                                className="inline-flex items-center gap-2 px-6 py-3 bg-white text-gray-700 border-2 border-gray-300 rounded-lg hover:bg-gray-50 transition-colors font-semibold"
+                            >
+                                Ver Todas as Ferramentas
                                 <ArrowRight className="h-5 w-5" />
                             </Link>
                         </div>
