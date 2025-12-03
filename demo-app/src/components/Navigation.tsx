@@ -30,6 +30,11 @@ const navigation = [
     icon: FileText,
   },
   {
+    name: 'PQ.042',
+    href: '/pq42',
+    icon: Settings,
+  },
+  {
     name: 'Ciclo de Vida',
     href: '/ciclo-de-vida',
     icon: Workflow,
