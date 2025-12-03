@@ -77,7 +77,7 @@ graph LR
       </CardHeader>
       <CardContent>
         <div className="bg-white p-6 rounded-lg border border-gray-200">
-          <MermaidDiagram diagram={diagram} />
+          <MermaidDiagram chart={diagram} />
         </div>
         <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="p-4 bg-red-50 border-2 border-red-200 rounded-lg">
